@@ -1,0 +1,2 @@
+class PantryIngredientsController < ApplicationController
+end

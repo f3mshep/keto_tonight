@@ -1,0 +1,2 @@
+module PantryIngredientsHelper
+end
