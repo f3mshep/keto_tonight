@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe Recipe, type: :model do
 before(:each) do
   @user = User.create
-  @recipe = Recipe.create(user: @user)
-  @ingredient = Ingredient.create
+  @recipe = Recipe.create(user: @user, likes: 1)
+  @ingredient = Ingredient.create(fiber: 3, carbs: 10, protein: 17, fat: 20 )
   @category = Category.create
   @recipe_category = @recipe.recipe_category.create(category: @category)
   @recipe_ingredient = @recipe.recipe_ingredients.create(ingredient: @ingredient)
@@ -24,9 +24,13 @@ end
   end
 
   describe '#nutrition_info' do
+    #maybe make the output a hash or something?
+    #like fiber: 10g or something
+    expect(@recipe.nutrition_info).to include("3g fiber")
   end
 
-  describe '#change_rating' do
+  describe '#change_likes' do
+    expect(@recipe.change_rating(1)).to eq(2)
   end
 
 
