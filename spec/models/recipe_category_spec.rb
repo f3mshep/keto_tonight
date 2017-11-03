@@ -1,5 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe RecipeCategory, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'recipe_categories' do
+    it 'belongs to a recipe' do
+    end
+
+    it 'belongs to a category' do
+    end
+  end
 end
