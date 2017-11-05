@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe RecipeIngredient, type: :model do
 
     before(:each) do
-      @recipe = Recipe.create
+      @user = User.create(email: 'testymctestface@gmail.com', password: 'securepassword')
+      @recipe = Recipe.create(user: @user)
       @ingredient = Ingredient.create
       @recipe_ingredient = @recipe.recipe_ingredients.create(ingredient: @ingredient)
     end

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Comment, type: :model do
   before(:each) do
     @recipe = Recipe.create
-    @user = User.create
+    @user = User.create(email: 'testymctestface@gmail.com', password: 'securepassword')
     @comment = Comment.create(recipe: @recipe, user: @user)
 
   end

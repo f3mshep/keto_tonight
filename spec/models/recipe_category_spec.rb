@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe RecipeCategory, type: :model do
   describe 'recipe_categories' do
     before(:each) do
-      @recipe = Recipe.create
+      @user = User.create(email: 'testymctestface@gmail.com', password: 'securepassword')
+      @recipe = Recipe.create(user: @user)
       @category = Category.create
       @recipe_category = @recipe.recipe_categories.create(category: @category)
     end
