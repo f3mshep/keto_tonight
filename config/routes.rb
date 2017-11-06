@@ -5,11 +5,11 @@ Rails.application.routes.draw do
 
   resources :users do
     resource :pantry
+    resources :recipes
   end
   resources :pantry_ingredients
   resources :ingredients
   resources :recipe_ingredients
-  resources :recipes
   resources :categories
   resources :comments
   resources :users
