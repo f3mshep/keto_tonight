@@ -1,5 +1,7 @@
 <h1>THIS IS MY PANTRY</h1>
 
 
-<%= render(@pantry) || 'There are no items in your pantry' %>
+<%= render(@pantry) %>
 <!-- make a list of all pantry items -->
+<br>
+<%= link_to  "Add Ingredient", edit_user_pantry_path, class: 'btn btn-primary' %>

@@ -1,3 +1,6 @@
+<%if @pantry.ingredients.empty?%>
+<p>There are no ingredients in your pantry!</p>
+<%end%>
 <%@pantry.ingredients.each do |ingredient|%>
   <div><%= link_to  ingredient.name, ingredient %> </div>
 <%end%>

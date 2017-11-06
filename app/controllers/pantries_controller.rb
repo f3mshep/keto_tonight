@@ -5,7 +5,9 @@ class PantriesController < ApplicationController
   end
 
   def edit
-
+    pantry_setter
+    @ingredient = Ingredient.new
+    @pantry_ingredient = PantryIngredient.new(pantry: @pantry, ingredient: @ingredient)
   end
 
   def update
@@ -15,7 +17,9 @@ class PantriesController < ApplicationController
   private
 
   def pantry_setter
-     @pantry = User.find(params[:user_id]).pantry
+     @user = User.find(params[:user_id])
+     @pantry = @user.pantry
+     @pantry = Pantry.create(user: @user) if @pantry.nil?
   end
 
   def pantry_params

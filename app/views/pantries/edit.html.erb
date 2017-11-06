@@ -1,8 +1,7 @@
-<h1>Edit Pantry</h1>
+<h1>Add to Pantry</h1>
 
 <!-- add pantry item by name -->
 
 <!-- add pantry item manually -->
-<%= form_for( variable , remote: true) do |f| %> %>
-
-<% end %>
+<br>
+<%= render partial: "new_ingredient", locals: {ingredient: @pantry_ingredient} %>
