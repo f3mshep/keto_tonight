@@ -2,15 +2,18 @@
 <h3>Nutrition Facts</h3>
 <hr>
 <div class="container">
-  <%= form_for @ingredient do |f| %>
-    <div><p>Ingredient Name<%= f.text_field :name %></p></div>
+  <%= form_tag @pantry, url: user_pantry_update_path do |f| %>
+    <%= f.fields_for :ingredients do |t| %>
+    <div><p>Ingredient Name<%= t.text_field :name %></p></div>
+    <div><p>Serving Size<%= t.text_field :serving_size %></p></div>
     <hr>
-    <div><p><strong>Calories </strong><%= f.text_field :calories %> g</p></div> <br>
-    <div><p><strong>Total Fat</strong><%= f.text_field :fat %> g</p></div> <br>
-    <div><p><strong>Protein</strong><%= f.text_field :protein %> g</p></div> <br>
-    <div><p><strong>Carbohydrate</strong><%= f.text_field :carbs %> g</p></div> <br>
-    <div><p><strong>Fiber</strong><%= f.text_field :fiber %> g</p></div> <br>
-    <%= f.submit "Create Ingredient"%>
+    <div><p><strong>Calories </strong><%= t.text_field :calories %> g</p></div> <br>
+    <div><p><strong>Total Fat </strong><%= t.text_field :fat %> g</p></div> <br>
+    <div><p><strong>Protein </strong><%= t.text_field :protein %> g</p></div> <br>
+    <div><p><strong>Carbohydrate </strong><%= t.text_field :carbs %> g</p></div> <br>
+    <div><p><strong>Fiber </strong><%= t.text_field :fiber %> g</p></div> <br>
+    <%end%>
+  <%= f.submit "Create Ingredient"%>
   <% end %>
 </div>
 </div>

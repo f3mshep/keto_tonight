@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   root 'static#home'
-
+  patch '/users/:user_id/pantry' => 'pantries#update', as: 'user_pantry_update'
   resources :users do
     resource :pantry
     resources :recipes
