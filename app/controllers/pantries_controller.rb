@@ -24,6 +24,12 @@ class PantriesController < ApplicationController
     end
   end
 
+  def delete
+    #It is a desired behavior to sever the link between the pantry and the
+    #ingredient, but not the ingredient itself.
+
+  end
+
   private
 
   def pantry_setter
@@ -40,7 +46,7 @@ class PantriesController < ApplicationController
       :protein,
       :carbs,
       :fiber,
-      :serving
+      :serving_size
     ])
   end
 

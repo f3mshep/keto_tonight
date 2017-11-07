@@ -2,18 +2,20 @@
 <h3>Nutrition Facts</h3>
 <hr>
 <div class="container">
-  <%= form_tag @pantry, url: user_pantry_update_path do |f| %>
+  <%= form_for @pantry, url: user_pantry_update_path do |f| %>
     <%= f.fields_for :ingredients do |t| %>
+    <% next unless t.object.id.nil?%>
     <div><p>Ingredient Name<%= t.text_field :name %></p></div>
-    <div><p>Serving Size<%= t.text_field :serving_size %></p></div>
     <hr>
     <div><p><strong>Calories </strong><%= t.text_field :calories %> g</p></div> <br>
     <div><p><strong>Total Fat </strong><%= t.text_field :fat %> g</p></div> <br>
     <div><p><strong>Protein </strong><%= t.text_field :protein %> g</p></div> <br>
     <div><p><strong>Carbohydrate </strong><%= t.text_field :carbs %> g</p></div> <br>
     <div><p><strong>Fiber </strong><%= t.text_field :fiber %> g</p></div> <br>
+
     <%end%>
   <%= f.submit "Create Ingredient"%>
+
   <% end %>
 </div>
 </div>

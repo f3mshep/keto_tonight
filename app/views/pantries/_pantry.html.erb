@@ -1,6 +1,6 @@
 <%if @pantry.ingredients.empty?%>
 <p>There are no ingredients in your pantry!</p>
 <%end%>
-<%@pantry.ingredients.each do |ingredient|%>
-  <div><%= link_to  ingredient.name, ingredient %> </div>
+<%@pantry.pantry_ingredients.each do |pantry_ingredient|%>
+  <div><p><%= link_to  pantry_ingredient.ingredient.name, pantry_ingredient.ingredient %> - <%= button_to "Delete", pantry_ingredient, method: :delete %>  </p></div>
 <%end%>
