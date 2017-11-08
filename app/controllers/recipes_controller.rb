@@ -1,4 +1,5 @@
 class RecipesController < ApplicationController
+    include RecipesHelper
     before_action :recipe_setter, only: [:show, :edit, :update]
 
     def index
@@ -20,7 +21,14 @@ class RecipesController < ApplicationController
     def create
         @recipe = Recipe.new(recipe_params)
         wrapper = EdamamWrapper.new
-        wrapper.line_ingredient_parser(@recipe.ingredient_list)
+        food_hash = wrapper.line_ingredient_parser(@recipe.ingredient_list)
+        add_nutrition(food_hash, @recipe)
+        if @recipe.save
+            add_ingredients(food_hash, @recipe)
+            redirect_to @recipe
+        else
+            render :new
+        end
     end
 
     def edit
