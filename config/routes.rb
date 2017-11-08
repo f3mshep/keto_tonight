@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     resource :pantry
     resources :recipes
   end
+  resources :recipes, only: [:update, :create, :destroy]
   resources :pantry_ingredients
   resources :ingredients
   resources :recipe_ingredients

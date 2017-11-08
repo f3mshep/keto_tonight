@@ -7,7 +7,7 @@ class EdamamWrapper
     XMASH = ENV['XMASH']
 
     def line_ingredient_parser(query)
-        line_items = query.input_to_array
+        line_items = input_to_array(query)
         line_items.each do |line_item|
             response = Unirest.get "https://edamam-edamam-nutrition-analysis.p.mashape.com/api/nutrition-data?ingr=#{CGI.escape(line_item)}",
             headers:{
@@ -15,6 +15,8 @@ class EdamamWrapper
             "Accept" => "application/json"
             }
             binding.pry
+            food = response.body["ingredients"][0]["parsed"][0]["foodMatch"]
+            food_id = response.body["ingredients"][0]["parsed"][0]["foodId"]
         end
     end
 
@@ -22,7 +24,7 @@ class EdamamWrapper
     private 
 
     def input_to_array(user_input)
-        user_input.split('r/n')
+         user_input.split(/[\r\n]+/)
     end
 
     def recipe_analyzer
