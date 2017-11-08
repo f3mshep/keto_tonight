@@ -18,7 +18,9 @@ class EdamamWrapper
             }
             food = response.body["ingredients"][0]["parsed"][0]["foodMatch"]
             food_id = response.body["ingredients"][0]["parsed"][0]["foodId"]
-            ingredients[food] = food_id
+            food_quantity = response.body["ingredients"][0]["parsed"][0]["quantity"]
+            food_measure = response.body["ingredients"][0]["parsed"][0]["measure"]
+            ingredients[food] = {food_id: food_id, quantity: food_quantity, measure: food_measure}
         end
         food_hash[:ingredients] = ingredients
         nutrients = recipe_analyzer(line_items)
