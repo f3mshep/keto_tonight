@@ -18,7 +18,7 @@ class RecipesController < ApplicationController
     end
     
     def create
-        @recipe = Recipe.create(recipe_params)
+        @recipe = Recipe.new(recipe_params)
         wrapper = EdamamWrapper.new
         wrapper.line_ingredient_parser(@recipe.ingredient_list)
     end
