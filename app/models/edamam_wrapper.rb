@@ -7,6 +7,7 @@ class EdamamWrapper
     XMASH = ENV['XMASH']
 
     def line_ingredient_parser(query)
+        ingredients = {}
         food_hash = {}
         line_items = input_to_array(query)
         line_items.each do |line_item|
@@ -17,8 +18,9 @@ class EdamamWrapper
             }
             food = response.body["ingredients"][0]["parsed"][0]["foodMatch"]
             food_id = response.body["ingredients"][0]["parsed"][0]["foodId"]
-            food_hash[:ingredients][food] = food_id
+            ingredients[food] = food_id
         end
+        food_hash[:ingredients] = ingredients
         nutrients = recipe_analyzer(line_items)
         food_hash[:nutrients] = nutrients
         food_hash
