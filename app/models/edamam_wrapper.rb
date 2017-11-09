@@ -16,10 +16,15 @@ class EdamamWrapper
             "X-Mashape-Key" => "#{XMASH}",
             "Accept" => "application/json"
             }
-            food = response.body["ingredients"][0]["parsed"][0]["foodMatch"]
-            food_id = response.body["ingredients"][0]["parsed"][0]["foodId"]
+            begin
+                food = response.body["ingredients"][0]["parsed"][0]["foodMatch"]
+                food_id = response.body["ingredients"][0]["parsed"][0]["foodId"]
+            rescue
+                return "#{line_item} not found"
+            end
             food_quantity = response.body["ingredients"][0]["parsed"][0]["quantity"]
             food_measure = response.body["ingredients"][0]["parsed"][0]["measure"]
+            return "must have an ingredient and measurement" if food_measure.nil?
             ingredients[food] = {food_id: food_id, quantity: food_quantity, measure: food_measure}
         end
         food_hash[:ingredients] = ingredients
@@ -29,7 +34,7 @@ class EdamamWrapper
     end
 
 
-    private 
+    private
 
     def input_to_array(user_input)
          user_input.split(/[\r\n]+/)

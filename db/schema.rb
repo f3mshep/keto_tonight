@@ -30,7 +30,6 @@ ActiveRecord::Schema.define(version: 20171107233233) do
 
   create_table "ingredients", force: :cascade do |t|
     t.string "name"
-    t.string "food_id"
     t.integer "calories"
     t.integer "protein"
     t.integer "fat"
@@ -67,8 +66,7 @@ ActiveRecord::Schema.define(version: 20171107233233) do
   create_table "recipe_ingredients", force: :cascade do |t|
     t.integer "recipe_id"
     t.integer "ingredient_id"
-    t.float "quantity"
-    t.string "measure"
+    t.string "amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["ingredient_id"], name: "index_recipe_ingredients_on_ingredient_id"
@@ -78,15 +76,11 @@ ActiveRecord::Schema.define(version: 20171107233233) do
   create_table "recipes", force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.integer "likes", default: 1
-    t.integer "calories"
-    t.integer "carbs"
-    t.integer "fat"
-    t.integer "protein"
-    t.integer "fiber"
+    t.integer "likes"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "serving_size"
     t.string "ingredient_list"
     t.string "cook_time"
     t.string "prep_time"

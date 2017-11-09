@@ -13,6 +13,7 @@
       <% else %>
         <li><%= link_to  "New Recipe", new_user_recipe_path(current_user), class: 'nav-link' %></li>
         <li><%= link_to  "Your Recipes", user_recipes_path(current_user), class: 'nav-link' %></li>
+        <li><%= link_to  "Sign out", destroy_user_session_path %></li>
       <% end %>
     </ul>
   </div>
