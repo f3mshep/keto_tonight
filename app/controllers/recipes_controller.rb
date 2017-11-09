@@ -19,6 +19,7 @@ class RecipesController < ApplicationController
     end
 
     def create
+        binding.pry
         @recipe = Recipe.new(user: current_user)
         @recipe.categories.build
         @recipe.assign_attributes(recipe_params)
