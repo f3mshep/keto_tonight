@@ -54,17 +54,19 @@ class EdamamWrapper
             http.request(request)
         end
         json = JSON.parse(response.body)
-        fat = json["totalNutrients"]["FAT"]["quantity"].to_i
-        fiber = json["totalNutrients"]["FIBTG"]["quantity"].to_i
-        calories = json["calories"]
-        carbs = json["totalNutrients"]["CHOCDF"]["quantity"].to_i
-        protein = json["totalNutrients"]["PROCNT"]["quantity"].to_i
+        if json["totalNutrients"]
+            fat = json["totalNutrients"]["FAT"]["quantity"] unless json["totalNutrients"]["FAT"].nil?
+            fiber = json["totalNutrients"]["FIBTG"]["quantity"] unless json["totalNutrients"]["FIBTG"].nil?
+            calories = json["calories"] unless json["calories"].nil?
+            carbs = json["totalNutrients"]["CHOCDF"]["quantity"] unless json["totalNutrients"]["CHOCDF"].nil?
+            protein = json["totalNutrients"]["PROCNT"]["quantity"] unless json["totalNutrients"]["PROCNT"].nil?
+        end
         {
-            calories: calories,
-            fat: fat,
-            fiber: fiber,
-            carbs: carbs,
-            protein: protein
+            calories: calories.to_i,
+            fat: fat.to_i,
+            fiber: fiber.to_i,
+            carbs: carbs.to_i,
+            protein: protein.to_i
         }
     end
 

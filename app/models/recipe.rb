@@ -13,80 +13,50 @@ class Recipe < ApplicationRecord
   validates :servings, presence: true
   validates :description, presence: true
   validates :ingredient_list, presence: true
-  validate :call_wrapper
-  validate :add_nutrition
+  validate :analyze_ingredients
   validate :keto_friendly
-  validate :save_food
 
 
-
-  private
-
-
-  def keto_friendly
-    if self.errors.none?
-      net_carb_serving = self.carbs - self.fiber / self.servings
-      if net_carb_serving > SILLY_AMOUNT
-        errors.add(:ingredients, "That recipe is definitely NOT keto friendly!")
-      elsif net_carb_serving > MAX_CARBS
-        errors.add(:ingredients, "There are too many net carbs per serving")
-      end
-    end
-  end
-
-  def call_wrapper
+  def analyze_ingredients
+    #is this a code smell??? I don't know. But it is the best way I can seem to handle validation using the API
     wrapper = EdamamWrapper.new
     food_hash = wrapper.line_ingredient_parser(ingredient_list)
     self.food_hash = food_hash
     if food_hash.class == String
       errors.add(:ingredients, "#{food_hash}")
+    else
+      add_nutrition
+    end
+  end
+
+
+  def save_food
+    food_hash[:ingredients].each do |ingredient, values|
+      new_ingredient = Ingredient.find_or_create_by_food_id(values[:food_id], ingredient)
+      RecipeIngredient.create(recipe: self, ingredient: new_ingredient, quantity: values[:quantity], measure: values[:measure] )
+    end
+  end
+
+  private
+
+  def keto_friendly
+    binding.pry
+    if self.errors.none?
+      net_carb_serving = (self.carbs - self.fiber) / self.servings
+      if net_carb_serving > SILLY_AMOUNT
+        puts net_carb_serving
+        errors.add(:ingredients, "That recipe is definitely NOT keto friendly!")
+      elsif net_carb_serving > MAX_CARBS
+        puts net_carb_serving
+        errors.add(:ingredients, "There are too many net carbs per serving")
+      end
     end
   end
 
   def add_nutrition
-    if self.errors.none?
-      food_hash[:nutrients].each do |label, amount|
-          recipe.send("#{label}=", amount)
-      end
-    end
-  end
-
-  def save_food
-    if self.errors.none?
-      food_hash[:ingredients].each do |ingredient, values|
-        new_ingredient = Ingredient.find_or_create_by_food_id(values[:food_id], ingredient)
-        RecipeIngredient.create(recipe: self, ingredient: new_ingredient, quantity: values[:quantity], measure: values[:measure] )
-      end
+    food_hash[:nutrients].each do |label, amount|
+        self.send("#{label}=", amount)
     end
   end
 
 end
-
-
-#         module RecipesHelper
-
-#     def add_nutrition(food_hash, recipe)
-#         food_hash[:nutrients].each do |label, amount|
-#             recipe.send("#{label}=", amount)
-#         end
-#     end
-
-#     def add_ingredients(food_hash, recipe)
-#         food_hash[:ingredients].each do |ingredient, values|
-#             new_ingredient = Ingredient.find_or_create_by_food_id(values[:food_id], ingredient)
-#             RecipeIngredient.create(recipe: recipe, ingredient: new_ingredient, quantity: values[:quantity], measure: values[:measure] )
-#         end
-#     end
-
-# end
-
-
-        # wrapper = EdamamWrapper.new
-        # food_hash = wrapper.line_ingredient_parser(@recipe.ingredient_list)
-        # add_nutrition(food_hash, @recipe)
-        # if @recipe.save
-        #     add_ingredients(food_hash, @recipe)
-        #     redirect_to user_recipe_path(@recipe.user, @recipe)
-        # else
-        #     render :new
-        # end
