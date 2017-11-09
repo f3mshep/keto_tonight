@@ -41,7 +41,6 @@ class Recipe < ApplicationRecord
   private
 
   def keto_friendly
-    binding.pry
     if self.errors.none?
       net_carb_serving = (self.carbs - self.fiber) / self.servings
       if net_carb_serving > SILLY_AMOUNT

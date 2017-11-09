@@ -91,6 +91,8 @@ GEM
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     hashie (3.5.6)
+    hublot (0.0.6)
+      rails (> 3.0.0)
     i18n (0.9.1)
       concurrent-ruby (~> 1.0)
     jbuilder (2.7.0)
@@ -268,6 +270,7 @@ DEPENDENCIES
   devise
   dotenv-rails
   edamam-ruby
+  hublot (~> 0.0.6)
   jbuilder (~> 2.5)
   jquery-rails
   json

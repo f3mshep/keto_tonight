@@ -11,7 +11,7 @@ class RecipesController < ApplicationController
     end
 
     def show
-
+        @comment = Comment.new(user: current_user, recipe: @recipe)
     end
 
     def new
@@ -31,9 +31,11 @@ class RecipesController < ApplicationController
     end
 
     def edit
+        @recipe.categories.build
     end
 
     def update
+        binding.pry
         if @recipe.update(recipe_params)
             @recipe.save_food
             redirect_to user_recipe_path(@recipe.user, @recipe)
@@ -51,7 +53,7 @@ class RecipesController < ApplicationController
     def recipe_params
        params.require(:recipe).permit(:title, :description, :serving_size,
        :ingredient_list, :cook_time, :prep_time, :servings,
-       :category_attributes, :category_ids => [])
+       :categories_attributes => [:name], :category_ids => [])
     end
 
     def recipe_setter

@@ -1,9 +1,9 @@
-[] Fix up routing
-[] Add pundit functions (admins can delete any recipe)
+[x] Fix up routing
+[] Add pundit functions (admins can delete any recipe, only admins can create categories)
 [] add some sort of scoped thing
-[] add comments 
-[] add category to recipe creation
+[x] add comments 
+[x] add category to recipe creation
 [] fix pantry ingredients
 [] search functions
-[] style stuff
+[] style stuff - make navbar not look like shit, home page, user home page, page lay outs
 [] add 'loading' to recipe creation

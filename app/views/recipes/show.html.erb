@@ -14,6 +14,12 @@
         </div>
     </div>
     <div class="col-md-8">
+        <h3>Categories</h3>
+        <%@recipe.categories.each do |category|%>
+            <%= category.name %>
+        <%end%>
+    </div>
+    <div class="col-md-8">
         <h3>Ingredients</h3>
         <ul>
             <%@recipe.recipe_ingredients.each do |recipe_ingredient|%>
@@ -26,3 +32,30 @@
         <%=simple_format(@recipe.description)%>
     </div>
 </div>
+
+<div class="container col-md-8 content-box">
+	<!-- these are all the comments -->
+	<div>
+		<h4 style="display: inline;">Comments</h4> <button type="button" data-toggle="modal" data-target="#leaveComment" style="display: inline;" class="btn btn-primary pull-right">Post a Comment</button>
+	</div>
+	
+    <br>
+    
+	<%@recipe.comments.each do |comment|%>
+		<div class="container">
+			<p><%=comment.content%></p>
+			<p><%="-#{comment.user.email} #{comment.created_at.localtime}"%></p>
+		</div>
+		<hr>
+	<%end%>
+</div>
+<br>
+
+
+<!-- Create new comment area-->	
+
+<%=bootstrap_modal("leaveComment"){ form_for @comment, url: create_recipe_comment_path(@recipe) do |f| %>
+    <%= f.label :content, "New Comment"%> <br>
+    <%= f.text_area :content, class:"form-control", rows: 3 %> <br>
+    <%= f.submit%>
+<% end }%>
