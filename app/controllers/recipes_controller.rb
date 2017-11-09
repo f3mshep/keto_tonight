@@ -20,6 +20,7 @@ class RecipesController < ApplicationController
 
     def create
         @recipe = Recipe.new(user: current_user)
+        @recipe.categories.build
         @recipe.assign_attributes(recipe_params)
 
         if @recipe.save
@@ -42,7 +43,9 @@ class RecipesController < ApplicationController
     private
 
     def recipe_params
-       params.require(:recipe).permit(:title, :description, :like, :user_id, :serving_size, :ingredient_list, :cook_time, :prep_time, :servings)
+       params.require(:recipe).permit(:title, :description, :serving_size,
+       :ingredient_list, :cook_time, :prep_time, :servings,
+       :category_attributes, :category_ids => [])
     end
 
     def recipe_setter

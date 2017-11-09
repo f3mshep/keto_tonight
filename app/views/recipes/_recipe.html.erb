@@ -21,7 +21,7 @@
         <%= f.label :prep_time%>
         <%= f.text_field :prep_time %> <br>
         <%= f.label :cook_time%>
-        <%= f.text_field :cook_time%> 
+        <%= f.text_field :cook_time%>
         <%= f.label :servings%>
         <%= f.number_field (:servings) %>
     </div>
@@ -31,6 +31,22 @@
         <%= f.text_area :ingredient_list, class: "form-control", placeholder:"Please enter ingredients one line at a time", rows: "10" %> <br>
         <%= f.label :description, "Recipe Instructions"%>
         <%= f.text_area :description, class: "form-control", placeholder: "Enter a description of how to make your recipe", rows: "10" %>
+    </div>
+
+    <div class="form-group" >
+        <%= f.label :category_ids, "Choose recipe categories:"%>
+        <%= f.collection_select :category_ids, Category.all, :id, :name, multiple:"multiple" %>
+            <script src="multiple-select.js"></script>
+            <script>
+                $('select').multipleSelect();
+            </script>
+        <br>
+        <%=fields_for :categories do |category| %>
+            <br>
+            <%= category.label :name, "New Category"%>
+            <br>
+            <%= category.text_field :name%>
+        <%end%>
     </div>
 
     <%= f.submit class:"btn btn-primary" %>
