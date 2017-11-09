@@ -24,7 +24,7 @@ class EdamamWrapper
             end
             food_quantity = response.body["ingredients"][0]["parsed"][0]["quantity"]
             food_measure = response.body["ingredients"][0]["parsed"][0]["measure"]
-            return "must have an ingredient and measurement" if food_measure.nil?
+            return "#{line_item} missing measurement" if food_measure.nil?
             ingredients[food] = {food_id: food_id, quantity: food_quantity, measure: food_measure}
         end
         food_hash[:ingredients] = ingredients

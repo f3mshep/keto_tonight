@@ -16,14 +16,12 @@ class RecipesController < ApplicationController
 
     def new
         @recipe = Recipe.new(user: current_user)
+        @recipe.categories.build
     end
 
     def create
-        binding.pry
         @recipe = Recipe.new(user: current_user)
-        @recipe.categories.build
         @recipe.assign_attributes(recipe_params)
-
         if @recipe.save
             @recipe.save_food
             redirect_to user_recipe_path(@recipe.user, @recipe)
@@ -36,6 +34,13 @@ class RecipesController < ApplicationController
     end
 
     def update
+        if @recipe.update(recipe_params)
+            @recipe.save_food
+            redirect_to user_recipe_path(@recipe.user, @recipe)
+        else
+            @recipe.categories.build
+            render :edit
+        end 
     end
 
     def delete

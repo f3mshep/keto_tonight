@@ -35,13 +35,11 @@
 
     <div class="form-group" >
         <%= f.label :category_ids, "Choose recipe categories:"%>
-        <%= f.collection_select :category_ids, Category.all, :id, :name, multiple:"multiple" %>
-            <script src="multiple-select.js"></script>
-            <script>
-                $('select').multipleSelect();
-            </script>
+        <!-- TURN THIS INTO A DROP DOWN WITH MULTIPLE SELECT USING THE JQUERY GEM -->
+        <%= f.collection_check_boxes :category_ids, Category.all, :id, :name %>
+    
         <br>
-        <%=fields_for :categories do |category| %>
+        <%=f.fields_for :categories do |category| %>
             <br>
             <%= category.label :name, "New Category"%>
             <br>
