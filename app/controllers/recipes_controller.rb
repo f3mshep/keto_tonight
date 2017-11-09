@@ -19,13 +19,14 @@ class RecipesController < ApplicationController
     end
     
     def create
-        @recipe = Recipe.new(recipe_params)
+        @recipe = Recipe.new(user: current_user)
+        @recipe.assign_attributes(recipe_params)
         wrapper = EdamamWrapper.new
         food_hash = wrapper.line_ingredient_parser(@recipe.ingredient_list)
         add_nutrition(food_hash, @recipe)
         if @recipe.save
             add_ingredients(food_hash, @recipe)
-            redirect_to @recipe
+            redirect_to user_recipe_path(@recipe.user, @recipe)
         else
             render :new
         end

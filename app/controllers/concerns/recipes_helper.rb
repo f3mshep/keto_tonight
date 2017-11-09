@@ -8,7 +8,6 @@ module RecipesHelper
 
     def add_ingredients(food_hash, recipe)
         food_hash[:ingredients].each do |ingredient, values|
-            binding.pry
             new_ingredient = Ingredient.find_or_create_by_food_id(values[:food_id], ingredient)
             RecipeIngredient.create(recipe: recipe, ingredient: new_ingredient, quantity: values[:quantity], measure: values[:measure] )
         end

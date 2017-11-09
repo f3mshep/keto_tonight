@@ -1,0 +1,8 @@
+[] Fix up routing
+[] Add pundit functions (admins can delete any recipe)
+[] add some sort of scoped thing
+[] add comments 
+[] add category to recipe creation
+[] fix pantry ingredients
+[] search functions
+[] style stuff

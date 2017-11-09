@@ -3,6 +3,7 @@
         <div class="container">
             <h2><%=@recipe.title%></h2>
             <h3>Macronutrients per Serving</h3>
+            <h4>Serves <%=@recipe.servings%></h4>
             <ul>
                 <li><strong>Calories: </strong><%=@recipe.calories / @recipe.servings%></li>
                 <li><strong>Fats: </strong><%=@recipe.fat / @recipe.servings%></li>
@@ -11,5 +12,17 @@
                 <li><strong>Fiber: </strong><%=@recipe.fiber / @recipe.servings%></li>
             </ul>
         </div>
+    </div>
+    <div class="col-md-8">
+        <h3>Ingredients</h3>
+        <ul>
+            <%@recipe.recipe_ingredients.each do |recipe_ingredient|%>
+                <li><%=recipe_ingredient.amount%> <%=recipe_ingredient.name%></li>
+            <%end%>
+        </ul>
+    </div>
+    <div class="col-md-8">
+        <h3>Directions</h3>
+        <%=simple_format(@recipe.description)%>
     </div>
 </div>
