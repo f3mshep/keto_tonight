@@ -39,11 +39,13 @@
         <%= f.collection_check_boxes :category_ids, Category.all, :id, :name %>
     
         <br>
-        <%=f.fields_for :categories do |category| %>
-            <br>
-            <%= category.label :name, "New Category"%>
-            <br>
-            <%= category.text_field :name%>
+        <%if policy(@category).create?%>
+            <%=f.fields_for :categories do |category| %>
+                <br>
+                <%= category.label :name, "New Category"%>
+                <br>
+                <%= category.text_field :name%>
+            <%end%>
         <%end%>
     </div>
 

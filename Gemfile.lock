@@ -146,6 +146,9 @@ GEM
     puma (3.10.0)
     pundit (1.1.0)
       activesupport (>= 3.0.0)
+    pundit-matchers (1.4.1)
+      pundit (~> 1.1, >= 1.1.0)
+      rspec-rails (>= 3.0.0)
     rack (2.0.3)
     rack-test (0.7.0)
       rack (>= 1.0, < 3)
@@ -280,6 +283,7 @@ DEPENDENCIES
   pry
   puma (~> 3.7)
   pundit
+  pundit-matchers (~> 1.4.1)
   rails (~> 5.1.4)
   rails-assets-multiple-select!
   rspec-rails (~> 3.7.0)

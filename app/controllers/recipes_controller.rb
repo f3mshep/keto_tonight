@@ -1,6 +1,6 @@
 class RecipesController < ApplicationController
 
-    before_action :recipe_setter, only: [:show, :edit, :update]
+    before_action :recipe_setter, only: [:show, :edit, :update, :destroy]
 
     def index
         if params[:user_id]
@@ -16,7 +16,7 @@ class RecipesController < ApplicationController
 
     def new
         @recipe = Recipe.new(user: current_user)
-        @recipe.categories.build
+        @category = @recipe.categories.build
     end
 
     def create
@@ -31,11 +31,11 @@ class RecipesController < ApplicationController
     end
 
     def edit
-        @recipe.categories.build
+       @category = @recipe.categories.build
     end
 
     def update
-        binding.pry
+        authorize @recipe
         if @recipe.update(recipe_params)
             @recipe.save_food
             redirect_to user_recipe_path(@recipe.user, @recipe)
@@ -45,7 +45,10 @@ class RecipesController < ApplicationController
         end 
     end
 
-    def delete
+    def destroy
+        authorize @recipe
+        @recipe.destroy
+        redirect_to user_recipes_path(current_user)
     end
 
     private

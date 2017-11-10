@@ -21,10 +21,5 @@ RSpec.describe RecipeIngredient, type: :model do
 
   end
 
-  describe '#amount' do
-    it 'has an amount that defaults to 1' do
-      expect(@recipe_ingredient.amount).to eq(1)
-    end
-  end
 
 end

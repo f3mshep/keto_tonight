@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     resources :recipes
   end
   resources :recipes, only: [:update, :create, :destroy]
+  resources :comments, only: [:destroy, :update]
   resources :pantry_ingredients
   resources :ingredients
   resources :recipe_ingredients

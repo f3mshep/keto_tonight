@@ -19,16 +19,6 @@ RSpec.describe Ingredient, type: :model do
 
   end
 
-  describe '#net_carbs' do
-    it 'can calculate net carbs based on the ingredients fiber and total carbs in one serving' do
-      expect(@ingredient.net_carbs).to eq(2)
-    end
-
-    it 'will not return a negative net carb count' do
-      @impossible_food = Ingredient.create(name: 'impossible food', carbs: 20, fiber: 30)
-      expect(@impossible_food).to eq(0)
-    end
-  end
 
 
 end

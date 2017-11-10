@@ -2,6 +2,12 @@
     <div class="col-md-8">
         <div class="container">
             <h2><%=@recipe.title%></h2>
+            <% if policy(@recipe).destroy?%>
+                <%= button_to  "Delete", user_recipe_path(@recipe) %>
+            <% end %>
+            <% if policy(@recipe).update?%>
+                <%= button_to  "Edit", edit_user_recipe_path(@recipe), method: :get  %>
+            <% end %>
             <h3>Macronutrients per Serving</h3>
             <h4>Serves <%=@recipe.servings%></h4>
             <ul>
@@ -44,7 +50,20 @@
 	<%@recipe.comments.each do |comment|%>
 		<div class="container">
 			<p><%=comment.content%></p>
-			<p><%="-#{comment.user.email} #{comment.created_at.localtime}"%></p>
+            <p><%="-#{comment.user.email} #{comment.created_at.localtime}"%></p>
+            <% if policy(comment).destroy?%>
+                <%= button_to  "Delete", comment, method: :delete %>
+            <%end%>
+            <%if policy(comment).update?%>
+                <button type="button" data-toggle="modal" data-target="#editComment" style="display: inline;" class="btn btn-primary">Edit</button>
+            <%end%>
+            <%=bootstrap_modal("editComment"){ form_for comment do |f| %>
+                <%= f.label :content, "Edit Comment"%>
+                <br>
+                <%= f.text_area :content, class:"form-control", rows: 3 %>
+                <br>
+                <%= f.submit "Update"%>
+            <% end }%>
 		</div>
 		<hr>
 	<%end%>
@@ -59,3 +78,6 @@
     <%= f.text_area :content, class:"form-control", rows: 3 %> <br>
     <%= f.submit%>
 <% end }%>
+
+<!-- edit comment here -->
+
