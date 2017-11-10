@@ -6,16 +6,21 @@ class EdamamWrapper
     KEY = ENV['EDAMAM_KEY']
     XMASH = ENV['XMASH']
 
+    def ingredient_finder(item)
+        response = Unirest.get "https://edamam-edamam-nutrition-analysis.p.mashape.com/api/nutrition-data?ingr=#{CGI.escape(item)}",
+        headers:{
+        "X-Mashape-Key" => "#{XMASH}",
+        "Accept" => "application/json"
+        }
+        response
+    end
+
     def line_ingredient_parser(query)
         ingredients = {}
         food_hash = {}
         line_items = input_to_array(query)
         line_items.each do |line_item|
-            response = Unirest.get "https://edamam-edamam-nutrition-analysis.p.mashape.com/api/nutrition-data?ingr=#{CGI.escape(line_item)}",
-            headers:{
-            "X-Mashape-Key" => "#{XMASH}",
-            "Accept" => "application/json"
-            }
+            response = ingredient_finder(line_item)
             begin
                 food = response.body["ingredients"][0]["parsed"][0]["foodMatch"]
                 food_id = response.body["ingredients"][0]["parsed"][0]["foodId"]

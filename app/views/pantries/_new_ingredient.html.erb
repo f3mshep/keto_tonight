@@ -3,15 +3,24 @@
 <hr>
 <div class="container">
   <%= form_for @pantry, url: user_pantry_update_path do |f| %>
+  <% if @pantry.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@pantry.errors.count, "error") %> prohibited your pantry from being updated:</h2>
+  
+      <ul>
+        <% @pantry.errors.full_messages.each do |msg| %>
+          <li>
+            <%= msg %>
+          </li>
+          <% end %>
+      </ul>
+    </div>
+    <% end %>
     <%= f.fields_for :ingredients do |t| %>
-    <% next unless t.object.id.nil?%>
+    <% next unless t.object.id.nil? #only shows new pantry ingredients %> 
     <div><p>Ingredient Name<%= t.text_field :name %></p></div>
     <hr>
-    <div><p><strong>Calories </strong><%= t.text_field :calories %> g</p></div> <br>
-    <div><p><strong>Total Fat </strong><%= t.text_field :fat %> g</p></div> <br>
-    <div><p><strong>Protein </strong><%= t.text_field :protein %> g</p></div> <br>
-    <div><p><strong>Carbohydrate </strong><%= t.text_field :carbs %> g</p></div> <br>
-    <div><p><strong>Fiber </strong><%= t.text_field :fiber %> g</p></div> <br>
 
     <%end%>
   <%= f.submit "Create Ingredient"%>

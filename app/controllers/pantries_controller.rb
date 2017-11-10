@@ -17,9 +17,11 @@ class PantriesController < ApplicationController
     #is unique. If they choose to bypass the built in SEARCH FOR ALREADY existing
     #ingredients they must be touchy about exactly what their macronutrients are
     pantry_setter
-    if @pantry.update(pantry_params)
+   
+    if  @pantry.update(pantry_params)
       redirect_to user_pantry_path(@user)
     else
+      @pantry.ingredients.build
       render :edit
     end
   end
@@ -27,7 +29,6 @@ class PantriesController < ApplicationController
   def delete
     #It is a desired behavior to sever the link between the pantry and the
     #ingredient, but not the ingredient itself.
-
   end
 
   private
@@ -40,13 +41,7 @@ class PantriesController < ApplicationController
 
   def pantry_params
     params.require(:pantry).permit(ingredients_attributes: [
-      :name,
-      :calories,
-      :fat,
-      :protein,
-      :carbs,
-      :fiber,
-      :serving_size
+      :name
     ])
   end
 
