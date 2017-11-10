@@ -19,14 +19,17 @@ class Recipe < ApplicationRecord
 
 
   def analyze_ingredients
+
     #is this a code smell??? I don't know. But it is the best way I can seem to handle validation using the API
-    wrapper = EdamamWrapper.new
-    food_hash = wrapper.line_ingredient_parser(ingredient_list)
-    self.food_hash = food_hash
-    if food_hash.class == String
-      errors.add(:ingredients, "#{food_hash}")
-    else
-      add_nutrition
+    if ingredient_list
+      wrapper = EdamamWrapper.new
+      food_hash = wrapper.line_ingredient_parser(ingredient_list)
+      self.food_hash = food_hash
+      if food_hash.class == String
+        errors.add(:ingredients, "#{food_hash}")
+      else
+        add_nutrition
+      end
     end
   end
 
