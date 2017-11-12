@@ -5,11 +5,12 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    @recipes =
+    @recipes = RecipeCategory.recipes_by_category(params[:id])
+    render :'recipes/index'
   end
 
   def destroy
-    @category =
+    @category = Category.find(params[:id])
     authorize @category
   end
 

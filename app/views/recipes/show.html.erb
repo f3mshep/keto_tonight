@@ -3,7 +3,7 @@
         <div class="container">
             <h2><%=@recipe.title%></h2>
             <% if policy(@recipe).destroy?%>
-                <%= button_to  "Delete", user_recipe_path(@recipe) %>
+                <%= button_to  "Delete", user_recipe_path(@recipe), method: :delete %>
             <% end %>
             <% if policy(@recipe).update?%>
                 <%= button_to  "Edit", edit_user_recipe_path(@recipe), method: :get  %>
@@ -44,9 +44,9 @@
 	<div>
 		<h4 style="display: inline;">Comments</h4> <button type="button" data-toggle="modal" data-target="#leaveComment" style="display: inline;" class="btn btn-primary pull-right">Post a Comment</button>
 	</div>
-	
+
     <br>
-    
+
 	<%@recipe.comments.each do |comment|%>
 		<div class="container">
 			<p><%=comment.content%></p>
@@ -71,7 +71,7 @@
 <br>
 
 
-<!-- Create new comment area-->	
+<!-- Create new comment area-->
 
 <%=bootstrap_modal("leaveComment"){ form_for @comment, url: create_recipe_comment_path(@recipe) do |f| %>
     <%= f.label :content, "New Comment"%> <br>
