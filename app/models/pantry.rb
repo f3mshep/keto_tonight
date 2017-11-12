@@ -20,6 +20,10 @@ class Pantry < ApplicationRecord
     end
   end
 
+  def ingredient_ids
+    ingredients.collect{|ingredient| ingredient.id}
+  end
+
   private
 
   def has_food_id

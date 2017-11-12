@@ -17,6 +17,9 @@ class Recipe < ApplicationRecord
   validate :analyze_ingredients
   validate :keto_friendly
 
+  def find_recipe_by_ingredients(ingredient_ids)
+    Recipe.joins(:recipe_ingredients).where(recipe_ingredients: {ingredient_id: ingredient_id})
+  end
 
   def analyze_ingredients
 
@@ -41,7 +44,9 @@ class Recipe < ApplicationRecord
     end
   end
 
-
+def self.bad_search(ingredient_array)
+  Recipe.all.select {|recipe|recipe.ingredients()}
+end
 
   private
 
