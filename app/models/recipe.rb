@@ -41,6 +41,8 @@ class Recipe < ApplicationRecord
     end
   end
 
+
+
   private
 
   def keto_friendly

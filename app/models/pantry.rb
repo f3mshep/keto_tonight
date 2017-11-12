@@ -12,7 +12,7 @@ class Pantry < ApplicationRecord
     food_response = wrapper.ingredient_finder(food_name)
     begin
       food_id =  food_response.body["ingredients"][0]["parsed"][0]["foodId"]
-      ingredient = Ingredient.find_or_create_by_food_id(food_id,name)
+      ingredient = Ingredient.find_or_create_by_food_id(food_id,food_name)
       pantry_ingredient = PantryIngredient.create(pantry_id: self.id, ingredient_id: ingredient.id)
       self.save
     rescue
@@ -20,7 +20,7 @@ class Pantry < ApplicationRecord
     end
   end
 
-  private 
+  private
 
   def has_food_id
     if no_food_id

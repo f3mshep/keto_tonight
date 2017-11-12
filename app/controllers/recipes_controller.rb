@@ -42,7 +42,7 @@ class RecipesController < ApplicationController
         else
             @recipe.categories.build
             render :edit
-        end 
+        end
     end
 
     def destroy
