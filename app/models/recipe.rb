@@ -1,7 +1,12 @@
 class Recipe < ApplicationRecord
-  scope :my_pantry, -> (ingredient_ids) { joins(:recipe_ingredients).where(recipe_ingredients: {ingredient_id: ingredient_ids}) }
-  scope :by_likes, -> 
-  scope :by_name, -> () {}
+  #scope in some ways appears to be a code style thing
+  #I have elected to have all my methods that deal with AR
+  #queries be scopes
+  scope :my_pantry, -> (ingredient_ids) { joins(:recipe_ingredients).where(recipe_ingredients: {ingredient_id: ingredient_ids}).distinct }
+  # scope :by_likes, -> 
+  #scope :most_recent
+  #scope :in_category
+  # scope :search_by_name, -> (query) {}
   attr_accessor :food_hash
   MAX_CARBS = 20
   SILLY_AMOUNT = 100
@@ -20,9 +25,10 @@ class Recipe < ApplicationRecord
   validate :analyze_ingredients
   validate :keto_friendly
 
-  def self.find_recipe_by_ingredients(ingredient_ids)
-    Recipe.joins(:recipe_ingredients).where(recipe_ingredients: {ingredient_id: ingredient_ids})
-  end
+  #turned into a scope method. 
+  # def self.find_recipe_by_ingredients(ingredient_ids)
+  #   Recipe.joins(:recipe_ingredients).where(recipe_ingredients: {ingredient_id: ingredient_ids})
+  # end
 
   def analyze_ingredients
 
@@ -38,6 +44,10 @@ class Recipe < ApplicationRecord
       end
     end
   end
+
+  def ingredient_difference(user)
+    ingredients - user.pantry_ingredients
+  end 
 
 
   def save_food

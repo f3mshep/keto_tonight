@@ -1,16 +1,16 @@
 [x] Fix up routing
 [x] Add pundit functions (admins can delete any recipe, only admins can create categories)
-[] add some sort of scoped thing
+[x] add some sort of scoped thing
 [x] add comments 
 [x] add category to recipe creation
 [x] fix pantry ingredients
 [] search functions
 [] style stuff - make navbar not look like shit, home page, user home page, page lay outs
 [] add 'loading' to recipe creation
-
-GOALS FOR FRIDAY:
-
 [x] Fix pantry
-[] Add search by pantry/ navbar meal category functions
 [x] Pundit functions
-[] Maybe incorporate spoonacular API into search?
+
+MONDAY:
+[] Form to actually delete category
+[] Add search by pantry/ navbar meal category functions
+[] Organization - be able to look at different user recipes, browse all recipes, categories
