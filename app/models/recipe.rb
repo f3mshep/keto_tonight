@@ -1,4 +1,7 @@
 class Recipe < ApplicationRecord
+  scope :my_pantry, -> (ingredient_ids) { joins(:recipe_ingredients).where(recipe_ingredients: {ingredient_id: ingredient_ids}) }
+  scope :by_likes, -> 
+  scope :by_name, -> () {}
   attr_accessor :food_hash
   MAX_CARBS = 20
   SILLY_AMOUNT = 100
@@ -17,8 +20,8 @@ class Recipe < ApplicationRecord
   validate :analyze_ingredients
   validate :keto_friendly
 
-  def find_recipe_by_ingredients(ingredient_ids)
-    Recipe.joins(:recipe_ingredients).where(recipe_ingredients: {ingredient_id: ingredient_id})
+  def self.find_recipe_by_ingredients(ingredient_ids)
+    Recipe.joins(:recipe_ingredients).where(recipe_ingredients: {ingredient_id: ingredient_ids})
   end
 
   def analyze_ingredients
@@ -43,10 +46,6 @@ class Recipe < ApplicationRecord
       RecipeIngredient.create(recipe: self, ingredient: new_ingredient, quantity: values[:quantity], measure: values[:measure] )
     end
   end
-
-def self.bad_search(ingredient_array)
-  Recipe.all.select {|recipe|recipe.ingredients()}
-end
 
   private
 
