@@ -7,6 +7,8 @@ class RecipesController < ApplicationController
             @recipes = User.find(params[:user_id]).recipes
         elsif params[:my_pantry]
             @recipes = Recipe.my_pantry(current_user.pantry_ids)
+            @recipes = @recipes.sort_by {|recipe| recipe.missing_ingredients(current_user).size}
+            @recipes = @recipes.delete_if {|recipe| recipe.missing_ingredients(current_user).size > 7}
         else
             @recipes = Recipe.all
         end

@@ -38,6 +38,12 @@
         <%=simple_format(@recipe.description)%>
     </div>
 </div>
+<div>
+    <!-- Shows the ingredients that the user is missing -->
+    <!-- update this with helper methods that automatically call current user  -->
+    <h3>You are missing <%=@recipe.missing_ingredients(current_user).size%> ingredients</h3>
+    <p><%=@recipe.missing_ingredient_names(current_user)%></p>
+</div>
 
 <div class="container col-md-8 content-box">
 	<!-- these are all the comments -->

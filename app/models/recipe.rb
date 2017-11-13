@@ -16,6 +16,7 @@ class Recipe < ApplicationRecord
   has_many :comments
   has_many :recipe_categories
   has_many :categories, through: :recipe_categories
+  has_many :liking_users, through: :likes, source: :user
   accepts_nested_attributes_for :categories, reject_if: :all_blank
   validates :title, presence: true
   validates :title, uniqueness: true
@@ -45,10 +46,14 @@ class Recipe < ApplicationRecord
     end
   end
 
-  def ingredient_difference(user)
+  def missing_ingredients(user)
     ingredients - user.pantry_ingredients
   end 
 
+  def missing_ingredient_names(user)
+    ingredients = missing_ingredients(user)
+    ingredients.collect {|ingredient|ingredient.name}
+  end
 
   def save_food
     food_hash[:ingredients].each do |ingredient, values|
