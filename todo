@@ -11,7 +11,7 @@
 [x] Pundit functions
 
 Tuesday:
-[] Form to actually delete category
+[x] Form to actually delete category
 [] Add search by pantry/ navbar meal category functions
 [] Organization - be able to look at different user recipes, browse all recipes, categories
 [] Refactor index controller, check out this link https://www.justinweiss.com/articles/search-and-filter-rails-models-without-bloating-your-controller/

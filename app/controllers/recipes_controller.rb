@@ -46,7 +46,7 @@ class RecipesController < ApplicationController
     def update
         authorize @recipe
         if @recipe.update(recipe_params)
-            @recipe.save_food
+            @recipe.update_food
             redirect_to user_recipe_path(@recipe.user, @recipe)
         else
             @recipe.categories.build

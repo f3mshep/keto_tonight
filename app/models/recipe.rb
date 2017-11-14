@@ -6,7 +6,7 @@ class Recipe < ApplicationRecord
   # scope :by_likes, -> 
   # scope :most_recent
   # scope :in_category
-  scope :by_likes, -> order('likes_count DESC')
+  # scope :by_likes, -> order('likes_count DESC')
   #alternatively, scope :by_likes, -> Recipe.joins(:likes).group("likes.recipe_id").order("count(likes.recipe_id) desc")
   #however, this only returns recipes that have been liked. Perhaps a desired behavior?
   scope :search_by_name, -> (query) {Recipe.where("title like ?", "%#{query}%")}
@@ -57,6 +57,11 @@ class Recipe < ApplicationRecord
   def missing_ingredient_names(user)
     ingredients = missing_ingredients(user)
     ingredients.collect {|ingredient|ingredient.name}
+  end
+
+  def update_food
+    ingredients.clear
+    save_food
   end
 
   def save_food
