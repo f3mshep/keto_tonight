@@ -6,6 +6,9 @@ class Recipe < ApplicationRecord
   
 
   scope :by_ingredients, -> (ingredient_ids) { joins(:recipe_ingredients).where(recipe_ingredients: {ingredient_id: ingredient_ids}).distinct }
+  
+  #works in console, significant changes would need to be made to index action unless we use javascript. Come back to this one.
+  scope :ingredient_names, -> (names) { joins(:ingredients).where(ingredients: {name: names}).distinct }
   scope :most_recent, -> {order('created_at DESC')}
   scope :by_category, -> (meal_category) {joins(:categories).where(categories: {name: meal_category})}
   scope :by_likes, -> { order('likes_count DESC') }
