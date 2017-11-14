@@ -4,8 +4,11 @@ class Recipe < ApplicationRecord
   #queries be scopes
   scope :my_pantry, -> (ingredient_ids) { joins(:recipe_ingredients).where(recipe_ingredients: {ingredient_id: ingredient_ids}).distinct }
   # scope :by_likes, -> 
-  #scope :most_recent
-  #scope :in_category
+  # scope :most_recent
+  # scope :in_category
+  scope :by_likes, -> order('likes_count DESC')
+  #alternatively, scope :by_likes, -> Recipe.joins(:likes).group("likes.recipe_id").order("count(likes.recipe_id) desc")
+  #however, this only returns recipes that have been liked. Perhaps a desired behavior?
   scope :search_by_name, -> (query) {Recipe.where("title like ?", "%#{query}%")}
   attr_accessor :food_hash
   MAX_CARBS = 20
@@ -16,6 +19,7 @@ class Recipe < ApplicationRecord
   has_many :comments
   has_many :recipe_categories
   has_many :categories, through: :recipe_categories
+  has_many :likes
   has_many :liking_users, through: :likes, source: :user
   accepts_nested_attributes_for :categories, reject_if: :all_blank
   validates :title, presence: true

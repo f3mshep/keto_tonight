@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171113220047) do
+ActiveRecord::Schema.define(version: 20171114012622) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -87,7 +87,6 @@ ActiveRecord::Schema.define(version: 20171113220047) do
   create_table "recipes", force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.integer "likes", default: 1
     t.integer "calories"
     t.integer "carbs"
     t.integer "fat"
@@ -100,6 +99,7 @@ ActiveRecord::Schema.define(version: 20171113220047) do
     t.string "cook_time"
     t.string "prep_time"
     t.integer "servings"
+    t.integer "likes_count", default: 0
     t.index ["user_id"], name: "index_recipes_on_user_id"
   end
 
