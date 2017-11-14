@@ -13,8 +13,19 @@
       <% else %>
         <li><%= link_to  "New Recipe", new_user_recipe_path(current_user), class: 'nav-link' %></li>
         <li><%= link_to  "Your Recipes", user_recipes_path(current_user), class: 'nav-link' %></li>
-        <li><%= link_to  "Sign out", destroy_user_session_path, class: 'nav-link' %></li>
+        <li><%= link_to  "Sign out", destroy_user_session_path, method: :delete, class: 'nav-link' %></li>
         <li><%= link_to  "Your pantry", user_pantry_path(current_user), class: 'nav-link' %></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            Recipe Categories
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <%= link_to  "Breakfast", categories_path(1), class: "dropdown-item" %>
+            <%= link_to  "Lunch", categories_path(2), class: "dropdown-item" %>
+            <%= link_to  "Dinner", categories_path(3), class: "dropdown-item" %>
+          </div>
+        </li>
       <% end %>
     </ul>
   </div>

@@ -4,7 +4,7 @@
 [x] add comments 
 [x] add category to recipe creation
 [x] fix pantry ingredients
-[] search functions
+[x] search functions
 [] style stuff - make navbar not look like shit, home page, user home page, page lay outs
 [] add 'loading' to recipe creation
 [x] Fix pantry
@@ -15,4 +15,4 @@ Tuesday:
 [] Add search by pantry/ navbar meal category functions
 [] Organization - be able to look at different user recipes, browse all recipes, categories
 [] Refactor index controller, check out this link https://www.justinweiss.com/articles/search-and-filter-rails-models-without-bloating-your-controller/
-[] User flow - do we want to allow users to access recipes?
+[] User flow - do we want to allow users to access recipes? - yes, just BLOT OUT THE COOL STUFF and ANNOY THEM TO SIGN IN

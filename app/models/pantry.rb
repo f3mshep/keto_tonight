@@ -6,6 +6,8 @@ class Pantry < ApplicationRecord
   accepts_nested_attributes_for :ingredients
   validate :has_food_id
 
+
+
   def ingredients_attributes=(ingredient)
     food_name = ingredient["#{ingredients.size}"]["name"] #this wont blow up in my face. I promise.
     wrapper = EdamamWrapper.new
