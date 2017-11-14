@@ -6,7 +6,7 @@ class Recipe < ApplicationRecord
   # scope :by_likes, -> 
   #scope :most_recent
   #scope :in_category
-  # scope :search_by_name, -> (query) {}
+  scope :search_by_name, -> (query) {Recipe.where("title like ?", "%#{query}%")}
   attr_accessor :food_hash
   MAX_CARBS = 20
   SILLY_AMOUNT = 100

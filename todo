@@ -10,7 +10,9 @@
 [x] Fix pantry
 [x] Pundit functions
 
-MONDAY:
+Tuesday:
 [] Form to actually delete category
 [] Add search by pantry/ navbar meal category functions
 [] Organization - be able to look at different user recipes, browse all recipes, categories
+[] Refactor index controller, check out this link https://www.justinweiss.com/articles/search-and-filter-rails-models-without-bloating-your-controller/
+[] User flow - do we want to allow users to access recipes?

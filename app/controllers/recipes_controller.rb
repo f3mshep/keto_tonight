@@ -9,6 +9,8 @@ class RecipesController < ApplicationController
             @recipes = Recipe.my_pantry(current_user.pantry_ids)
             @recipes = @recipes.sort_by {|recipe| recipe.missing_ingredients(current_user).size}
             @recipes = @recipes.delete_if {|recipe| recipe.missing_ingredients(current_user).size > 7}
+        elsif params[:search_term]
+            @recipes = Recipe.search_by_name(params[:search_term])
         else
             @recipes = Recipe.all
         end
@@ -56,6 +58,9 @@ class RecipesController < ApplicationController
         authorize @recipe
         @recipe.destroy
         redirect_to user_recipes_path(current_user)
+    end
+
+    def search
     end
 
     private
