@@ -1,15 +1,17 @@
 class Recipe < ApplicationRecord
+
   #scope in some ways appears to be a code style thing
   #I have elected to have all my methods that deal with AR
   #queries be scopes
-  scope :my_pantry, -> (ingredient_ids) { joins(:recipe_ingredients).where(recipe_ingredients: {ingredient_id: ingredient_ids}).distinct }
-  # scope :by_likes, -> 
-  # scope :most_recent
-  # scope :in_category
-  # scope :by_likes, -> order('likes_count DESC')
-  #alternatively, scope :by_likes, -> Recipe.joins(:likes).group("likes.recipe_id").order("count(likes.recipe_id) desc")
-  #however, this only returns recipes that have been liked. Perhaps a desired behavior?
-  scope :search_by_name, -> (query) {Recipe.where("title like ?", "%#{query}%")}
+  
+
+  scope :by_ingredients, -> (ingredient_ids) { joins(:recipe_ingredients).where(recipe_ingredients: {ingredient_id: ingredient_ids}).distinct }
+  scope :most_recent, -> {order('created_at DESC')}
+  scope :by_category, -> (meal_category) {joins(:categories).where(categories: {name: meal_category})}
+  scope :by_likes, -> { order('likes_count DESC') }
+  scope :is_liked, -> {Recipe.joins(:likes).group("likes.recipe_id")}
+  scope :search_query, -> (query) {Recipe.where("title like ?", "%#{query}%")}
+
   attr_accessor :food_hash
   MAX_CARBS = 20
   SILLY_AMOUNT = 100
@@ -34,6 +36,12 @@ class Recipe < ApplicationRecord
   # def self.find_recipe_by_ingredients(ingredient_ids)
   #   Recipe.joins(:recipe_ingredients).where(recipe_ingredients: {ingredient_id: ingredient_ids})
   # end
+
+  def self.my_pantry(user)
+    recipes =  by_ingredients(user.pantry_ids)
+    recipes = recipes.sort_by {|recipe| recipe.missing_ingredients(user).size}
+    recipes.delete_if {|recipe| recipe.missing_ingredients(user).size > 7}
+  end
 
   def analyze_ingredients
 
