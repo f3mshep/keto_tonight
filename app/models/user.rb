@@ -18,6 +18,12 @@ class User < ApplicationRecord
     end
   end
 
+  def likes_recipe(recipe)
+    likes.detect do |like|
+      like.recipe == recipe
+    end
+  end
+
   def pantry_ids
     pantry.ingredient_ids
   end

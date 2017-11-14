@@ -15,7 +15,10 @@ class RecipesController < ApplicationController
     end
 
     def show
-        @comment = Comment.new(user: current_user, recipe: @recipe)
+        if current_user
+            @like = current_user.likes_recipe(@recipe) || Like.new(user: current_user, recipe: @recipe)
+            @comment = Comment.new(user: current_user, recipe: @recipe)
+        end
     end
 
     def new

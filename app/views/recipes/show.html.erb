@@ -8,6 +8,16 @@
             <% if policy(@recipe).update?%>
                 <%= button_to  "Edit", edit_user_recipe_path(@recipe), method: :get  %>
             <% end %>
+                <% if @like.persisted? %>
+                    <%= form_for(@like, method: :delete) do |f| %>
+                        <%= f.submit "Unlike", class: 'btn btn-primary' %>
+                    <% end %>
+                    <% else %>
+                        <%= form_for(@like) do |f| %>
+                        <%= f.hidden_field :recipe_id, value: "#{@recipe.id}" %>
+                        <%= f.submit"Like", class: 'btn btn-primary' %>
+                    <% end %>
+                <% end %>
             <h3>Macronutrients per Serving</h3>
             <h4>Serves <%=@recipe.servings%></h4>
             <ul>
