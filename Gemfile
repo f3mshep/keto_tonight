@@ -55,6 +55,7 @@ group :development, :test do
   gem "database_cleaner"
   gem 'rspec-rails', '~> 3.7.0'
   gem 'selenium-webdriver'
+  gem 'seed_dump'
 end
 
 group :test do
