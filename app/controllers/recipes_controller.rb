@@ -41,7 +41,6 @@ class RecipesController < ApplicationController
         @recipe.assign_attributes(recipe_params)
         if @recipe.save
             @recipe.save_food
-            binding.pry
             redirect_to user_recipe_path(@recipe.user, @recipe)
         else
             @category = @recipe.categories.build
