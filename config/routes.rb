@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-
+  get '/users/home' => 'users#home', as: "user_home"
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   root 'static#home'
   patch '/users/:user_id/pantry' => 'pantries#update', as: 'user_pantry_update'

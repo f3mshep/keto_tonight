@@ -3,16 +3,6 @@ class RecipesController < ApplicationController
     before_action :recipe_setter, only: [:show, :edit, :update, :destroy]
 
     def index
-        # if params[:user_id]
-        #     @recipes = User.find(params[:user_id]).recipes
-        # elsif params[:my_pantry]
-        #     @recipes = Recipe.my_pantry(current_user)
-        # elsif params[:search_term]
-        #     @recipes = Recipe.search_by_name(params[:search_term])
-        # else
-        #     @recipes = Recipe.all
-        # end
-        #holy crap rails black magic is amazeballs
         if params[:user_id]
             #I could write a scope for this but I don't want to mess up nested params
             @recipes = User.find(params[:user_id]).recipes
