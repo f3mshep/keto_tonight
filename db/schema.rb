@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171115175908) do
+ActiveRecord::Schema.define(version: 20171115184936) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -31,11 +31,6 @@ ActiveRecord::Schema.define(version: 20171115175908) do
   create_table "ingredients", force: :cascade do |t|
     t.string "name"
     t.string "food_id"
-    t.integer "calories"
-    t.integer "protein"
-    t.integer "fat"
-    t.integer "fiber"
-    t.integer "carbs"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "serving_size"
@@ -87,6 +82,11 @@ ActiveRecord::Schema.define(version: 20171115175908) do
   create_table "recipes", force: :cascade do |t|
     t.string "title"
     t.text "description"
+    t.integer "calories"
+    t.integer "carbs"
+    t.integer "fat"
+    t.integer "protein"
+    t.integer "fiber"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -95,6 +95,7 @@ ActiveRecord::Schema.define(version: 20171115175908) do
     t.string "prep_time"
     t.integer "servings"
     t.integer "likes_count", default: 0
+    t.string "image", default: "https://i.imgur.com/D4OUBUs.jpg"
     t.index ["user_id"], name: "index_recipes_on_user_id"
   end
 

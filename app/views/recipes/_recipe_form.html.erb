@@ -1,0 +1,53 @@
+<%= form_for recipe do |f| %>
+    <% if recipe.errors.any? %>
+        <div id="error_explanation">
+            <h2>
+                <%= pluralize(recipe.errors.count, "error") %> prohibited this recipe from being saved:</h2>
+
+            <ul>
+                <% recipe.errors.full_messages.each do |msg| %>
+                    <li>
+                        <%= msg %>
+                    </li>
+                    <% end %>
+            </ul>
+        </div>
+    <% end %>
+    <div class="form-group">
+        <%= f.label :title %>
+        <%= f.text_field :title, class:"form-control" %>
+    </div>
+    <div class="form-group">
+        <%= f.label :prep_time%>
+        <%= f.text_field :prep_time %> <br>
+        <%= f.label :cook_time%>
+        <%= f.text_field :cook_time%>
+        <%= f.label :servings%>
+        <%= f.number_field (:servings) %>
+    </div>
+
+    <div class="form-group">
+        <%= f.label :ingredient_list, "Ingredients"%>
+        <%= f.text_area :ingredient_list, class: "form-control", placeholder:"Please enter ingredients one line at a time", rows: "10" %> <br>
+        <%= f.label :description, "Recipe Instructions"%>
+        <%= f.text_area :description, class: "form-control", placeholder: "Enter a description of how to make your recipe", rows: "10" %>
+    </div>
+
+    <div class="form-group" >
+        <%= f.label :category_ids, "Choose recipe categories:"%>
+        <!-- TURN THIS INTO A DROP DOWN WITH MULTIPLE SELECT USING THE JQUERY GEM -->
+        <%= f.collection_check_boxes :category_ids, Category.all, :id, :name %>
+    
+        <br>
+        <%if policy(@category).create?%>
+            <%=f.fields_for :categories do |category| %>
+                <br>
+                <%= category.label :name, "New Category"%>
+                <br>
+                <%= category.text_field :name%>
+            <%end%>
+        <%end%>
+    </div>
+
+    <%= f.submit class:"btn btn-primary" %>
+<% end %>
