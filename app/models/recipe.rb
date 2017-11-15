@@ -9,10 +9,11 @@ class Recipe < ApplicationRecord
   
   #works in console, significant changes would need to be made to index action unless we use javascript. Come back to this one.
   scope :ingredient_names, -> (names) { joins(:ingredients).where(ingredients: {name: names}).distinct }
+
   scope :most_recent, -> {order('created_at DESC')}
-  scope :by_category, -> (meal_category) {joins(:categories).where(categories: {name: meal_category})}
+  scope :by_categories, -> (meal_category) {joins(:categories).where(categories: {name: meal_category})}
   scope :by_likes, -> { order('likes_count DESC') }
-  scope :is_liked, -> {Recipe.joins(:likes).group("likes.recipe_id")}
+  scope :is_liked, ->(enabled) {Recipe.joins(:likes).group("likes.recipe_id") if enabled}
   scope :search_query, -> (query) {Recipe.where("title like ?", "%#{query}%")}
 
   attr_accessor :food_hash

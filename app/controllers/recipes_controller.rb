@@ -76,7 +76,7 @@ class RecipesController < ApplicationController
     private
 
     def filtering_params(params)
-        params.slice(:by_ingredients, :most_recent, :by_category,
+        params.slice(:by_ingredients, :most_recent, :by_categories,
         :by_likes, :is_liked, :search_query)
     end
 
