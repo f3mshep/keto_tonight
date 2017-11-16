@@ -73,7 +73,8 @@ class Recipe < ApplicationRecord
 
   def missing_ingredient_names(user)
     ingredients = missing_ingredients(user)
-    ingredients.collect {|ingredient|ingredient.name}
+    ingredients = ingredients.collect {|ingredient|ingredient.name}
+    "To make this recipe, you will need: #{ingredients.to_sentence}"
   end
 
   def update_food
