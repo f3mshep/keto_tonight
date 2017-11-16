@@ -11,6 +11,7 @@
 
 <%if current_page?('/')%>
 <body>
+  <%= stylesheet_link_tag    'static', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= yield %>
 </body>
 <%else%>
@@ -19,10 +20,7 @@
         <%= content_tag(:div, flash[:notice], :id => "flash_notice") if flash[:notice] %>
         <%= content_tag(:div, flash[:alert], :id => "flash_alert") if flash[:alert] %>
         <%= render  "layouts/navbar" %>
-        <br>
-        <div class="container">
-          <%= yield %>
-        </div>
+        <%= yield %>
     </body>
 <%end%>
 

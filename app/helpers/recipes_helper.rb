@@ -1,5 +1,10 @@
 module RecipesHelper
 
+    def top_recipes(meal_category, limit=3)
+       @recipes = Recipe.by_categories(meal_category).by_likes.first(limit)
+    end
+
+
     def like_button
         #figure out why the eff this doesn't work, but directly embedding it does
         if current_user.liked_recipes.include?(@recipe)
