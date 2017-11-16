@@ -29,3 +29,34 @@ div.pretty-search {
 .margin-0 {
   margin: 0;
 }
+
+.card {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+body {
+  background-color: #F2F2F2 !important;
+}
+
+div.content-box div.card {
+  border: none;
+}
+
+.card-block {
+  padding-left: 8px;
+  padding-bottom: 8px;
+}
+
+.content-box {
+  padding: 20px;
+  background-color: white;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+  border-radius: 5px;
+}
+
+a:visited.no-color,a:link.no-color {
+    color: black;
+}

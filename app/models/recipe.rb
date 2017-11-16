@@ -28,6 +28,7 @@ class Recipe < ApplicationRecord
   has_many :likes
   has_many :liking_users, through: :likes, source: :user
   accepts_nested_attributes_for :categories, reject_if: :all_blank
+  before_save :url_checker
   validates :title, presence: true
   validates :title, uniqueness: true
   validates :servings, presence: true
@@ -40,6 +41,10 @@ class Recipe < ApplicationRecord
   # def self.find_recipe_by_ingredients(ingredient_ids)
   #   Recipe.joins(:recipe_ingredients).where(recipe_ingredients: {ingredient_id: ingredient_ids})
   # end
+
+  def url_checker
+      image = "https://i.imgur.com/D4OUBUs.jpg" if image.empty?
+  end
 
   def self.my_pantry(user)
     recipes =  by_ingredients(user.pantry_ids)

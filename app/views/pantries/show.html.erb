@@ -1,14 +1,22 @@
 <div class="container">
-    <h1>THIS IS MY PANTRY</h1>
-    
-    
-    <%= render(@pantry) %>
-    <!-- make a list of all pantry items -->
     <br>
-    <%= link_to  "Add Ingredient", edit_user_pantry_path, class: 'btn btn-primary' %>
+<div class="container content-box">
+    <h1>My Pantry</h1>
+    <br>
+    <div class="btn-group">
+        <%= link_to  "Add Ingredient", edit_user_pantry_path, class: 'btn btn-primary' %>
+        <%= form_tag( recipes_path , method: :get) do %>
+            <%= hidden_field_tag :my_pantry, "true" %>
+            <%= submit_tag "What can I make tonight?", class: 'btn btn-secondary'%>
+        <% end %>
+    </div>
+</div>
     
-    <%= form_tag( recipes_path , method: :get) do %>
-        <%= hidden_field_tag :my_pantry, "true" %>
-        <%= submit_tag "What can I make tonight?", class: 'btn btn-secondary'%>
-    <% end %>
+<div class="content-box">
+        <%= render(@pantry) %>
+        <!-- make a list of all pantry items -->
+        <br>
+</div>
+
 </div class="container">
+<br>

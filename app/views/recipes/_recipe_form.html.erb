@@ -1,3 +1,4 @@
+<% image_url = nil if recipe.image == "https://i.imgur.com/D4OUBUs.jpg" %>
 <%= form_for recipe do |f| %>
     <% if recipe.errors.any? %>
         <div id="error_explanation">
@@ -15,16 +16,26 @@
     <% end %>
     <div class="form-group">
         <%= f.label :title %>
-        <%= f.text_field :title, class:"form-control" %>
+        <%= f.text_field :title, class:"form-control", placeholder: "Enter a catchy name" %>
     </div>
     <div class="form-group">
-        <%= f.label :prep_time%>
-        <%= f.text_field :prep_time %> <br>
-        <%= f.label :cook_time%>
-        <%= f.text_field :cook_time%>
-        <%= f.label :servings%>
-        <%= f.number_field (:servings) %>
+        <%= f.label :image %>
+            <%= f.text_field :image, class:"form-control", value: image_url, placeholder: "Enter a URL to a picture of your tasty food (optional)"%>
     </div>
+        <div class="row">
+            <div class="col-4">
+                <%= f.label :prep_time%>
+                <%= f.text_field :prep_time, class: "form-control", placeholder: "Enter hours and minutes" %> <br>
+            </div class="col-4">
+            <div class="col-4">
+                <%= f.label :cook_time%>
+                <%= f.text_field :cook_time, class: "form-control", placeholder: "Enter hours and minutes"%>
+            </div>
+            <div class="col-4">
+                <%= f.label :servings%>
+                <%= f.number_field :servings, class: "form-control" %>
+            </div>
+        </div>
 
     <div class="form-group">
         <%= f.label :ingredient_list, "Ingredients"%>

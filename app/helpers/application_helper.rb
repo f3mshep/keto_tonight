@@ -12,6 +12,10 @@ module ApplicationHelper
         Category.find_by(name: "Dinner")
     end 
 
+    def dessert_category
+        Category.find_by(name: "Dessert")
+    end
+
     def bootstrap_modal(toggle_id)
 
      html = " <div class='modal fade' id='#{toggle_id}' tabindex='-1' role='dialog' aria-labelledby='comment' aria-hidden='true'>

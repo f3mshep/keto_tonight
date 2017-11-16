@@ -1,12 +1,12 @@
 <div class="pretty-search">
     <div class="row justify-content-center">
-        <div class="col-md-6" style="text-align: center">
+        <div class="col-md-5" style="text-align: center">
             <br>
             <br>
             <br>
             <h1 style="color:whitesmoke">Find a Recipe</h1>
             <br>
-                <%= form_tag(recipes_path, method: :get, class: 'justify-content-center')  do %>
+                <%= form_tag(recipes_path, method: :get, class: '')  do %>
                     <div class="row">
                         <div class="col-md-10 padding-0"><%= text_field_tag :search_query, "", class: "form-control margin-0", placeholder: "What do you want to cook tonight?" %></div>
                         <div class="col-md-1 padding-0"><%= submit_tag 'Search', class: "btn btn-secondary margin-0" %></div>
@@ -18,27 +18,41 @@
 <p>&nbsp</p>
 <p>&nbsp</p>
 <div class="container">
-    <div class="row">
-        <div class="col-md-">
+    <div class="row justify-content-center">
+        <div class="col-md-10 content-box">
             <div class="row">
-                <div class="col-md-12"><h2>Dinner</h2></div class="col-md-12">
+                <div class="col-md-10 pull-left"><h2>Dinner</h2></div class="col-md-6">
+                <div class="col-md-2 pull-right"><%= button_to  "View More", category_path(dinner_category), method: :get, class: 'btn btn-primary' %></div>
+            </div>
+            <div class="row">
                 <%= render partial: "recipes/recipe", collection: top_recipes("Dinner") %>
             </div>
+            <hr>
             <div class="row">
-                <div class="col-md-12"><h2>Lunch</h2></div>
-                <br>
+                <div class="col-md-10 pull-left"><h2>Lunch</h2></div class="col-md-6">
+                <div class="col-md-2 pull-right"><%= button_to  "View More", category_path(lunch_category), method: :get, class: 'btn btn-primary' %></div>
+            </div>
+            <div class="row">
                 <%= render partial: "recipes/recipe", collection: top_recipes("Lunch") %>
             </div>
+            <hr>
             <div class="row">
-                <div class="col-md-12"><h2>Breakfast</h2></div>
-                <br>
+                <div class="col-md-10 pull-left"><h2>Breakfast</h2></div class="col-md-6">
+                <div class="col-md-2 pull-right"><%= button_to  "View More", category_path(breakfast_category), method: :get, class: 'btn btn-primary' %></div>
+            </div>
+            <div class="row">
                 <%= render partial: "recipes/recipe", collection: top_recipes("Breakfast") %>
             </div>
+            <hr>
             <div class="row">
-                <div class="col-md-12"><h2>Dessert</h2></div class="col-md-12">
-                <br>
+                <div class="col-md-10 pull-left"><h2>Dessert</h2></div class="col-md-6">
+                <div class="col-md-2 pull-right"><%= button_to  "View More", category_path(dessert_category), method: :get, class: 'btn btn-primary' %></div>
+            </div>
+            <div class="row">
                 <%= render partial: "recipes/recipe", collection: top_recipes("Dessert") %>
             </div>
+            
         </div>
     </div>
 </div>
+<p>&nbsp</p>
