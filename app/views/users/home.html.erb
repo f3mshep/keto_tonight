@@ -1,19 +1,25 @@
-<div class="jumbotron">
+<div class="pretty-search">
     <div class="row justify-content-center">
         <div class="col-md-6" style="text-align: center">
-            <h1>Find a Recipe</h1>
             <br>
-            <%= form_tag(recipes_path, method: :get, class: 'form-inline justify-content-center')  do %>
-                <%= text_field_tag :search_query, "", class: "form-control input-lg", placeholder: "What do you want to cook tonight?" %>
-                <br>
-                <%= submit_tag 'Search', class: "btn btn-primary" %>
-            <% end %>
+            <br>
+            <br>
+            <h1 style="color:whitesmoke">Find a Recipe</h1>
+            <br>
+                <%= form_tag(recipes_path, method: :get, class: 'justify-content-center')  do %>
+                    <div class="row">
+                        <div class="col-md-10 padding-0"><%= text_field_tag :search_query, "", class: "form-control margin-0", placeholder: "What do you want to cook tonight?" %></div>
+                        <div class="col-md-1 padding-0"><%= submit_tag 'Search', class: "btn btn-secondary margin-0" %></div>
+                    </div>
+                <% end %>
         </div>
     </div>
 </div>
+<p>&nbsp</p>
+<p>&nbsp</p>
 <div class="container">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-">
             <div class="row">
                 <div class="col-md-12"><h2>Dinner</h2></div class="col-md-12">
                 <%= render partial: "recipes/recipe", collection: top_recipes("Dinner") %>
@@ -29,7 +35,7 @@
                 <%= render partial: "recipes/recipe", collection: top_recipes("Breakfast") %>
             </div>
             <div class="row">
-                <h2>Dessert</h2>
+                <div class="col-md-12"><h2>Dessert</h2></div class="col-md-12">
                 <br>
                 <%= render partial: "recipes/recipe", collection: top_recipes("Dessert") %>
             </div>
