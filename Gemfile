@@ -7,11 +7,13 @@ end
 gem "hublot", "~> 0.0.6"
 gem "pretty_stamps"
 gem 'json'
+gem 'material_icons'
 gem 'edamam-ruby'
 gem 'dotenv-rails'
 gem 'autoprefixer-rails'
 gem 'bootstrap', '~> 4.0.0.beta2.1'
 gem 'pry'
+gem "font-awesome-rails"
 gem 'unirest', '~> 1.1.2'
 gem 'jquery-rails'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

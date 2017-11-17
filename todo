@@ -24,10 +24,13 @@ WEDNESDAY:
 
 FRIDAY:
 [] Add a before_action that requires user to be signed in to do ANYTHING
-[] Style log-in, log-out pages
-[] Reverse engineer twitter button https://cssanimation.rocks/twitter-fave/
-[] Footer
+[x] Style log-in, log-out pages
+[x] Footer
 [x] validate length of recipe titles
 [] Readme
-[] finalize navbar
+[x] finalize navbar
 [] add a blurb about what keto is on the user home page
+
+Jquery Frontend
+
+[] Reverse engineer twitter button https://cssanimation.rocks/twitter-fave/ - Save for jquery front end

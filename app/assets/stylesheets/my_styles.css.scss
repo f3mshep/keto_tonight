@@ -72,3 +72,8 @@ div.btn-group .btn {
   display: flex;
   align-items: center;
 }
+
+footer {
+    position: static !important;
+    bottom: 0;
+}
