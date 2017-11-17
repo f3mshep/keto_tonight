@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20171115184936) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "categories", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -20,8 +23,8 @@ ActiveRecord::Schema.define(version: 20171115184936) do
 
   create_table "comments", force: :cascade do |t|
     t.text "content"
-    t.integer "user_id"
-    t.integer "recipe_id"
+    t.bigint "user_id"
+    t.bigint "recipe_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["recipe_id"], name: "index_comments_on_recipe_id"
@@ -37,8 +40,8 @@ ActiveRecord::Schema.define(version: 20171115184936) do
   end
 
   create_table "likes", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "recipe_id"
+    t.bigint "user_id"
+    t.bigint "recipe_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["recipe_id"], name: "index_likes_on_recipe_id"
@@ -46,15 +49,15 @@ ActiveRecord::Schema.define(version: 20171115184936) do
   end
 
   create_table "pantries", force: :cascade do |t|
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_pantries_on_user_id"
   end
 
   create_table "pantry_ingredients", force: :cascade do |t|
-    t.integer "pantry_id"
-    t.integer "ingredient_id"
+    t.bigint "pantry_id"
+    t.bigint "ingredient_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["ingredient_id"], name: "index_pantry_ingredients_on_ingredient_id"
@@ -69,8 +72,8 @@ ActiveRecord::Schema.define(version: 20171115184936) do
   end
 
   create_table "recipe_ingredients", force: :cascade do |t|
-    t.integer "recipe_id"
-    t.integer "ingredient_id"
+    t.bigint "recipe_id"
+    t.bigint "ingredient_id"
     t.float "quantity"
     t.string "measure"
     t.datetime "created_at", null: false
@@ -87,7 +90,7 @@ ActiveRecord::Schema.define(version: 20171115184936) do
     t.integer "fat"
     t.integer "protein"
     t.integer "fiber"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "ingredient_list"
