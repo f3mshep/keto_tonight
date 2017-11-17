@@ -18,7 +18,6 @@ gem 'unirest', '~> 1.1.2'
 gem 'jquery-rails'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.4'
-# Use sqlite3 as the database for Active Record
 gem 'pg'
 # Use Puma as the app server
 gem 'rails-assets-multiple-select', source: 'https://rails-assets.org'
