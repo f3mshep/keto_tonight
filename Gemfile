@@ -34,6 +34,7 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'devise'
 gem 'pundit'
+ruby '2.3.4'
 #UPLOAD COMPLETE . . .
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
