@@ -44,7 +44,7 @@ class Recipe < ApplicationRecord
   # end
 
   def url_checker
-      image = "https://i.imgur.com/D4OUBUs.jpg" if image.empty?
+      image = "https://i.imgur.com/D4OUBUs.jpg" if image.nil? || image.empty?
   end
 
   def self.my_pantry(user)
