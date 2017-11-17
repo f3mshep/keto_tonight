@@ -9,7 +9,7 @@
                 <%= form_tag(recipes_path, method: :get, class: '')  do %>
                     <div class="row">
                         <div class="col-md-10 padding-0"><%= text_field_tag :search_query, "", class: "form-control margin-0", placeholder: "What do you want to cook tonight?" %></div>
-                        <div class="col-md-1 padding-0"><%= submit_tag 'Search', class: "btn btn-secondary margin-0" %></div>
+                        <div class="col-md-1 padding-0"><%= submit_tag 'Search', class: "btn btn-secondary margin-0", style:'margin-left: 10px;' %></div>
                     </div>
                 <% end %>
         </div>

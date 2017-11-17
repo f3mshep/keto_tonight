@@ -5,6 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 gem "hublot", "~> 0.0.6"
+gem "pretty_stamps"
 gem 'json'
 gem 'edamam-ruby'
 gem 'dotenv-rails'

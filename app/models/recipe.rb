@@ -31,6 +31,7 @@ class Recipe < ApplicationRecord
   before_save :url_checker
   validates :title, presence: true
   validates :title, uniqueness: true
+  validates :title, length: {maximum: 40}
   validates :servings, presence: true
   validates :description, presence: true
   validates :ingredient_list, presence: true
@@ -47,7 +48,8 @@ class Recipe < ApplicationRecord
   end
 
   def self.my_pantry(user)
-    recipes =  by_ingredients(user.pantry_ids)
+    binding.pry
+    recipes =  by_ingredients([user.pantry_ids])
     recipes = recipes.sort_by {|recipe| recipe.missing_ingredients(user).size}
     recipes.delete_if {|recipe| recipe.missing_ingredients(user).size > 7}
   end

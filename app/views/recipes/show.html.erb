@@ -78,17 +78,18 @@
                 </div>
             </div>
         
-    
-    <div class="col-md-10 content-box">
-        <!-- Shows the ingredients that the user is missing -->
-        <h4>You are missing
-            <%=@recipe.missing_ingredients(current_user).size%> ingredients</h4>
-        <p>
-            <br>
-            <%=@recipe.missing_ingredient_names(current_user)%>
-            <hr>
-        </p>
-
+    <%if @recipe.missing_ingredients(current_user) %>
+        <div class="col-md-10 content-box">
+            <!-- Shows the ingredients that the user is missing -->
+            <h4>You are missing
+                <%=@recipe.missing_ingredients(current_user).size%> ingredients</h4>
+            <p>
+                <br>
+                <%=@recipe.missing_ingredient_names(current_user)%>
+                <hr>
+            </p>
+        </div>
+    <%end%>
     <br>
     <div class="col-md-10 content-box">
     	<!-- these are all the comments -->
@@ -99,7 +100,6 @@
             <div class="col-2">
                 <button type="button" data-toggle="modal" data-target="#leaveComment" style="display: inline;" class="btn btn-primary pull-right">Post a Comment</button>
             </div>
-        </div>
 
         <br>
     
@@ -107,13 +107,15 @@
     		<div class="container">
                 <hr>
     			<p><%=comment.content%></p>
-                <p><%="-#{comment.user.email} #{comment.created_at.localtime}"%></p>
-                <% if policy(comment).destroy?%>
-                    <%= button_to  "Delete", comment, method: :delete %>
-                <%end%>
-                <%if policy(comment).update?%>
-                    <button type="button" data-toggle="modal" data-target="#editComment" style="display: inline;" class="btn btn-primary">Edit</button>
-                <%end%>
+                <p><%="-#{comment.user.email} #{comment.created_at.localtime.pretty}"%></p>
+                <div class="btn-group">
+                    <%if policy(comment).update?%>
+                        <button type="button" data-toggle="modal" data-target="#editComment" class="btn btn-primary">Edit</button>
+                    <%end%>
+                    <% if policy(comment).destroy?%>
+                        <%= button_to  "Delete", comment, method: :delete, class: "btn btn-secondary" %>
+                    <%end%>
+                </div >
                 <%=bootstrap_modal("editComment"){ form_for comment do |f| %>
                     <%= f.label :content, "Edit Comment"%>
                     <br>

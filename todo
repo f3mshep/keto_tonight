@@ -27,5 +27,7 @@ FRIDAY:
 [] Style log-in, log-out pages
 [] Reverse engineer twitter button https://cssanimation.rocks/twitter-fave/
 [] Footer
-[] validate length of recipe titles
+[x] validate length of recipe titles
+[] Readme
 [] finalize navbar
+[] add a blurb about what keto is on the user home page

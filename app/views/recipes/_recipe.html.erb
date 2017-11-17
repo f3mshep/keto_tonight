@@ -2,7 +2,7 @@
 <div class="col-md-4">
     <div class="card" >
         <!-- <img class="card-img-top" src=<%=recipe.image%> style="width: 100%" alt="Card image cap"> -->
-        <%= link_to recipe_path(recipe) do%>
+        <%= link_to user_recipe_path(recipe.user, recipe) do%>
             <%= image_tag "#{recipe.image}", style: "width:100%", class: "card-img-top"%>
         <%end%>
         <div class="card-block">
