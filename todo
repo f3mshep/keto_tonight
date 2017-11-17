@@ -18,6 +18,14 @@ Tuesday:
 [] User flow - do we want to allow users to access recipes? - yes, just BLOT OUT THE COOL STUFF and ANNOY THEM TO SIGN IN
 
 WEDNESDAY:
-[]Style that shizz for real
-[]add loading splash to recipe creation
-[]think about user flow management
+[x]Style that shizz for real
+[x]add loading splash to recipe creation
+[x]think about user flow management
+
+FRIDAY:
+[] Add a before_action that requires user to be signed in to do ANYTHING
+[] Style log-in, log-out pages
+[] Reverse engineer twitter button https://cssanimation.rocks/twitter-fave/
+[] Footer
+[] validate length of recipe titles
+[] finalize navbar

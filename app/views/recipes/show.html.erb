@@ -3,13 +3,26 @@
         <div class='row justify-content-center' >
             <div class="col-md-10 content-box">
                 <div class="container">
-                    <h2><%=@recipe.title%></h2>
-                    <% if policy(@recipe).destroy?%>
-                        <%= button_to  "Delete", user_recipe_path(@recipe), method: :delete %>
-                    <% end %>
-                    <% if policy(@recipe).update?%>
-                        <%= button_to  "Edit", edit_user_recipe_path(@recipe), method: :get  %>
-                    <% end %>
+                    <div class="row">
+                        <div class="col-10">
+                            <h2><%=@recipe.title%></h2>
+                        </div>
+                        <div class="btn-group col-2">
+                            <% if policy(@recipe).update?%>
+                                <%= button_to  "Edit", edit_user_recipe_path(@recipe), method: :get, class: "btn btn-primary"  %>
+                            <% end %>
+                            <% if policy(@recipe).destroy?%>
+                                <%= button_to  "Delete", user_recipe_path(@recipe), method: :delete, class: "btn btn-secondary" %>
+                            <% end %>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <br>
+                        <%= image_tag  "#{@recipe.image}", style: "width:100%;" %>
+                        <br>
+                    </div>
+                    <br>
+                    <div class="container">
                         <% if @like.persisted? %>
                             <%= form_for(@like, method: :delete) do |f| %>
                                 <%= f.submit "Unlike", class: 'btn btn-primary' %>
@@ -20,6 +33,8 @@
                                 <%= f.submit"Like", class: 'btn btn-primary' %>
                             <% end %>
                         <% end %>
+                    </div>
+                    <hr>
                     <h3>Macronutrients per Serving</h3>
                     <h4>Serves <%=@recipe.servings%></h4>
                     <ul>
@@ -29,46 +44,63 @@
                         <li><strong>Carbohydrates: </strong><%=@recipe.carbs / @recipe.servings%></li>
                         <li><strong>Fiber: </strong><%=@recipe.fiber / @recipe.servings%></li>
                     </ul>
+                    <hr>
                 </div>
             </div>
             <div class="col-md-10 content-box">
-                <h3>Categories</h3>
-                <%@recipe.categories.each do |category|%>
-                    <%= category.name %>
-                <%end%>
+                <div class="container">
+                    <h3>Categories</h3>
+                    <%@recipe.categories.each do |category|%>
+                        <%= category.name %>
+                    <%end%>
+                    <hr>
+                </div>
             </div>
             <div class="col-md-10 content-box">
-                <h3>Ingredients</h3>
-                <ul>
-                    <%@recipe.recipe_ingredients.each do |recipe_ingredient|%>
-                        <li><%=recipe_ingredient.amount%> <%=recipe_ingredient.name%></li>
-                    <%end%>
-                </ul>
+                <div class="container">
+                    <h3>Ingredients</h3>
+                    <ul>
+                        <br>
+                        <%@recipe.recipe_ingredients.each do |recipe_ingredient|%>
+                            <li><%=recipe_ingredient.amount%> <%=recipe_ingredient.name%></li>
+                        <%end%>
+                    </ul>
+                    <hr>
+                </div>
             </div>
     
             <div class="col-md-10 content-box">
-                <h3>Directions</h3>
-                <%=simple_format(@recipe.description)%>
+                <div class="container">
+                    <h3>Directions</h3>
+                    <br>
+                    <%=simple_format(@recipe.description)%>
+                    <hr>
+                </div>
             </div>
         
     
     <div class="col-md-10 content-box">
         <!-- Shows the ingredients that the user is missing -->
-        <!-- update this with helper methods that automatically call current user  -->
         <h4>You are missing
             <%=@recipe.missing_ingredients(current_user).size%> ingredients</h4>
         <p>
             <br>
             <%=@recipe.missing_ingredient_names(current_user)%>
+            <hr>
         </p>
 
     <br>
     <div class="col-md-10 content-box">
     	<!-- these are all the comments -->
-    	<div>
-    		<h4 style="display: inline;">Comments</h4> <button type="button" data-toggle="modal" data-target="#leaveComment" style="display: inline;" class="btn btn-primary pull-right">Post a Comment</button>
-    	</div>
-    
+        <div class="row">
+        	<div class="col-10">
+        		<h4 style="display: inline;">Comments</h4>
+            </div>
+            <div class="col-2">
+                <button type="button" data-toggle="modal" data-target="#leaveComment" style="display: inline;" class="btn btn-primary pull-right">Post a Comment</button>
+            </div>
+        </div>
+
         <br>
     
     	<%@recipe.comments.each do |comment|%>
