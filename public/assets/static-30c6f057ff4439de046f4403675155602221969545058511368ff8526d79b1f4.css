@@ -1,0 +1,359 @@
+@import url(creative.min.css);
+/* line 2, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_global.scss */
+body,
+html {
+  width: 100%;
+  height: 100%;
+}
+
+/* line 8, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_global.scss */
+body {
+  font-family: 'Merriweather', 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* line 12, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_global.scss */
+hr {
+  max-width: 50px;
+  border-width: 3px;
+  border-color: #F05F40;
+}
+
+/* line 18, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_global.scss */
+hr.light {
+  border-color: #fff;
+}
+
+/* line 22, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_global.scss */
+a {
+  color: #F05F40;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+/* line 25, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_global.scss */
+a:hover {
+  color: #f05f40;
+}
+
+/* line 30, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_global.scss */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* line 39, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_global.scss */
+.bg-primary {
+  background-color: #F05F40 !important;
+}
+
+/* line 43, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_global.scss */
+.bg-dark {
+  background-color: #212529 !important;
+}
+
+/* line 47, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_global.scss */
+.text-faded {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* line 51, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_global.scss */
+section {
+  padding: 8rem 0;
+}
+
+/* line 55, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_global.scss */
+.section-heading {
+  margin-top: 0;
+}
+
+/* line 59, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_global.scss */
+::-moz-selection {
+  color: #fff;
+  background: #212529;
+  text-shadow: none;
+}
+
+/* line 65, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_global.scss */
+::-moz-selection {
+  color: #fff;
+  background: #212529;
+  text-shadow: none;
+}
+::selection {
+  color: #fff;
+  background: #212529;
+  text-shadow: none;
+}
+
+/* line 71, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_global.scss */
+img::-moz-selection {
+  color: #fff;
+  background: transparent;
+}
+img::selection {
+  color: #fff;
+  background: transparent;
+}
+
+/* line 76, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_global.scss */
+img::-moz-selection {
+  color: #fff;
+  background: transparent;
+}
+
+/* line 81, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_global.scss */
+body {
+  -webkit-tap-highlight-color: #212529;
+}
+
+/* line 2, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_navbar.scss */
+#mainNav {
+  border-bottom: 1px solid rgba(33, 37, 41, 0.1);
+  background-color: #fff;
+  font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+/* line 7, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_navbar.scss */
+#mainNav .navbar-brand {
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #F05F40;
+  font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+}
+/* line 12, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_navbar.scss */
+#mainNav .navbar-brand:focus, #mainNav .navbar-brand:hover {
+  color: #f05f40;
+}
+/* line 19, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_navbar.scss */
+#mainNav .navbar-nav > li.nav-item > a.nav-link,
+#mainNav .navbar-nav > li.nav-item > a.nav-link:focus {
+  font-size: .9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #212529;
+}
+/* line 25, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_navbar.scss */
+#mainNav .navbar-nav > li.nav-item > a.nav-link:hover,
+#mainNav .navbar-nav > li.nav-item > a.nav-link:focus:hover {
+  color: #F05F40;
+}
+/* line 28, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_navbar.scss */
+#mainNav .navbar-nav > li.nav-item > a.nav-link.active,
+#mainNav .navbar-nav > li.nav-item > a.nav-link:focus.active {
+  color: #F05F40 !important;
+  background-color: transparent;
+}
+/* line 31, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_navbar.scss */
+#mainNav .navbar-nav > li.nav-item > a.nav-link.active:hover,
+#mainNav .navbar-nav > li.nav-item > a.nav-link:focus.active:hover {
+  background-color: transparent;
+}
+@media (min-width: 992px) {
+  /* line 2, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_navbar.scss */
+  #mainNav {
+    border-color: transparent;
+    background-color: transparent;
+  }
+  /* line 41, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_navbar.scss */
+  #mainNav .navbar-brand {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  /* line 43, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_navbar.scss */
+  #mainNav .navbar-brand:focus, #mainNav .navbar-brand:hover {
+    color: #fff;
+  }
+  /* line 48, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_navbar.scss */
+  #mainNav .navbar-nav > li.nav-item > a.nav-link {
+    padding: 0.5rem 1rem;
+  }
+  /* line 51, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_navbar.scss */
+  #mainNav .navbar-nav > li.nav-item > a.nav-link,
+  #mainNav .navbar-nav > li.nav-item > a.nav-link:focus {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  /* line 54, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_navbar.scss */
+  #mainNav .navbar-nav > li.nav-item > a.nav-link:hover,
+  #mainNav .navbar-nav > li.nav-item > a.nav-link:focus:hover {
+    color: #fff;
+  }
+  /* line 58, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_navbar.scss */
+  #mainNav.navbar-shrink {
+    border-bottom: 1px solid rgba(33, 37, 41, 0.1);
+    background-color: #fff;
+  }
+  /* line 61, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_navbar.scss */
+  #mainNav.navbar-shrink .navbar-brand {
+    color: #F05F40;
+  }
+  /* line 63, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_navbar.scss */
+  #mainNav.navbar-shrink .navbar-brand:focus, #mainNav.navbar-shrink .navbar-brand:hover {
+    color: #f05f40;
+  }
+  /* line 68, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_navbar.scss */
+  #mainNav.navbar-shrink .navbar-nav > li.nav-item > a.nav-link,
+  #mainNav.navbar-shrink .navbar-nav > li.nav-item > a.nav-link:focus {
+    color: #212529;
+  }
+  /* line 71, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_navbar.scss */
+  #mainNav.navbar-shrink .navbar-nav > li.nav-item > a.nav-link:hover,
+  #mainNav.navbar-shrink .navbar-nav > li.nav-item > a.nav-link:focus:hover {
+    color: #F05F40;
+  }
+}
+
+/* line 2, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_masthead.scss */
+header.masthead {
+  padding-top: 10rem;
+  padding-bottom: calc(10rem - 56px);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0.5))), url(/assets/slate_veggies-8aff532db5d3ef1c240fbccb1f9008ef769c636561f099fdd6c90bb0043c0bf8.jpg);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/assets/slate_veggies-8aff532db5d3ef1c240fbccb1f9008ef769c636561f099fdd6c90bb0043c0bf8.jpg);
+  background-position: center center;
+  background-size: cover;
+}
+/* line 13, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_masthead.scss */
+header.masthead hr {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+/* line 17, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_masthead.scss */
+header.masthead h1 {
+  font-size: 2rem;
+}
+/* line 20, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_masthead.scss */
+header.masthead p {
+  font-weight: 300;
+}
+@media (min-width: 768px) {
+  /* line 24, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_masthead.scss */
+  header.masthead p {
+    font-size: 1.15rem;
+  }
+}
+@media (min-width: 992px) {
+  /* line 2, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_masthead.scss */
+  header.masthead {
+    height: 100vh;
+    min-height: 650px;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  /* line 33, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_masthead.scss */
+  header.masthead h1 {
+    font-size: 3rem;
+  }
+}
+@media (min-width: 1200px) {
+  /* line 38, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_masthead.scss */
+  header.masthead h1 {
+    font-size: 4rem;
+  }
+}
+
+/* line 2, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_services.scss */
+.service-box {
+  max-width: 400px;
+}
+
+/* line 2, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_portfolio.scss */
+.portfolio-box {
+  position: relative;
+  display: block;
+  max-width: 650px;
+  margin: 0 auto;
+}
+/* line 7, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_portfolio.scss */
+.portfolio-box .portfolio-box-caption {
+  position: absolute;
+  bottom: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  opacity: 0;
+  color: #fff;
+  background: rgba(240, 95, 64, 0.9);
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+/* line 18, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_portfolio.scss */
+.portfolio-box .portfolio-box-caption .portfolio-box-caption-content {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  text-align: center;
+}
+/* line 24, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_portfolio.scss */
+.portfolio-box .portfolio-box-caption .portfolio-box-caption-content .project-category,
+.portfolio-box .portfolio-box-caption .portfolio-box-caption-content .project-name {
+  padding: 0 15px;
+  font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+}
+/* line 29, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_portfolio.scss */
+.portfolio-box .portfolio-box-caption .portfolio-box-caption-content .project-category {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+/* line 34, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_portfolio.scss */
+.portfolio-box .portfolio-box-caption .portfolio-box-caption-content .project-name {
+  font-size: 18px;
+}
+/* line 40, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_portfolio.scss */
+.portfolio-box:hover .portfolio-box-caption {
+  opacity: 1;
+}
+/* line 44, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_portfolio.scss */
+.portfolio-box:focus {
+  outline: none;
+}
+@media (min-width: 768px) {
+  /* line 50, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_portfolio.scss */
+  .portfolio-box .portfolio-box-caption .portfolio-box-caption-content .project-category {
+    font-size: 16px;
+  }
+  /* line 53, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_portfolio.scss */
+  .portfolio-box .portfolio-box-caption .portfolio-box-caption-content .project-name {
+    font-size: 22px;
+  }
+}
+
+/* line 2, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_bootstrap-overrides.scss */
+.text-primary {
+  color: #F05F40 !important;
+}
+
+/* line 6, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_bootstrap-overrides.scss */
+.btn {
+  font-weight: 700;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 300px;
+  font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* line 14, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_bootstrap-overrides.scss */
+.btn-xl {
+  padding: 1rem 2rem;
+}
+
+/* line 18, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_bootstrap-overrides.scss */
+.btn-primary {
+  background-color: #F05F40;
+  border-color: #F05F40;
+}
+/* line 21, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_bootstrap-overrides.scss */
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+  color: #fff;
+  background-color: #ee4b28 !important;
+}
+/* line 27, /home/alexandra/code/keto_tonight/app/assets/stylesheets/_bootstrap-overrides.scss */
+.btn-primary:active, .btn-primary:focus {
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(240, 95, 64, 0.5) !important;
+          box-shadow: 0 0 0 0.2rem rgba(240, 95, 64, 0.5) !important;
+}
