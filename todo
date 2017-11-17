@@ -23,14 +23,16 @@ WEDNESDAY:
 [x]think about user flow management
 
 FRIDAY:
-[] Add a before_action that requires user to be signed in to do ANYTHING
+[x] Add a before_action that requires user to be signed in to do ANYTHING
 [x] Style log-in, log-out pages
 [x] Footer
 [x] validate length of recipe titles
 [] Readme
+[x] make sure user has pantry when they access recipe show page
 [x] finalize navbar
 [] add a blurb about what keto is on the user home page
 
 Jquery Frontend
 
+[] Add a loading animation to creating/updating recipes
 [] Reverse engineer twitter button https://cssanimation.rocks/twitter-fave/ - Save for jquery front end

@@ -73,7 +73,15 @@ div.btn-group .btn {
   align-items: center;
 }
 
-footer {
-    position: static !important;
-    bottom: 0;
+
+.page-wrap {
+  position: relative;
+  min-height: 100vh;
+  padding-bottom: 10px; /* Should be equal to the height of your footer */
+}
+
+.footer-wrap{
+  width: 100%;
+  position: relative;
+  bottom: 0px;
 }

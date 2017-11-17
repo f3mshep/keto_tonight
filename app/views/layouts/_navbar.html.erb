@@ -7,21 +7,21 @@
     </button>
   
     <div class="collapse navbar-collapse" id="navbarColor01">
+        <%if !current_user %>
+          <ul class= "navbar-nav mr-auto">
+            <li class="nav-item" ><%= link_to  "Sign in", new_user_session_path, class:'nav-link' %></li>
+            <li class="nav-item" ><%= link_to  "Sign up", new_user_registration_path, class: 'nav-link' %></li>
+          </ul>
+        <% else %>
         <div class="navbar-nav mr-auto">
             <li class="nav-item" ><%= link_to  "Breakfast", category_path(breakfast_category), class: "nav-link" %></li>
             <li class="nav-item" ><%= link_to  "Lunch", category_path(lunch_category), class: "nav-link" %></li>
             <li class="nav-item" ><%= link_to  "Dinner", category_path(dinner_category), class: "nav-link" %></li>
         </div>
-        <%if !current_user%>
-          <ul class=""navbar-nav mr-auto"">
-            <li class="nav-item" ><%= link_to  "Sign in", new_user_session_path, class:'nav-link' %></li>
-            <li class="nav-item" ><%= link_to  "Sign up", new_user_registration_path, class: 'nav-link' %></li>
-          </ul>
-        <% else %>
         <ul class="navbar-nav ml-auto">
           <li class="nav-item" ><%= link_to  material_icon.search.md_36, search_path, class: 'nav-link' %></li>
           <li class="nav-item dropdown">
-            <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+            <a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
               aria-expanded="false">
               <%= material_icon.account_circle.md_36%>
             </a>

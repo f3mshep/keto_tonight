@@ -1,6 +1,8 @@
 class RecipesController < ApplicationController
 
     before_action :recipe_setter, only: [:show, :edit, :update, :destroy]
+    before_action :require_login, only: [:show, :edit, :new, :create, :update, :destroy]
+    before_action :has_pantry, only: [:show]
 
     def index
         if params[:user_id]
@@ -19,10 +21,8 @@ class RecipesController < ApplicationController
     end
 
     def show
-        if current_user
-            @like = current_user.likes_recipe(@recipe) || Like.new(user: current_user, recipe: @recipe)
-            @comment = Comment.new(user: current_user, recipe: @recipe)
-        end
+        @like = current_user.likes_recipe(@recipe) || Like.new(user: current_user, recipe: @recipe)
+        @comment = Comment.new(user: current_user, recipe: @recipe)
     end
 
     def new
