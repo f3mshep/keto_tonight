@@ -64,3 +64,11 @@ a:visited.no-color,a:link.no-color {
 div.btn-group .btn {
   margin: 5px;
 }
+
+.vertical-tweak {
+  min-height: 55%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 55vh; /* These two lines are counted as one :-)       */
+
+  display: flex;
+  align-items: center;
+}
