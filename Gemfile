@@ -33,6 +33,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'devise'
+gem 'dotenv-heroku'
 gem 'pundit'
 ruby '2.3.1'
 #UPLOAD COMPLETE . . .

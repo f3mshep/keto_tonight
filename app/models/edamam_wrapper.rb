@@ -2,9 +2,9 @@ require 'net/http'
 require 'uri'
 
 class EdamamWrapper
-    ID = ENV['EDAMAM_ID']
-    KEY = ENV['EDAMAM_KEY']
-    XMASH = ENV['XMASH']
+    ID = ENV['EDAMAM_KEY']
+    KEY = ENV['EDAMAM_SECRET']
+    XMASH = PluQm6c5uwmshs9emiukbR9RcYXqp1k7K4CjsnpXO36AfoGwdh
 
     def ingredient_finder(item)
         response = Unirest.get "https://edamam-edamam-nutrition-analysis.p.mashape.com/api/nutrition-data?ingr=#{CGI.escape(item)}",
