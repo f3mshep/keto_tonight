@@ -5,10 +5,6 @@ class EdamamWrapper
     ID = ENV['EDAMAM_KEY']
     KEY = ENV['EDAMAM_SECRET']
     XMASH = 'PluQm6c5uwmshs9emiukbR9RcYXqp1k7K4CjsnpXO36AfoGwdh'
-<<<<<<< HEAD
-=======
-    
->>>>>>> 75150dd02037bee9e92735b6f056d6ade5dec243
 
     def ingredient_finder(item)
         response = Unirest.get "https://edamam-edamam-nutrition-analysis.p.mashape.com/api/nutrition-data?ingr=#{CGI.escape(item)}",
