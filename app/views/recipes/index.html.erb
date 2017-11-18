@@ -1,9 +1,17 @@
-<div class="container fill">
-    <div class="container">
+<div class="container">
         <br>
-    <div class="row">
-        <%= render(@recipes) %>
-    </div>
-    </div>
+    <% if !@recipes.empty? %>
+        <div class="row">
+            <%= render(@recipes)%>
+        </div>
+    <% else %>
+        <div class="row justify-content-center">
+            <div class="col-md-10 content-box" style="text-align:center;">
+                <h4>There are no recipes here. Create one!</h4>
+                <br>
+                <%= button_to  "New Recipe", new_user_recipe_path(current_user), class:"btn btn-primary" %>
+            </div>
+        </div>
+    <% end %>
     <br>
 </div>
