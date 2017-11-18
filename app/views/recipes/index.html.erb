@@ -9,7 +9,7 @@
             <div class="col-md-10 content-box" style="text-align:center;">
                 <h4>There are no recipes here. Create one!</h4>
                 <br>
-                <%= button_to  "New Recipe", new_user_recipe_path(current_user), class:"btn btn-primary" %>
+                <%= button_to  "New Recipe", new_user_recipe_path(current_user), class:"btn btn-primary", method: :get %>
             </div>
         </div>
     <% end %>
