@@ -44,6 +44,7 @@ class Recipe < ApplicationRecord
   # end
 
   def url_checker
+      binding.pry
       image = "https://i.imgur.com/D4OUBUs.jpg" if image.nil? || image.empty?
   end
 
