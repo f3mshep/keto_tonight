@@ -7,7 +7,7 @@ class Pantry < ApplicationRecord
   validate :has_food_id
 
   def ingredients_attributes=(ingredient)
-    food_name = ingredient["#{ingredients.size}"]["name"] #this wont blow up in my face. I promise.
+    food_name = ingredient["#{ingredients.size}"]["name"]
     wrapper = EdamamWrapper.new
     food_response = wrapper.ingredient_finder(food_name)
     begin
