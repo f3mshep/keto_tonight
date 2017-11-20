@@ -51,11 +51,12 @@
     
         <br>
         <%if policy(@category).create?%>
-            <%=f.fields_for :categories do |category| %>
+            <%=f.fields_for :categories do |category_attribute| %>
+                <% next unless category_attribute.object.persisted? %>
                 <br>
-                <%= category.label :name, "Create Category"%>
+                <%= category_attribute.label :name, "Create Category"%>
                 <br>
-                <%= category.text_field :name%>
+                <%= category_attribute.text_field :name, value: nil, placeholder:"Enter new category name"%>
             <%end%>
         <%end%>
     </div>
