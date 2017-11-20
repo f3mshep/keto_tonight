@@ -1,4 +1,5 @@
-<div>
-    
-    <p><%= link_to  category.name, category %> <%= button_to  "Delete", category_path(category), method: :delete if policy(category).destroy? %></p>
+<div class="row">
+    <div class="col-md-10"><p><%= link_to  category.name, category %></p></div>
+    <div  class="col-md-2"><%= button_to  "Delete", category_path(category), method: :delete, class: "btn btn-primary btn-sm" if policy(category).destroy? %></div>
 </div>
+<hr>

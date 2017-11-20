@@ -42,8 +42,13 @@ class Recipe < ApplicationRecord
   #   Recipe.joins(:recipe_ingredients).where(recipe_ingredients: {ingredient_id: ingredient_ids})
   # end
 
-  def categories_attributes=(category)
-    binding.pry
+  def categories_attributes=(category_attributes)
+    category_attributes.values.each do |category|
+      next if category.values.first.empty?
+      binding.pry
+      category = Category.find_or_create_by(category)
+      category.recipes << self
+    end
   end
 
   def url_checker
@@ -52,7 +57,6 @@ class Recipe < ApplicationRecord
   end
 
   def self.my_pantry(user)
-    binding.pry
     recipes =  by_ingredients([user.pantry_ids])
     recipes = recipes.sort_by {|recipe| recipe.missing_ingredients(user).size}
     recipes.delete_if {|recipe| recipe.missing_ingredients(user).size > 7}
