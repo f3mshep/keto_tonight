@@ -5,12 +5,15 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 gem "hublot", "~> 0.0.6"
+gem "pretty_stamps"
 gem 'json'
+gem 'material_icons'
 gem 'edamam-ruby'
 gem 'dotenv-rails'
 gem 'autoprefixer-rails'
 gem 'bootstrap', '~> 4.0.0.beta2.1'
 gem 'pry'
+gem "font-awesome-rails"
 gem 'unirest', '~> 1.1.2'
 gem 'jquery-rails'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -55,6 +58,7 @@ group :development, :test do
   gem "database_cleaner"
   gem 'rspec-rails', '~> 3.7.0'
   gem 'selenium-webdriver'
+  gem 'seed_dump'
 end
 
 group :test do

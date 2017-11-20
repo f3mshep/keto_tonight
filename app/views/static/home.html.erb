@@ -1,1 +1,18 @@
-<h1>Welcome to KetoTonight, a web app for stuff</h1>
+<%= render partial: "home_nav" %>
+<header class="masthead text-center text-white d-flex">
+    <div class="container my-auto">
+        <div class="row">
+            <div class="col-lg-10 mr-auto">
+                <h1 class="text-uppercase">
+                    <strong>We're having Keto Tonight</strong>
+                </h1>
+                <hr>
+            </div>
+            <div class="col-lg-10 mr-auto">
+                <p class="text-faded mb-5">Welcome to Keto Tonight, the ultimate keto-friendly cookbook that anyone can contribute to. 
+                    Enter your favourite recipes and recieve detailed nutrional statistics. Sign up now, deliciousness awaits!  </p>
+                <%= link_to  "Sign Up", new_user_registration_path, class: "btn btn-primary btn-xl" %>
+            </div>
+        </div>
+    </div>
+</header>

@@ -6,4 +6,12 @@ class ApplicationController < ActionController::Base
       request.env['omniauth.origin'] || root_path
   end
 
+  def require_login
+    redirect_to new_user_session_path if !current_user
+  end
+
+  def has_pantry
+    Pantry.create(user: current_user) if current_user.pantry.nil?
+  end
+
 end

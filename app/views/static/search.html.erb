@@ -1,3 +1,4 @@
-<div class="row justify-content-center">
-  <%= button_to  "Search  by Pantry Contents", model %>
-</div>
+<%= form_tag(recipes_path, method: :get) do %>
+  <%= text_field_tag :search_term %>
+  <%= submit_tag 'Search' %>
+<% end %>

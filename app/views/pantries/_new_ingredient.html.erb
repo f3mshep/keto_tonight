@@ -1,5 +1,5 @@
-<div class="container">
-<h3>Nutrition Facts</h3>
+<div class="container content-box">
+<h2>Add to pantry</h2>
 <hr>
 <div class="container">
   <%= form_for @pantry, url: user_pantry_update_path do |f| %>
@@ -19,12 +19,9 @@
     <% end %>
     <%= f.fields_for :ingredients do |t| %>
     <% next unless t.object.id.nil? #only shows new pantry ingredients %> 
-    <div><p>Ingredient Name<%= t.text_field :name %></p></div>
-    <hr>
-
+    <div><p>Ingredient Name<%= t.text_field :name, class: "form-control" %></p></div>
     <%end%>
-  <%= f.submit "Create Ingredient"%>
-
+  <%= f.submit "Find Ingredient", class: "btn btn-primary"%>
   <% end %>
 </div>
 </div>

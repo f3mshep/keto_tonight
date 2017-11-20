@@ -1,4 +1,8 @@
-<h1>New Recipe</h1>
 <br>
-<%= render partial: "recipe", locals: {recipe: @recipe} %>
+<div class="container content-box">
+    <h1>New Recipe</h1>
+    <br>
+        <%= render partial: "recipe_form", locals: {recipe: @recipe} %>
+    <br>
+</div>
 <br>

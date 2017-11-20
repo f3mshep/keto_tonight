@@ -1,5 +1,21 @@
 module ApplicationHelper
 
+    def breakfast_category
+        Category.find_by(name: "Breakfast")
+    end
+
+    def lunch_category
+        Category.find_by(name: "Lunch")
+    end
+
+    def dinner_category
+        Category.find_by(name: "Dinner")
+    end 
+
+    def dessert_category
+        Category.find_by(name: "Dessert")
+    end
+
     def bootstrap_modal(toggle_id)
 
      html = " <div class='modal fade' id='#{toggle_id}' tabindex='-1' role='dialog' aria-labelledby='comment' aria-hidden='true'>

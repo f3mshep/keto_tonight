@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171107233233) do
+ActiveRecord::Schema.define(version: 20171115184936) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -31,14 +31,18 @@ ActiveRecord::Schema.define(version: 20171107233233) do
   create_table "ingredients", force: :cascade do |t|
     t.string "name"
     t.string "food_id"
-    t.integer "calories"
-    t.integer "protein"
-    t.integer "fat"
-    t.integer "fiber"
-    t.integer "carbs"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "serving_size"
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "recipe_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["recipe_id"], name: "index_likes_on_recipe_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "pantries", force: :cascade do |t|
@@ -78,7 +82,6 @@ ActiveRecord::Schema.define(version: 20171107233233) do
   create_table "recipes", force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.integer "likes", default: 1
     t.integer "calories"
     t.integer "carbs"
     t.integer "fat"
@@ -91,6 +94,8 @@ ActiveRecord::Schema.define(version: 20171107233233) do
     t.string "cook_time"
     t.string "prep_time"
     t.integer "servings"
+    t.integer "likes_count", default: 0
+    t.string "image", default: "https://i.imgur.com/D4OUBUs.jpg"
     t.index ["user_id"], name: "index_recipes_on_user_id"
   end
 

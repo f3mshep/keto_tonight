@@ -1,5 +1,7 @@
 class PantriesController < ApplicationController
 
+  before_action :require_login
+
   def show
     pantry_setter
   end

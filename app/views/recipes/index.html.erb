@@ -1,3 +1,9 @@
-<%@recipes.each do |recipe|%>
-    <%= link_to  "#{recipe.title}", user_recipe_path(recipe.user, recipe)  %>
-<%end%>
+<div class="container fill">
+    <div class="container">
+        <br>
+    <div class="row">
+        <%= render(@recipes) %>
+    </div>
+    </div>
+    <br>
+</div>

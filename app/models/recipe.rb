@@ -1,4 +1,21 @@
 class Recipe < ApplicationRecord
+
+  #scope in some ways appears to be a code style thing
+  #I have elected to have all my methods that deal with AR
+  #queries be scopes
+  
+
+  scope :by_ingredients, -> (ingredient_ids) { joins(:recipe_ingredients).where(recipe_ingredients: {ingredient_id: ingredient_ids}).distinct }
+  
+  #works in console, significant changes would need to be made to index action unless we use javascript. Come back to this one.
+  scope :ingredient_names, -> (names) { joins(:ingredients).where(ingredients: {name: names}).distinct }
+
+  scope :most_recent, -> {order('created_at DESC')}
+  scope :by_categories, -> (meal_category) {joins(:categories).where(categories: {name: meal_category})}
+  scope :by_likes, -> { order('likes_count DESC') }
+  scope :is_liked, ->(enabled) {Recipe.joins(:likes).group("likes.recipe_id") if enabled}
+  scope :search_query, -> (query) {Recipe.where("title like ?", "%#{query}%")}
+
   attr_accessor :food_hash
   MAX_CARBS = 20
   SILLY_AMOUNT = 100
@@ -8,17 +25,33 @@ class Recipe < ApplicationRecord
   has_many :comments
   has_many :recipe_categories
   has_many :categories, through: :recipe_categories
+  has_many :likes
+  has_many :liking_users, through: :likes, source: :user
   accepts_nested_attributes_for :categories, reject_if: :all_blank
+  before_save :url_checker
   validates :title, presence: true
   validates :title, uniqueness: true
+  validates :title, length: {maximum: 40}
   validates :servings, presence: true
   validates :description, presence: true
   validates :ingredient_list, presence: true
   validate :analyze_ingredients
   validate :keto_friendly
 
-  def find_recipe_by_ingredients(ingredient_ids)
-    Recipe.joins(:recipe_ingredients).where(recipe_ingredients: {ingredient_id: ingredient_id})
+  #turned into a scope method. 
+  # def self.find_recipe_by_ingredients(ingredient_ids)
+  #   Recipe.joins(:recipe_ingredients).where(recipe_ingredients: {ingredient_id: ingredient_ids})
+  # end
+
+  def url_checker
+      image = "https://i.imgur.com/D4OUBUs.jpg" if image.nil? || image.empty?
+  end
+
+  def self.my_pantry(user)
+    binding.pry
+    recipes =  by_ingredients([user.pantry_ids])
+    recipes = recipes.sort_by {|recipe| recipe.missing_ingredients(user).size}
+    recipes.delete_if {|recipe| recipe.missing_ingredients(user).size > 7}
   end
 
   def analyze_ingredients
@@ -36,6 +69,20 @@ class Recipe < ApplicationRecord
     end
   end
 
+  def missing_ingredients(user)
+    ingredients - user.pantry_ingredients
+  end 
+
+  def missing_ingredient_names(user)
+    ingredients = missing_ingredients(user)
+    ingredients = ingredients.collect {|ingredient|ingredient.name}
+    "To make this recipe, you will need: #{ingredients.to_sentence}"
+  end
+
+  def update_food
+    ingredients.clear
+    save_food
+  end
 
   def save_food
     food_hash[:ingredients].each do |ingredient, values|
@@ -43,10 +90,6 @@ class Recipe < ApplicationRecord
       RecipeIngredient.create(recipe: self, ingredient: new_ingredient, quantity: values[:quantity], measure: values[:measure] )
     end
   end
-
-def self.bad_search(ingredient_array)
-  Recipe.all.select {|recipe|recipe.ingredients()}
-end
 
   private
 

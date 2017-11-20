@@ -1,16 +1,38 @@
 [x] Fix up routing
-[] Add pundit functions (admins can delete any recipe, only admins can create categories)
-[] add some sort of scoped thing
+[x] Add pundit functions (admins can delete any recipe, only admins can create categories)
+[x] add some sort of scoped thing
 [x] add comments 
 [x] add category to recipe creation
-[] fix pantry ingredients
-[] search functions
+[x] fix pantry ingredients
+[x] search functions
 [] style stuff - make navbar not look like shit, home page, user home page, page lay outs
 [] add 'loading' to recipe creation
-
-GOALS FOR FRIDAY:
-
 [x] Fix pantry
-[] Add search by pantry/ navbar meal category functions
 [x] Pundit functions
-[] Maybe incorporate spoonacular API into search?
+
+Tuesday:
+[x] Form to actually delete category
+[x] Add search by pantry/ navbar meal category functions
+[x] Organization - be able to look at different user recipes, browse all recipes, categories
+[x] Refactor index controller, check out this link https://www.justinweiss.com/articles/search-and-filter-rails-models-without-bloating-your-controller/
+[] User flow - do we want to allow users to access recipes? - yes, just BLOT OUT THE COOL STUFF and ANNOY THEM TO SIGN IN
+
+WEDNESDAY:
+[x]Style that shizz for real
+[x]add loading splash to recipe creation
+[x]think about user flow management
+
+FRIDAY:
+[x] Add a before_action that requires user to be signed in to do ANYTHING
+[x] Style log-in, log-out pages
+[x] Footer
+[x] validate length of recipe titles
+[] Readme
+[x] make sure user has pantry when they access recipe show page
+[x] finalize navbar
+[] add a blurb about what keto is on the user home page
+
+Jquery Frontend
+
+[] Add a loading animation to creating/updating recipes
+[] Reverse engineer twitter button https://cssanimation.rocks/twitter-fave/ - Save for jquery front end
