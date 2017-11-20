@@ -3,10 +3,10 @@ class Recipe < ApplicationRecord
   #scope in some ways appears to be a code style thing
   #I have elected to have all my methods that deal with AR
   #queries be scopes
-  
+
 
   scope :by_ingredients, -> (ingredient_ids) { joins(:recipe_ingredients).where(recipe_ingredients: {ingredient_id: ingredient_ids}).distinct }
-  
+
   #works in console, significant changes would need to be made to index action unless we use javascript. Come back to this one.
   scope :ingredient_names, -> (names) { joins(:ingredients).where(ingredients: {name: names}).distinct }
 
@@ -27,7 +27,6 @@ class Recipe < ApplicationRecord
   has_many :categories, through: :recipe_categories
   has_many :likes
   has_many :liking_users, through: :likes, source: :user
-  accepts_nested_attributes_for :categories, reject_if: :all_blank
   before_save :url_checker
   validates :title, presence: true
   validates :title, uniqueness: true
@@ -38,10 +37,14 @@ class Recipe < ApplicationRecord
   validate :analyze_ingredients
   validate :keto_friendly
 
-  #turned into a scope method. 
+  #turned into a scope method.
   # def self.find_recipe_by_ingredients(ingredient_ids)
   #   Recipe.joins(:recipe_ingredients).where(recipe_ingredients: {ingredient_id: ingredient_ids})
   # end
+
+  def categories_attributes=(category)
+    binding.pry
+  end
 
   def url_checker
       binding.pry
@@ -72,7 +75,7 @@ class Recipe < ApplicationRecord
 
   def missing_ingredients(user)
     ingredients - user.pantry_ingredients
-  end 
+  end
 
   def missing_ingredient_names(user)
     ingredients = missing_ingredients(user)

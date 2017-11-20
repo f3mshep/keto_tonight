@@ -5,7 +5,7 @@
       aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-  
+
     <div class="collapse navbar-collapse" id="navbarColor01">
         <%if !current_user %>
           <ul class= "navbar-nav mr-auto">
@@ -28,8 +28,8 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <%= link_to  "New Recipe", new_user_recipe_path(current_user), class: 'dropdown-item' %>
               <%= link_to  "Your Recipes", user_recipes_path(current_user), class: 'dropdown-item' %>
-              <%= link_to  "Sign out", destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
               <%= link_to  "Your pantry", user_pantry_path(current_user), class: 'dropdown-item' %>
+              <%= link_to  "Sign out", destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
             </div>
           </li>
         <% end %>
