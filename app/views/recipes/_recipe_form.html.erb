@@ -53,7 +53,7 @@
         <%if policy(@category).create?%>
             <%=f.fields_for :categories do |category| %>
                 <br>
-                <%= category.label :name, "New Category"%>
+                <%= category.label :name, "Create Category"%>
                 <br>
                 <%= category.text_field :name%>
             <%end%>

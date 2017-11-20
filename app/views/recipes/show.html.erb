@@ -50,9 +50,7 @@
             <div class="col-md-10 content-box">
                 <div class="container">
                     <h3>Categories</h3>
-                    <%@recipe.categories.each do |category|%>
-                        <%= category.name %>
-                    <%end%>
+                    <%=@recipe.categories_names.to_sentence%>
                     <hr>
                 </div>
             </div>
@@ -80,53 +78,57 @@
         
     <%if @recipe.missing_ingredients(current_user) %>
         <div class="col-md-10 content-box">
-            <!-- Shows the ingredients that the user is missing -->
-            <h4>You are missing
-                <%=@recipe.missing_ingredients(current_user).size%> ingredients</h4>
-            <p>
-                <br>
-                <%=@recipe.missing_ingredient_names(current_user)%>
-                <hr>
-            </p>
+            <div class="container">
+                <!-- Shows the ingredients that the user is missing -->
+                <h4>You are missing
+                    <%=@recipe.missing_ingredients(current_user).size%> ingredients</h4>
+                <p>
+                    <br>
+                    <%=@recipe.missing_ingredient_names(current_user)%>
+                    <hr>
+                </p>
+            </div>
         </div>
     <%end%>
     <br>
     <div class="col-md-10 content-box">
-    	<!-- these are all the comments -->
-        <div class="row">
-        	<div class="col-10">
-        		<h4 style="display: inline;">Comments</h4>
-            </div>
-            <div class="col-2">
-                <button type="button" data-toggle="modal" data-target="#leaveComment" style="display: inline;" class="btn btn-primary pull-right">Post a Comment</button>
-            </div>
-
-        <br>
+        <div class="container">
+        	<!-- these are all the comments -->
+            <div class="row">
+            	<div class="col-10">
+            		<h4 style="display: inline;">Comments</h4>
+                </div>
+                <div class="col-2">
+                    <button type="button" data-toggle="modal" data-target="#leaveComment" style="display: inline;" class="btn btn-primary pull-right">Post a Comment</button>
+                </div>
     
-    	<%@recipe.comments.each do |comment|%>
-    		<div class="container">
-                <hr>
-    			<p><%=comment.content%></p>
-                <p><%="-#{comment.user.email} #{comment.created_at.localtime.pretty}"%></p>
-                <div class="btn-group">
-                    <%if policy(comment).update?%>
-                        <button type="button" data-toggle="modal" data-target="#editComment" class="btn btn-primary">Edit</button>
-                    <%end%>
-                    <% if policy(comment).destroy?%>
-                        <%= button_to  "Delete", comment, method: :delete, class: "btn btn-secondary" %>
-                    <%end%>
-                </div >
-                <%=bootstrap_modal("editComment"){ form_for comment do |f| %>
-                    <%= f.label :content, "Edit Comment"%>
-                    <br>
-                    <%= f.text_area :content, class:"form-control", rows: 3 %>
-                    <br>
-                    <%= f.submit "Update"%>
-                <% end }%>
-    		</div>
-    	<%end%>
-    </div>
-    <br>
+            <br>
+        
+        	<%@recipe.comments.each do |comment|%>
+        		<div class="container">
+                    <hr>
+        			<p><%=comment.content%></p>
+                    <p><%="-#{comment.user.email} #{comment.created_at.localtime.pretty}"%></p>
+                    <div class="btn-group">
+                        <%if policy(comment).update?%>
+                            <button type="button" data-toggle="modal" data-target="#editComment" class="btn btn-primary">Edit</button>
+                        <%end%>
+                        <% if policy(comment).destroy?%>
+                            <%= button_to  "Delete", comment, method: :delete, class: "btn btn-secondary" %>
+                        <%end%>
+                    </div >
+                    <%=bootstrap_modal("editComment"){ form_for comment do |f| %>
+                        <%= f.label :content, "Edit Comment"%>
+                        <br>
+                        <%= f.text_area :content, class:"form-control", rows: 3 %>
+                        <br>
+                        <%= f.submit "Update"%>
+                    <% end }%>
+        		</div>
+        	<%end%>
+        </div>
+        <br>
+        </div>
     </div>
     </div>
     </div>

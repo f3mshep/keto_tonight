@@ -19,6 +19,7 @@ class Recipe < ApplicationRecord
   attr_accessor :food_hash
   MAX_CARBS = 20
   SILLY_AMOUNT = 100
+  DEFAULT_IMAGE = "https://i.imgur.com/D4OUBUs.jpg"
   belongs_to :user
   has_many :recipe_ingredients
   has_many :ingredients, through: :recipe_ingredients
@@ -45,15 +46,17 @@ class Recipe < ApplicationRecord
   def categories_attributes=(category_attributes)
     category_attributes.values.each do |category|
       next if category.values.first.empty?
-      binding.pry
       category = Category.find_or_create_by(category)
-      category.recipes << self
+      category.recipes << self unless category.recipes.include?(self)
     end
   end
 
+  def categories_names
+    categories.collect {|category|category.name}
+  end
+
   def url_checker
-      binding.pry
-      image = "https://i.imgur.com/D4OUBUs.jpg" if image.nil? || image.empty?
+      self.image = DEFAULT_IMAGE if self.image.nil? || self.image.empty?
   end
 
   def self.my_pantry(user)

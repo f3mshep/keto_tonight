@@ -2,15 +2,20 @@
 <div class="col-md-4">
     <div class="card" >
         <!-- <img class="card-img-top" src=<%=recipe.image%> style="width: 100%" alt="Card image cap"> -->
-        <%= link_to user_recipe_path(recipe.user, recipe) do%>
-            <%= image_tag "#{recipe.image}", style: "width:100%", class: "card-img-top"%>
-        <%end%>
-        <div class="card-block">
+<div class="thumbnail">
+ <div class="img-wrapper">
+                <%= link_to user_recipe_path(recipe.user, recipe) do%>
+                    <%= image_tag "#{recipe.image}", style: "width:100%", class: "card-img-top"%>
+                <%end%>
+ </div>
+         <div class="card-block">
             <br>
             <%= link_to user_recipe_path(recipe.user, recipe) do%>
                 <h6 class="card-title"><%=recipe.title%></h6>
             <% end %>
             <h7 class="card-title"><%=recipe.comments.size%> comments </h7>
         </div>
+</div>
+
     </div>
 </div>

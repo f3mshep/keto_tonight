@@ -59,6 +59,7 @@ class RecipesController < ApplicationController
 
     def destroy
         authorize @recipe
+        @recipe.recipe_categories.destroy_all
         @recipe.destroy
         redirect_to user_recipes_path(current_user)
     end
