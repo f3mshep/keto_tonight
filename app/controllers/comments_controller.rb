@@ -11,6 +11,7 @@ class CommentsController < ApplicationController
     def update
         authorize @comment
         comment.update(comment_params)
+        redirect_to user_recipe_path(@comment.recipe.user_id, @comment.recipe)
     end
 
     def destroy
