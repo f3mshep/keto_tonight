@@ -28,6 +28,10 @@ class User < ApplicationRecord
     pantry.ingredient_ids
   end
 
+  def new_user?
+    recipes.size < 1 && comments.size < 1 && likes.size < 1
+  end
+
   def pantry_ingredients
     pantry.ingredients
   end
