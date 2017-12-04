@@ -1,8 +1,8 @@
-#Keto Tonight
+# Keto Tonight
 
 Keto Tonight is a web app for recipes that fit the criteria for the ketogenic diet. Users are able to create recipes, which are checked with compliance with the diet before they are saved in the database. Recipes can also be searched for based on what a user has in their pantry. Each recipe features a detailed nutritional breakdown. 
 
-##Installation
+## Installation
 
 An up-to-date version of this app is hosted on Heroku, available at [Keto Tonight](https://stark-harbor-64502.herokuapp.com)
 
