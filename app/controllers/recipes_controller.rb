@@ -35,6 +35,7 @@ class RecipesController < ApplicationController
         @recipe.assign_attributes(recipe_params)
         if @recipe.save
             @recipe.save_food
+            flash[:notice] = "#{@recipe.title} successfully created!"
             redirect_to user_recipe_path(@recipe.user, @recipe)
         else
             @category = @recipe.categories.build
@@ -50,6 +51,7 @@ class RecipesController < ApplicationController
         authorize @recipe
         if @recipe.update(recipe_params)
             @recipe.update_food
+            flash[:notice] = "#{@recipe.title} successfully updated!"
             redirect_to user_recipe_path(@recipe.user, @recipe)
         else
             @category = @recipe.categories.build
@@ -61,6 +63,7 @@ class RecipesController < ApplicationController
         authorize @recipe
         @recipe.recipe_categories.destroy_all
         @recipe.destroy
+        flash[:notice] = "#{@recipe.title} successfully deleted"
         redirect_to user_recipes_path(current_user)
     end
 

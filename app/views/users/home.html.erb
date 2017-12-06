@@ -18,6 +18,15 @@
 <p>&nbsp</p>
 <p>&nbsp</p>
 <div class="container">
+    <%if current_user.new_user?%>
+        <div class="row justify-content-center">
+            <div class="col-md-10 content-box">
+                <%= render partial: "keto_blurb"%>
+            </div>
+            <br>
+        </div>
+        <br>
+    <%end%>
     <div class="row justify-content-center">
         <div class="col-md-10 content-box">
             <div class="row">

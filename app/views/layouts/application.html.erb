@@ -12,7 +12,6 @@
 <%if current_page?('/')%>
 <body>
   <%= stylesheet_link_tag    'static', media: 'all', 'data-turbolinks-track': 'reload' %>
-  <%= render "layouts/flash" %>
   <%= yield %>
 </body>
 <%else%>

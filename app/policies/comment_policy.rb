@@ -8,4 +8,7 @@ class CommentPolicy < ApplicationPolicy
         user.admin || record.try(:user) == user
     end
 
+    def create?
+    	user
+    end
 end

@@ -14,7 +14,7 @@ class Recipe < ApplicationRecord
   scope :by_categories, -> (meal_category) {joins(:categories).where(categories: {name: meal_category})}
   scope :by_likes, -> { order('likes_count DESC') }
   scope :is_liked, ->(enabled) {Recipe.joins(:likes).group("likes.recipe_id") if enabled}
-  scope :search_query, -> (query) {Recipe.where("title like ?", "%#{query}%")}
+  scope :search_query, -> (query) {Recipe.where("lower(title) like ?", "%#{query.downcase}%")}
 
   attr_accessor :food_hash
   MAX_CARBS = 20
