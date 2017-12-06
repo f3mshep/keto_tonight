@@ -19,7 +19,6 @@ class PantriesController < ApplicationController
     #is unique. If they choose to bypass the built in SEARCH FOR ALREADY existing
     #ingredients they must be touchy about exactly what their macronutrients are
     pantry_setter
-   
     if  @pantry.update(pantry_params)
       redirect_to user_pantry_path(@user)
     else
@@ -36,7 +35,7 @@ class PantriesController < ApplicationController
   private
 
   def pantry_setter
-     @user = User.find(params[:user_id])
+     @user = current_user
      @pantry = @user.pantry
      @pantry = Pantry.create(user: @user) if @pantry.nil?
   end
