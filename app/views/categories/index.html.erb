@@ -5,6 +5,16 @@
             <h2>All Categories</h2>
             <br>
             <%= render(@categories) || "Somehow, there are no categories. Run the seed file" %>
+            <br>
+            <button data-toggle="modal"  data-target="#newCategory" class="btn btn-primary">New Category</button>
         </div>
     </div>
 </div>
+
+
+
+<%=bootstrap_modal("newCategory"){ form_for @category do |f| %>
+    <%= f.label :name, "New Category"%> <br>
+    <%= f.text_area :name, class:"form-control", rows: 1 %> <br>
+    <%= f.submit%>
+<% end }%>
