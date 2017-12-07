@@ -33,6 +33,8 @@ class Recipe < ApplicationRecord
   validates :title, uniqueness: true
   validates :title, length: {maximum: 40}
   validates :servings, presence: true
+  validates :servings, numericality: {less_than_or_equal_to: 60}
+  validates :servings, numericality: {greater_than_or_equal_to: 1, only_integer: true}
   validates :description, presence: true
   validates :ingredient_list, presence: true
   validate :analyze_ingredients
