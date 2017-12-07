@@ -1,16 +1,15 @@
 class PantriesController < ApplicationController
 
   before_action :require_login
+  before_action :pantry_setter, only: [:show, :edit, :update]
 
   def show
-    pantry_setter
   end
 
   def edit
     #I thought long and hard about how to get pantry ingredients working properly.
     #Technically, what is happening here is that we are editing a User's pantry
     #Therefore, to add a brand new ingredient we needed to use nested params!
-    pantry_setter
     @pantry.ingredients.build
   end
 
@@ -18,7 +17,6 @@ class PantriesController < ApplicationController
     #one thing this doesn't do is check if the ingredient the user is adding
     #is unique. If they choose to bypass the built in SEARCH FOR ALREADY existing
     #ingredients they must be touchy about exactly what their macronutrients are
-    pantry_setter
     if  @pantry.update(pantry_params)
       redirect_to user_pantry_path(@user)
     else

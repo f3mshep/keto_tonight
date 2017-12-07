@@ -6,4 +6,5 @@ class PantryIngredient < ApplicationRecord
   def ingredient_name
     ingredient.name
   end
+  
 end

@@ -9,9 +9,9 @@
         <%= pluralize(@pantry.errors.count, "error") %> prohibited your pantry from being updated:</h2>
   
       <ul>
-        <% @pantry.errors.full_messages.each do |msg| %>
+        <% @pantry.errors.values.each do |msg| %>
           <li>
-            <%= msg %>
+            <%= msg.first %>
           </li>
           <% end %>
       </ul>

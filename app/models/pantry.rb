@@ -1,10 +1,11 @@
 class Pantry < ApplicationRecord
   attr_accessor :no_food_id
+  attr_accessor :not_unique
   belongs_to :user
   has_many :pantry_ingredients
   has_many :ingredients, through: :pantry_ingredients
-  # accepts_nested_attributes_for :ingredients
   validate :has_food_id
+  validate :is_unique_ingredient
 
 
 
@@ -16,8 +17,12 @@ class Pantry < ApplicationRecord
       begin
         food_id =  food_response.body["ingredients"][0]["parsed"][0]["foodId"]
         ingredient = Ingredient.find_or_create_by_food_id(food_id,food_name)
-        pantry_ingredient = PantryIngredient.create(pantry_id: self.id, ingredient_id: ingredient.id)
-        self.save
+        pantry_ingredient = PantryIngredient.new(pantry_id: self.id, ingredient_id: ingredient.id)
+        if pantry_ingredient.save
+          self.save
+        else
+          self.not_unique = true
+        end
       rescue
         self.no_food_id = food_name
       end
@@ -30,6 +35,12 @@ class Pantry < ApplicationRecord
   end
 
   private
+
+  def is_unique_ingredient
+    if not_unique
+      errors.add(:ingredients, "That food is already in your pantry!")
+    end
+  end
 
   def has_food_id
     if no_food_id
