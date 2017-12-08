@@ -26,9 +26,10 @@
               <%= material_icon.account_circle.md_36%>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <%= link_to("Likes", my_likes_path(current_user.id) , class: 'dropdown-item') %>
               <%= link_to  "New recipe", new_user_recipe_path(current_user), class: 'dropdown-item' %>
-              <%= link_to  "Your recipes", user_recipes_path(current_user), class: 'dropdown-item' %>
-              <%= link_to  "Your pantry", user_pantry_path(current_user), class: 'dropdown-item' %>
+              <%= link_to  "My Recipes", user_recipes_path(current_user), class: 'dropdown-item' %>
+              <%= link_to  "Pantry", user_pantry_path(current_user), class: 'dropdown-item' %>
               <%= link_to  "Sign out", destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
               <% if current_user.admin%>
                 <%= link_to  "Category management", categories_path, class: 'dropdown-item' %>
