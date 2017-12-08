@@ -9,11 +9,10 @@ class Recipe < ApplicationRecord
 
   #works in console, significant changes would need to be made to index action unless we use javascript. Come back to this one.
   scope :ingredient_names, -> (names) { joins(:ingredients).where(ingredients: {name: names}).distinct }
-
   scope :most_recent, -> {order('created_at DESC')}
   scope :by_categories, -> (meal_category) {joins(:categories).where(categories: {name: meal_category})}
   scope :by_likes, -> { order('likes_count DESC') }
-  scope :is_liked, ->(enabled) {Recipe.joins(:likes).group("likes.recipe_id") if enabled}
+  scope :is_liked, ->(enabled) {Recipe.select('recipes.*').joins(:likes).group('recipes.id').having('count(likes.id) > 0') if enabled}
   scope :search_query, -> (query) {Recipe.where("lower(title) like ?", "%#{query.downcase}%")}
 
   attr_accessor :food_hash
@@ -40,10 +39,11 @@ class Recipe < ApplicationRecord
   validate :analyze_ingredients
   validate :keto_friendly
 
-  #turned into a scope method.
-  # def self.find_recipe_by_ingredients(ingredient_ids)
-  #   Recipe.joins(:recipe_ingredients).where(recipe_ingredients: {ingredient_id: ingredient_ids})
-  # end
+  def self.my_likes(user_id)
+    likes = Like.user_likes(user_id)
+    recipe_ids = likes.pluck(:recipe_id)
+    Recipe.all.where(id: recipe_ids)
+  end
 
   def categories_attributes=(category_attributes)
     category_attributes.values.each do |category|

@@ -11,6 +11,7 @@ class RecipesController < ApplicationController
         else
             @recipes = Recipe.where(nil)
             filtering_params(params).each do |key, value|
+                binding.pry
                 if value == "true"
                     @recipes = @recipes.public_send(key, current_user)
                 elsif value.present?
@@ -18,6 +19,11 @@ class RecipesController < ApplicationController
                 end
             end
         end
+    end
+
+    def my_likes
+        @recipes = Recipe.my_likes(params[:id])
+        render :index
     end
 
     def show
@@ -74,7 +80,7 @@ class RecipesController < ApplicationController
 
     def filtering_params(params)
         params.slice(:by_ingredients, :most_recent, :by_categories,
-        :by_likes, :is_liked, :search_query, :my_pantry)
+        :by_likes, :is_liked, :search_query, :my_pantry, :my_likes)
     end
 
     def recipe_params
