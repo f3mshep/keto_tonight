@@ -8,7 +8,6 @@ class Comment {
     }
 
     postComment(){
-        debugger
         let postThis = $.post(this.postURL, this.serialized, (data)=>{
             debugger
             var commentHolder = document.createElement("div")
@@ -17,13 +16,13 @@ class Comment {
             commentHolder.getElementsByTagName("button")[0].id = data.id
             commentHolder.getElementsByTagName("button")[1].id = data.id
             document.getElementById("ajaxComments").appendChild(commentHolder)
+            $('#leaveComment').modal('hide')
         })
     }
 
 
 
     deleteComment(){
-        
     }
 }
 
