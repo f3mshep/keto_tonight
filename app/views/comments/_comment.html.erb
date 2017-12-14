@@ -1,0 +1,20 @@
+<div class="container">
+    <hr>
+    <p id="commentContent"><%=comment.content%></p>
+    <p><%="-#{comment.user.email}"%></p>
+    <div class="btn-group">
+        <%if policy(comment).update?%>
+            <button type="button" data-toggle="modal" data-target="#editComment" class="btn btn-primary">Edit</button>
+        <%end%>
+        <% if policy(comment).destroy?%>
+            <%if comment.id%>
+                <%= button_to  "Delete", comment, method: :delete, class: "btn btn-secondary" %>
+            <% else %>
+                <button id="delete" method="delete" class="btn btn-secondary">Delete</button>
+            <% end %>
+        <%end%>
+    </div >
+    <% if comment.id%>
+        <%= render partial: "comments/edit_comment", locals: {comment: comment}%>
+    <% end %>
+</div>

@@ -1,0 +1,44 @@
+class Comment {
+    constructor(argument){
+        this.content = argument.getElementsByClassName("form-control")[0].value
+        this.serialized = $(argument).serialize()
+        this.postURL = argument.action.replace(/https?:\/\/localhost:3000/, "")
+        this.id = undefined
+        this.selector = argument
+    }
+
+    postComment(){
+        debugger
+        let postThis = $.post(this.postURL, this.serialized, (data)=>{
+            debugger
+            var commentHolder = document.createElement("div")
+            commentHolder.innerHTML = "<%= j (render(@comment)) %>"
+            commentHolder.getElementsByTagName("p")[0].innerHTML = data.content
+            commentHolder.getElementsByTagName("button")[0].id = data.id
+            commentHolder.getElementsByTagName("button")[1].id = data.id
+            document.getElementById("ajaxComments").appendChild(commentHolder)
+        })
+    }
+
+
+
+    deleteComment(){
+        
+    }
+}
+
+
+
+
+
+
+
+
+
+$(function (){
+    $("#new_comment").submit(function (event) {
+        event.preventDefault()
+        let commentObj = new Comment(this)
+        commentObj.postComment()
+    })
+})

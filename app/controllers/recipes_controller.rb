@@ -29,6 +29,7 @@ class RecipesController < ApplicationController
     def show
         @like = current_user.likes_recipe(@recipe) || Like.new(user: current_user, recipe: @recipe)
         @comment = Comment.new(user: current_user, recipe: @recipe)
+        @comments = @recipe.comments
     end
 
     def new

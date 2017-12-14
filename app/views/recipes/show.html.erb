@@ -103,29 +103,9 @@
                 </div>
     
             <br>
-        
-        	<%@recipe.comments.each do |comment|%>
-        		<div class="container">
-                    <hr>
-        			<p><%=comment.content%></p>
-                    <p><%="-#{comment.user.email} #{comment.created_at.localtime.pretty}"%></p>
-                    <div class="btn-group">
-                        <%if policy(comment).update?%>
-                            <button type="button" data-toggle="modal" data-target="#editComment" class="btn btn-primary">Edit</button>
-                        <%end%>
-                        <% if policy(comment).destroy?%>
-                            <%= button_to  "Delete", comment, method: :delete, class: "btn btn-secondary" %>
-                        <%end%>
-                    </div >
-                    <%=bootstrap_modal("editComment"){ form_for comment do |f| %>
-                        <%= f.label :content, "Edit Comment"%>
-                        <br>
-                        <%= f.text_area :content, class:"form-control", rows: 3 %>
-                        <br>
-                        <%= f.submit "Update"%>
-                    <% end }%>
-        		</div>
-        	<%end%>
+        <%=render(@comments)%>
+        <div id="ajaxComments">
+        </div>
         </div>
         <br>
         </div>
@@ -142,4 +122,9 @@
 <% end }%>
 
 <!-- edit comment here -->
-
+<script>
+    <%= render partial: "jscomments",
+              formats: [:js],
+              locals: {time_now: Time.now}
+          %>
+</script>

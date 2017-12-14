@@ -5,7 +5,7 @@ class CommentsController < ApplicationController
         @comment = Comment.new(user_id: current_user.id, recipe_id: params[:recipe_id])
         @comment.update(comment_params)
         authorize @comment
-        redirect_to user_recipe_path(@comment.recipe.user_id, @comment.recipe)
+        render json: @comment
     end
 
     def update
