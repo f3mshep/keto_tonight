@@ -40,4 +40,8 @@ $(function (){
         let commentObj = new Comment(this)
         commentObj.postComment()
     })
+    $(".js-delete").click(function(){
+        let commentObj = new Comment(this)
+        commentObj.deleteComment()
+    })
 })

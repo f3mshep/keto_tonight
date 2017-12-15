@@ -8,9 +8,9 @@
         <%end%>
         <% if policy(comment).destroy?%>
             <%if comment.id%>
-                <%= button_to  "Delete", comment, method: :delete, class: "btn btn-secondary" %>
+                <%= button_to  "Delete", comment, method: :delete, id: comment.id, class: "btn btn-secondary js-delete" %>
             <% else %>
-                <button id="delete" method="delete" class="btn btn-secondary">Delete</button>
+                <button id="" method="delete" class="btn btn-secondary js-delete">Delete</button>
             <% end %>
         <%end%>
     </div >
