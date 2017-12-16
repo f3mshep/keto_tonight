@@ -1,6 +1,5 @@
 class Comment {
     constructor(argument){
-        debugger
         this.serialized = $(argument).serialize()
         this.postURL = argument.action.replace(/https?:\/\/localhost:3000/, "")
         this.id = argument.id
@@ -9,50 +8,57 @@ class Comment {
 
     postComment(){
         let postThis = $.post(this.postURL, this.serialized, (data)=>{
-            debugger
             var commentHolder = document.createElement("div")
-            commentHolder.id = data.id
+            commentHolder.id = "comment-" + data.id
             commentHolder.innerHTML = "<%= j (render(@comment)) %>"
             commentHolder.getElementsByTagName("p")[0].innerHTML = data.content
             commentHolder.getElementsByTagName("button")[0].id = data.id
             commentHolder.getElementsByTagName("button")[1].id = data.id
+            commentHolder.getElementsByTagName("button")[1].action = `/users/${data.user.id}/recipes/${data.recipe.id}`
             document.getElementById("ajaxComments").appendChild(commentHolder)
             $('#leaveComment').modal('hide')
         })
+        postThis.then($.proxy(function (resp) {
+            let myId = "#comment-" + resp.id
+            $(myId).click(this.deleteComment)
+                }, this))
     }
-
-
 
     deleteComment(){
-    // var deleteMe = this.selector
-    // $.ajax({
-    // url: '',
-    // type: 'DELETE',
-    // success: function(result) {
-    //     $(deleteMe).remove()
-    // }
-    //     });
+        let url = this.postURL || "/comments/" + this.id.replace(/\D*/, "")
+        debugger
+        $.ajax({
+        url: url,
+        type: 'DELETE',
+        success: function(resp) {
+                let myId = "#comment-" + resp.id
+                $(myId).remove()
+                }
+            })
     }
+}
+
+function addCommentListener(){
+    $("#new_comment").submit(function (event) {
+        event.preventDefault()
+        let commentObj = new Comment(this)
+        commentObj.postComment()
+    })
+}
+
+function addDeleteListener(){
+    $(".js-delete").click(function (event) {
+        event.preventDefault()
+        let commentObj = new Comment(this.parentElement)
+        commentObj.deleteComment()
+    })
 }
 
 
 
 
 
-
-
-
-
 $(function (){
-    $("#new_comment").submit(function (event) {
-        debugger
-        event.preventDefault()
-        let commentObj = new Comment(this)
-        commentObj.postComment()
-    })
-    $(".js-delete").click(function(){
-        debugger
-        let commentObj = new Comment(this.parentElement)
-        commentObj.deleteComment()
-    })
+    addCommentListener()
+    addDeleteListener()
 })

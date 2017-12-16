@@ -17,7 +17,7 @@ class CommentsController < ApplicationController
     def destroy
         authorize @comment
         @comment.destroy
-        redirect_to user_recipe_path(@comment.user, @comment.recipe)
+        render json: @comment
     end
 
 
