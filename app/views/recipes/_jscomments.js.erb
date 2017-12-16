@@ -14,7 +14,6 @@ class Comment {
             commentHolder.getElementsByTagName("p")[0].innerHTML = data.content
             commentHolder.getElementsByTagName("button")[0].id = data.id
             commentHolder.getElementsByTagName("button")[1].id = data.id
-            commentHolder.getElementsByTagName("button")[1].action = `/users/${data.user.id}/recipes/${data.recipe.id}`
             document.getElementById("ajaxComments").appendChild(commentHolder)
             $('#leaveComment').modal('hide')
         })
