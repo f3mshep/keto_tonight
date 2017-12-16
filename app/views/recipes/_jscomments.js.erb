@@ -53,6 +53,14 @@ function addDeleteListener(){
     })
 }
 
+function addEditListener(){
+    $(".js-edit").click(function (event) {
+        event.preventDefault()
+        let commentObj = new Comment(this.parentElement)
+        commentObj.editComment()
+    })
+}
+
 
 
 
@@ -60,4 +68,5 @@ function addDeleteListener(){
 $(function (){
     addCommentListener()
     addDeleteListener()
+    addEditListener()
 })
