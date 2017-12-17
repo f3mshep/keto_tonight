@@ -1,6 +1,5 @@
 class Comment {
     constructor(argument){
-        debugger
         this.serialized = undefined
         this.postURL = undefined
         this.content = undefined
@@ -13,7 +12,7 @@ class Comment {
     }
 
     setActionURL(){
-        let this.actionURL = "/comments/" + this.id.replace(/\D*/, "")
+        this.actionURL = "/comments/" + this.id.replace(/\D*/, "")
     }
 
     setPostURL(){
@@ -47,7 +46,7 @@ class Comment {
     }
 
     deleteComment(){
-        this.setActionURL
+        this.setActionURL()
         debugger
         $.ajax({
         url: this.actionURL,
@@ -60,21 +59,28 @@ class Comment {
     }
 
     editComment(){
-        this.setActionURL
-        this.setContent
+        this.setActionURL()
+        this.setContent()
+        let myUpdate = this.updateComment.bind(this)
         document.getElementById("js-comment").innerHTML = this.content
-        debugger
+        $("#commitEdit").click(function(event){
+            event.preventDefault()
+            debugger
+            myUpdate()
+        })
     }
 
     updateComment(){
+        let newContent = document.getElementById("js-comment").innerHTML
         let id = this.id.replace(/\D*/, "")
+        let newData = {
+            id: id,
+            content: newContent
+        }
         $.ajax({
             url: this.actionURL,
             type: "PATCH",
-            data: {
-                id: id,
-                content: this.content
-            }
+            data: newData
         })
     }
 }
@@ -103,7 +109,6 @@ function addDeleteListener(){
 function addEditListener(){
     $(".js-edit").click(function (event) {
         event.preventDefault()
-        debugger
         let commentObj = new Comment(this.parentNode.parentNode)
         commentObj.editComment()
     })
