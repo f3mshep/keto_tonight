@@ -21,8 +21,8 @@ class Comment {
             let myId = "#comment-" + resp.id
             $(myId).click(this.deleteComment)
             const commentForm = document.getElementById("new_comment")
-            debugger
-            commentForm.getElementsByTagName("input").namedItem("commit")
+            commentForm.getElementsByTagName("textarea")[0].value = ""
+            commentForm.getElementsByTagName("input").namedItem("commit").disabled = false
                 }, this))
     }
 
