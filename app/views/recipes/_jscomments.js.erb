@@ -1,12 +1,32 @@
 class Comment {
     constructor(argument){
-        this.serialized = $(argument).serialize()
-        this.postURL = argument.action.replace(/https?:\/\/localhost:3000/, "")
+        debugger
+        this.serialized = undefined
+        this.postURL = undefined
+        this.content = undefined
         this.id = argument.id
         this.selector = argument
     }
 
+    setContent(){
+        this.content = this.selector.getElementsByTagName("p").namedItem("commentContent").innerHTML
+    }
+
+    setActionURL(){
+        let this.actionURL = "/comments/" + this.id.replace(/\D*/, "")
+    }
+
+    setPostURL(){
+        this.postURL = this.selector.action.replace(/https?:\/\/localhost:3000/, "")
+    }
+
+    serializeForm(){
+        this.serialized = $(this.selector).serialize()
+    }
+
     postComment(){
+        this.setPostUrl()
+        this.serializeForm()
         let postThis = $.post(this.postURL, this.serialized, (data)=>{
             var commentHolder = document.createElement("div")
             commentHolder.id = "comment-" + data.id
@@ -27,10 +47,10 @@ class Comment {
     }
 
     deleteComment(){
-        let url = this.postURL || "/comments/" + this.id.replace(/\D*/, "")
+        this.setActionURL
         debugger
         $.ajax({
-        url: url,
+        url: this.actionURL,
         type: 'DELETE',
         success: function(resp) {
                 let myId = "#comment-" + resp.id
@@ -40,7 +60,22 @@ class Comment {
     }
 
     editComment(){
-        url =
+        this.setActionURL
+        this.setContent
+        document.getElementById("js-comment").innerHTML = this.content
+        debugger
+    }
+
+    updateComment(){
+        let id = this.id.replace(/\D*/, "")
+        $.ajax({
+            url: this.actionURL,
+            type: "PATCH",
+            data: {
+                id: id,
+                content: this.content
+            }
+        })
     }
 }
 
@@ -68,7 +103,8 @@ function addDeleteListener(){
 function addEditListener(){
     $(".js-edit").click(function (event) {
         event.preventDefault()
-        let commentObj = new Comment(this.parentElement)
+        debugger
+        let commentObj = new Comment(this.parentNode.parentNode)
         commentObj.editComment()
     })
 }
