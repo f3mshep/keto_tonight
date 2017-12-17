@@ -70,9 +70,17 @@ class Comment {
         })
     }
 
+    changeComment(newContent){
+        this.selector.getElementsByTagName("p").namedItem("commentContent").innerHTML = newContent
+        debugger
+        $('#editComment').modal('hide')
+    }
+
     updateComment(){
-        let newContent = document.getElementById("js-comment").innerHTML
+        let newContent = document.getElementById("js-comment").value
         let id = this.id.replace(/\D*/, "")
+        let myComment = this.changeComment.bind(this, newContent)
+        debugger
         let newData = {
             id: id,
             content: newContent
@@ -80,7 +88,8 @@ class Comment {
         $.ajax({
             url: this.actionURL,
             type: "PATCH",
-            data: newData
+            data: {comment: newData},
+            success: myComment
         })
     }
 }
