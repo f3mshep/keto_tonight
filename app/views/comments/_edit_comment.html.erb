@@ -1,7 +1,7 @@
     <%=bootstrap_modal("editComment"){ form_tag("/comments", method: "patch")  do%>
         <%= label_tag :content, "Edit Comment"%>
         <br>
-        <%= text_area_tag :content, class:"form-control", rows: 3 %>
+        <%= text_area_tag "js-comment", nil, class:"form-control", rows: 3 %>
         <br>
-        <%= submit_tag "Update"%>
+        <%= submit_tag "Update", class:"js-edit"%>
     <% end }%>
