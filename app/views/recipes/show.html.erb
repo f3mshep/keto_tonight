@@ -66,7 +66,7 @@
                     <hr>
                 </div>
             </div>
-    
+
             <div class="col-md-10 content-box">
                 <div class="container">
                     <h3>Directions</h3>
@@ -75,7 +75,7 @@
                     <hr>
                 </div>
             </div>
-        
+
     <%if @recipe.missing_ingredients(current_user) %>
         <div class="col-md-10 content-box">
             <div class="container">
@@ -101,7 +101,7 @@
                 <div class="col-2">
                     <button type="button" data-toggle="modal" data-target="#leaveComment" style="display: inline;" class="btn btn-primary pull-right">Post a Comment</button>
                 </div>
-    
+
             <br>
         <%=render(@comments)%>
         <div id="ajaxComments">
@@ -122,6 +122,11 @@
 <% end }%>
 
 <!-- edit comment here -->
+
+<%= render partial: "comments/edit_comment" %>
+
+<!-- loading view scripts here -->
+
 <script>
     <%= render partial: "jscomments",
               formats: [:js],
