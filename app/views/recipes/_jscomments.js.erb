@@ -20,6 +20,9 @@ class Comment {
         postThis.then($.proxy(function (resp) {
             let myId = "#comment-" + resp.id
             $(myId).click(this.deleteComment)
+            const commentForm = document.getElementById("new_comment")
+            debugger
+            commentForm.getElementsByTagName("input").namedItem("commit")
                 }, this))
     }
 
@@ -42,6 +45,9 @@ function addCommentListener(){
         event.preventDefault()
         let commentObj = new Comment(this)
         commentObj.postComment()
+
+        $(this).removeClass("disabled")
+
     })
 }
 
