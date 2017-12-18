@@ -5,6 +5,7 @@ class Comment {
         this.content = undefined
         this.id = argument.id
         this.selector = argument
+        debugger
     }
 
     setContent(){
@@ -38,7 +39,7 @@ class Comment {
             // commentHolder.getElementsByTagName("button")[1].id = data.id
             // commentHolder.getElementsByTagName("form")[1].action = "/comments/" + data.id
 
-            document.getElementById("js-commentholder").appendChild(commentHolder)
+            document.getElementById("commentsBox").appendChild(commentHolder)
             $('#leaveComment').modal('hide')
         })
         postThis.then($.proxy(function (resp) {
@@ -77,26 +78,30 @@ class Comment {
     editComment(){
         this.setActionURL()
         this.setContent()
+        debugger
         let myUpdate = this.updateComment.bind(this)
         document.getElementById("js-comment").innerHTML = this.content
-        document.getElementById("js-element").value = this.content
         $("#commitEdit").click(function(event){
             event.preventDefault()
             myUpdate()
         })
+        $('#editComment').on('hidden.bs.modal', function(){
+            $('#commitEdit').off()
+            debugger
+        })
     }
 
     changeComment(newContent){
+        debugger
         this.selector.getElementsByTagName("p").namedItem("commentContent").innerHTML = newContent
         $('#editComment').modal('hide')
     }
 
     updateComment(){
-
         let newContent = document.getElementById("js-comment").value
         let id = this.id.replace(/\D*/, "")
         let myComment = this.changeComment.bind(this, newContent)
-
+        debugger
         let newData = {
             id: id,
             content: newContent
@@ -133,8 +138,8 @@ function addDeleteListener(){
 
 function addEditListener(){
     $(".js-edit").click(function (event) {
-
         event.preventDefault()
+        debugger
         let commentObj = new Comment(this.parentNode.parentNode)
         commentObj.editComment()
     })

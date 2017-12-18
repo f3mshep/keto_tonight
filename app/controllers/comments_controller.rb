@@ -9,6 +9,7 @@ class CommentsController < ApplicationController
     end
 
     def update
+
         authorize @comment
         @comment.update(comment_params)
         #
