@@ -32,9 +32,11 @@ class Comment {
             commentHolder.innerHTML = "<%= j (render(@comment)) %>"
             commentHolder.getElementsByTagName("p")[0].innerHTML = data.content
             commentHolder.getElementsByTagName("button")[0].id = data.id
-            commentHolder.getElementsByTagName("button")[1].id = data.id
+            commentHolder.getElementsByTagName("form")[0].action = "/comments/" + data.id
+
+            // commentHolder.getElementsByTagName("button")[1].id = data.id
             debugger
-            commentHolder.getElementsByTagName("button")[1].action = "/comments/" + data.id
+            // commentHolder.getElementsByTagName("form")[1].action = "/comments/" + data.id
 
             document.getElementById("js-commentholder").appendChild(commentHolder)
             $('#leaveComment').modal('hide')
