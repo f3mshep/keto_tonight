@@ -16,6 +16,7 @@ class Comment {
     }
 
     setPostURL(){
+        debugger
         this.postURL = this.selector.action.replace(/https?:\/\/localhost:3000/, "")
     }
 
@@ -35,15 +36,25 @@ class Comment {
             commentHolder.getElementsByTagName("form")[0].action = "/comments/" + data.id
 
             // commentHolder.getElementsByTagName("button")[1].id = data.id
-            debugger
             // commentHolder.getElementsByTagName("form")[1].action = "/comments/" + data.id
 
             document.getElementById("js-commentholder").appendChild(commentHolder)
             $('#leaveComment').modal('hide')
         })
         postThis.then($.proxy(function (resp) {
-            let myId = "#comment-" + resp.id
-            $(myId).click(this.deleteComment)
+            let myId = "comment-" + resp.id
+            this.selector = document.getElementById(myId)
+            this.id = myId
+            const myEdit = this.editComment.bind(this)
+            const myDelete = this.deleteComment.bind(this)
+            document.getElementById(myId).querySelector(".js-delete").addEventListener("click", function(event){
+                event.preventDefault()
+                myDelete()
+            })
+            document.getElementById(myId).querySelector(".js-edit").addEventListener("click", function(event){
+                event.preventDefault()
+                myEdit()
+            })
             const commentForm = document.getElementById("new_comment")
             commentForm.getElementsByTagName("textarea")[0].value = ""
             commentForm.getElementsByTagName("input").namedItem("commit").disabled = false
@@ -51,8 +62,7 @@ class Comment {
     }
 
     deleteComment(){
-        this.setPostURL()
-        debugger
+        this.setActionURL()
         $.ajax({
         url: this.postURL,
         type: 'DELETE',
@@ -64,30 +74,29 @@ class Comment {
     }
 
     editComment(){
-        debugger
         this.setActionURL()
         this.setContent()
         let myUpdate = this.updateComment.bind(this)
         document.getElementById("js-comment").innerHTML = this.content
         $("#commitEdit").click(function(event){
             event.preventDefault()
-            debugger
+
             myUpdate()
         })
     }
 
     changeComment(newContent){
         this.selector.getElementsByTagName("p").namedItem("commentContent").innerHTML = newContent
-        debugger
+
         $('#editComment').modal('hide')
     }
 
     updateComment(){
-        debugger
+
         let newContent = document.getElementById("js-comment").value
         let id = this.id.replace(/\D*/, "")
         let myComment = this.changeComment.bind(this, newContent)
-        debugger
+
         let newData = {
             id: id,
             content: newContent
@@ -124,7 +133,7 @@ function addDeleteListener(){
 
 function addEditListener(){
     $(".js-edit").click(function (event) {
-        debugger
+
         event.preventDefault()
         let commentObj = new Comment(this.parentNode.parentNode)
         commentObj.editComment()
