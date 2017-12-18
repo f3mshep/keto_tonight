@@ -24,7 +24,7 @@ class Comment {
     }
 
     postComment(){
-        this.setPostUrl()
+        this.setPostURL()
         this.serializeForm()
         let postThis = $.post(this.postURL, this.serialized, (data)=>{
             var commentHolder = document.createElement("div")
@@ -33,7 +33,10 @@ class Comment {
             commentHolder.getElementsByTagName("p")[0].innerHTML = data.content
             commentHolder.getElementsByTagName("button")[0].id = data.id
             commentHolder.getElementsByTagName("button")[1].id = data.id
-            document.getElementById("ajaxComments").appendChild(commentHolder)
+            debugger
+            commentHolder.getElementsByTagName("button")[1].action = "/comments/" + data.id
+
+            document.getElementById("js-commentholder").appendChild(commentHolder)
             $('#leaveComment').modal('hide')
         })
         postThis.then($.proxy(function (resp) {
@@ -46,10 +49,10 @@ class Comment {
     }
 
     deleteComment(){
-        this.setActionURL()
+        this.setPostURL()
         debugger
         $.ajax({
-        url: this.actionURL,
+        url: this.postURL,
         type: 'DELETE',
         success: function(resp) {
                 let myId = "#comment-" + resp.id
@@ -59,6 +62,7 @@ class Comment {
     }
 
     editComment(){
+        debugger
         this.setActionURL()
         this.setContent()
         let myUpdate = this.updateComment.bind(this)
@@ -77,6 +81,7 @@ class Comment {
     }
 
     updateComment(){
+        debugger
         let newContent = document.getElementById("js-comment").value
         let id = this.id.replace(/\D*/, "")
         let myComment = this.changeComment.bind(this, newContent)
@@ -117,6 +122,7 @@ function addDeleteListener(){
 
 function addEditListener(){
     $(".js-edit").click(function (event) {
+        debugger
         event.preventDefault()
         let commentObj = new Comment(this.parentNode.parentNode)
         commentObj.editComment()

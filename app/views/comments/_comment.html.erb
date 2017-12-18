@@ -10,7 +10,10 @@
             <%if comment.id%>
                 <%= button_to  "Delete", comment, method: :delete, id: comment.id, class: "btn btn-secondary js-delete" %>
             <% else %>
-                <button id="" method="delete" class="btn btn-secondary js-delete">Delete</button>
+                <%= form_tag '/comments/', method: :delete  do |f| %> %>
+                    <%= submit_tag "Delete", class:"btn btn-secondary js-delete"%>
+                <% end %>
+                <%= button_to  "Delete", method: :delete, id:0, class: "btn btn-secondary js-delete" %>
             <% end %>
         <%end%>
     </div >
