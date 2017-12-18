@@ -63,8 +63,9 @@ class Comment {
 
     deleteComment(){
         this.setActionURL()
+        let url = this.actionURL
         $.ajax({
-        url: this.postURL,
+        url: url,
         type: 'DELETE',
         success: function(resp) {
                 let myId = "#comment-" + resp.id
@@ -78,16 +79,15 @@ class Comment {
         this.setContent()
         let myUpdate = this.updateComment.bind(this)
         document.getElementById("js-comment").innerHTML = this.content
+        document.getElementById("js-element").value = this.content
         $("#commitEdit").click(function(event){
             event.preventDefault()
-
             myUpdate()
         })
     }
 
     changeComment(newContent){
         this.selector.getElementsByTagName("p").namedItem("commentContent").innerHTML = newContent
-
         $('#editComment').modal('hide')
     }
 
@@ -126,7 +126,7 @@ function addCommentListener(){
 function addDeleteListener(){
     $(".js-delete").click(function (event) {
         event.preventDefault()
-        let commentObj = new Comment(this.parentElement)
+        let commentObj = new Comment(this.parentElement.parentElement.parentElement)
         commentObj.deleteComment()
     })
 }
