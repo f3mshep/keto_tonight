@@ -87,8 +87,8 @@
                 <!-- Shows the ingredients that the user is missing -->
                 <!--To get this working, we can make a POST route /missing_ingredients,
                 takes the current user ID and the recipe ID. It will return a list of missing ingredients. -->
-                <h4>You are missing
-                    <div id="missingCount"><%=@recipe.missing_ingredients(current_user).size%></div> ingredients</h4>
+                <h4 id="missingCount">You are missing
+                    <%=@recipe.missing_ingredients(current_user).size%> ingredients</h4>
                 <p>
                     <br>
                     <div id="missingIngredients"><%=@recipe.missing_ingredient_names(current_user)%></div>
@@ -116,9 +116,28 @@
         <br>
         
         </div>
+                
+            <div class="col-md-10">
+                <div class="container">
+                    <br>
+                    <div class="row justify-content-center">
+                        <div class="col-md-1 mr-auto">
+                            <%= link_to  material_icon.navigate_before.md_36, "#"%>
+                        </div>
+                        <div class="col-md-4 mx-auto text-center">
+                            <h5>View more
+                                <%=@recipe.categories.first.name%> recipes</h5>
+                        </div>
+                        <div class="ml-auto col-md-1">
+                            <%= link_to  material_icon.navigate_next.md_36, "#"%>
+                        </div>
+                    </div>
+                </div>
+            </div>
     </div>
+
     </div>
-    </div>
+   
     <br>
 <!-- Create new comment area-->
 
