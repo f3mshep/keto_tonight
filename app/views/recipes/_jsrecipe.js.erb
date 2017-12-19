@@ -1,19 +1,34 @@
-class Recipe{
-    constructor(json){
-        this.nextRecipeId = 
-        this.previousRecipeId =
-        
-    }
+const categoryId = "<%= @recipe.categories.first.id %>"
+const currentUserId = "<%= current_user.id %>"
+let currentRecipeId = "<%= @recipe.id%>"
+let allRecipes = {}
 
-    nextRecipe(){
-
-    }
-
-    previousRecipe(){
-
-    }
-
-    populateRecipe(){
-
-    }
+function loadRecipes() {
+    $.get("/categories/" + categoryId + ".json", function(data){
+        debugger
+    })
 }
+
+$(function () {
+    loadRecipes()
+})
+
+// class Recipe{
+//     constructor(json){
+//         this.nextRecipeId = 
+//         this.previousRecipeId =
+
+//     }
+
+//     nextRecipe(){
+
+//     }
+
+//     previousRecipe(){
+
+//     }
+
+//     populateRecipe(){
+
+//     }
+// }

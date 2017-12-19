@@ -7,7 +7,10 @@ class CategoriesController < ApplicationController
 
   def show
     @recipes = RecipeCategory.recipes_by_category(params[:id])
-    render :'recipes/index'
+    respond_to do |format|
+      format.html {render :'recipes/index'}
+      format.json {render json: @recipes}
+    end
   end
 
   def destroy
