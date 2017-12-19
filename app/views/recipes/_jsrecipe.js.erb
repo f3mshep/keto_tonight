@@ -13,15 +13,20 @@ function loadRecipes() {
     })
 }
 
-function ingredientName(){
-    this.rec
+function ingredientName(recipeIngredient){
+    let target = recipeIngredient.id
+
+    let food = thisRecipe.ingredients.find((ingredient) => ingredient.id === target)
+    return food.name
 }
 
 function loadIngredients(){
     let recipeIngredients = thisRecipe.recipe_ingredients
     for (const recipeIngredient of recipeIngredients) {
+        debugger
         let lineItem = document.createElement("li")
         lineItem.innerHTML = `${recipeIngredient.quantity} ${recipeIngredient.measure} ${ingredientName(recipeIngredient)}`
+        document.getElementById("recipeIngredients").appendChild(lineItem)
     }
 }
 
@@ -29,7 +34,7 @@ function loadCategories(){
 
 }
 
-function loadComments(recipeIngredient){
+function loadComments(){
 
 }
 
@@ -55,7 +60,7 @@ function loadRecipe(RecipeId){
     thisRecipe = allRecipes.find(loadThis)
     currentRecipeId = thisRecipe.id
     paginateRecipes()
-
+    //maybe on a refactor I can make this a hash that is iterated through.
     document.getElementById("recipeTitle").innerHTML = thisRecipe.title
     document.getElementById("adminFeatures").innerHTML = ""
     document.getElementById("recipePicture").src = thisRecipe.image
@@ -92,23 +97,3 @@ $(function () {
     nextRecipe()
     previousRecipe()
 })
-
-// class Recipe{
-//     constructor(json){
-//         this.nextRecipeId = 
-//         this.previousRecipeId =
-
-//     }
-
-//     nextRecipe(){
-
-//     }
-
-//     previousRecipe(){
-
-//     }
-
-//     populateRecipe(){
-
-//     }
-// }
