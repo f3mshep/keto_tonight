@@ -1,10 +1,10 @@
 const categoryId = parseInt("<%= @recipe.categories.first.id %>")
 const currentUserId = parseInt("<%= current_user.id %>")
-let currentRecipeId = parseInt("<%= @recipe.id%>")
-let allRecipes = {}
-let nextId = ""
-let previousId = ""
-let thisRecipe = {}
+var currentRecipeId = parseInt("<%= @recipe.id%>")
+var allRecipes = {}
+var nextId = ""
+var previousId = ""
+var thisRecipe = {}
 
 function loadRecipes() {
     $.get("/categories/" + categoryId + ".json", function(data){
@@ -23,19 +23,40 @@ function ingredientName(recipeIngredient){
 function loadIngredients(){
     let recipeIngredients = thisRecipe.recipe_ingredients
     for (const recipeIngredient of recipeIngredients) {
-        debugger
         let lineItem = document.createElement("li")
-        lineItem.innerHTML = `${recipeIngredient.quantity} ${recipeIngredient.measure} ${ingredientName(recipeIngredient)}`
+        lineItem.innerHTML = `${Math.ceil(recipeIngredient.quantity)} ${recipeIngredient.measure} ${ingredientName(recipeIngredient)}`
         document.getElementById("recipeIngredients").appendChild(lineItem)
     }
 }
 
 function loadCategories(){
-
+    let categories = thisRecipe.categories.map((category)=>category.name)
+    if(categories.length === 1){
+        categories = categories[0]
+    }
+    else if(categories.length === 2){
+        categories = categories[0] + " and " + categories[1]
+    }
+    else if(categories.length > 2){
+        categories[categories.length - 1] = "and " + categories[categories.length - 1]
+        categories = categories.join(", ")
+    }
+    document.getElementById("recipeCategories").innerHTML = categories
 }
 
 function loadComments(){
-
+    document.getElementById("new_comment").action = "/recipes/" + currentRecipeId + "/comments"
+    let comments = thisRecipe.comments
+    for (const comment of comments) {
+        var commentHolder = document.createElement("div")
+        commentHolder.id = "comment-" + comment.id
+        commentHolder.innerHTML = "<%= j (render(@comment)) %>"
+        commentHolder.getElementsByTagName("p")[0].innerHTML = comment.content
+        commentHolder.getElementsByTagName("button")[0].id = comment.id
+        commentHolder.getElementsByTagName("form")[0].action = "/comments/" + comment.id
+        debugger
+        document.getElementById("commentsBox").prepend(commentHolder)
+    }
 }
 
 function paginateRecipes() {
@@ -77,6 +98,7 @@ function loadRecipe(RecipeId){
     document.getElementById("commentsBox").innerHTML = ""
     loadCategories()
     loadIngredients()
+    loadComments()
 }
 
 function nextRecipe(){
@@ -87,7 +109,8 @@ function nextRecipe(){
 }
 
 function previousRecipe(){
-    $("#prevRecipe").click(function(){
+    $("#prevRecipe").click(function(event){
+        event.preventDefault()
         loadRecipe(prevId)
     })
 }

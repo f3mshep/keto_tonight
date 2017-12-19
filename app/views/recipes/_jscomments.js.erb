@@ -33,10 +33,6 @@ class Comment {
             commentHolder.getElementsByTagName("p")[0].innerHTML = data.content
             commentHolder.getElementsByTagName("button")[0].id = data.id
             commentHolder.getElementsByTagName("form")[0].action = "/comments/" + data.id
-
-            // commentHolder.getElementsByTagName("button")[1].id = data.id
-            // commentHolder.getElementsByTagName("form")[1].action = "/comments/" + data.id
-
             document.getElementById("commentsBox").prepend(commentHolder)
             $('#leaveComment').modal('hide')
         })
