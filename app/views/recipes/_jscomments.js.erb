@@ -37,7 +37,7 @@ class Comment {
             // commentHolder.getElementsByTagName("button")[1].id = data.id
             // commentHolder.getElementsByTagName("form")[1].action = "/comments/" + data.id
 
-            document.getElementById("commentsBox").prependChild(commentHolder)
+            document.getElementById("commentsBox").prepend(commentHolder)
             $('#leaveComment').modal('hide')
         })
         postThis.then($.proxy(function (resp) {

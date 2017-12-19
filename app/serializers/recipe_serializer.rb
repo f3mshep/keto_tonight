@@ -4,6 +4,7 @@ class RecipeSerializer < ActiveModel::Serializer
   has_many :comments
   has_many :recipe_ingredients
   has_many :ingredients, through: :recipe_ingredients
+  has_many :categories
   has_many :likes
   belongs_to :user
 end

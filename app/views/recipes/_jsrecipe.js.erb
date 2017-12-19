@@ -1,16 +1,83 @@
-const categoryId = "<%= @recipe.categories.first.id %>"
-const currentUserId = "<%= current_user.id %>"
-let currentRecipeId = "<%= @recipe.id%>"
+const categoryId = parseInt("<%= @recipe.categories.first.id %>")
+const currentUserId = parseInt("<%= current_user.id %>")
+let currentRecipeId = parseInt("<%= @recipe.id%>")
 let allRecipes = {}
+let nextId = ""
+let previousId = ""
 
 function loadRecipes() {
     $.get("/categories/" + categoryId + ".json", function(data){
-        debugger
+        allRecipes = data
+        paginateRecipes()
+    })
+}
+
+function loadIngredients(){
+
+}
+
+function loadComments(){
+
+}
+
+function paginateRecipes() {
+    let recipeMap = allRecipes.map(recipe => recipe.id)
+    let currentIndex = recipeMap.indexOf(currentRecipeId)
+    let nextIndex = currentIndex + 1
+    let prevIndex = currentIndex - 1
+   if (nextIndex >= recipeMap.length){
+        nextIndex = nextIndex % recipeMap.length
+   }
+   if (prevIndex < 0){
+       prevIndex = recipeMap.length - 1
+   }
+   nextId = recipeMap[nextIndex]
+   previousId = recipeMap[prevIndex]
+}
+
+function loadRecipe(RecipeId){
+    function loadThis(element){
+        return element.id === RecipeId
+    }
+    let thisRecipe = allRecipes.find(loadThis)
+    debugger
+
+    currentRecipeId = thisRecipe.id
+    paginateRecipes()
+
+    document.getElementById("recipeTitle").innerHTML = thisRecipe.title
+    document.getElementById("adminFeatures").innerHTML = ""
+    document.getElementById("recipePicture").attribute("src", thisRecipe.image)
+    document.getElementById("recipeServings").innerHTML = "Serves " + thisRecipe.servings
+    document.getElementById("recipeCalories").innerHTML = "<strong>Calories: </strong>" + ( thisRecipe.calories / thisRecipe.servings)
+    document.getElementById("recipeFat").innerHTML = "<strong>Fats: </strong>" + (thisRecipe.fat / thisRecipe.servings)
+    document.getElementById("recipeProtein").innerHTML = "<strong>Protein: </strong>" + (thisRecipe.protein / thisRecipe.servings)
+    document.getElementById("recipeCarbs").innerHTML = "<strong>Protein: </strong>" + (thisRecipe.carbs / thisRecipe.servings)
+    document.getElementById("recipeFiber").innerHTML = "<strong>Fiber: </strong>" + (thisRecipe.fiber / thisRecipe.servings)
+    document.getElementById("recipeIngredients").innerHTML = ""
+    document.getElementById("recipeDescription").innerHTML = thisRecipe.description
+    document.getElementById("missingCount").innerHTML = ""
+    document.getElementById("missingIngredients").innerHTML = ""
+    document.getElementById("commentsBox").innerHTML = ""
+}
+
+function nextRecipe(){
+    $("#nextRecipe").click(function(event){
+        event.preventDefault()
+        loadRecipe(nextId)
+    })
+}
+
+function previousRecipe(){
+    $("#prevRecipe").click(function(){
+        loadRecipe(prevId)
     })
 }
 
 $(function () {
     loadRecipes()
+    nextRecipe()
+    previousRecipe()
 })
 
 // class Recipe{
