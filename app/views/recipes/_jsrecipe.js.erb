@@ -17,7 +17,9 @@ function ingredientName(recipeIngredient){
     let target = recipeIngredient.id
 
     let food = thisRecipe.ingredients.find((ingredient) => ingredient.id === target)
-    return food.name
+    if (food){
+        return food.name
+    }
 }
 
 function loadIngredients(){
@@ -54,7 +56,6 @@ function loadComments(){
         commentHolder.getElementsByTagName("p")[0].innerHTML = comment.content
         commentHolder.getElementsByTagName("button")[0].id = comment.id
         commentHolder.getElementsByTagName("form")[0].action = "/comments/" + comment.id
-        debugger
         document.getElementById("commentsBox").prepend(commentHolder)
     }
 }
@@ -97,8 +98,9 @@ function loadRecipe(RecipeId){
     document.getElementById("missingIngredients").innerHTML = ""
     document.getElementById("commentsBox").innerHTML = ""
     loadCategories()
-    loadIngredients()
     loadComments()
+    loadIngredients()
+    
 }
 
 function nextRecipe(){
@@ -111,7 +113,7 @@ function nextRecipe(){
 function previousRecipe(){
     $("#prevRecipe").click(function(event){
         event.preventDefault()
-        loadRecipe(prevId)
+        loadRecipe(previousId)
     })
 }
 
