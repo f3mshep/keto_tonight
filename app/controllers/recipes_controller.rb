@@ -30,6 +30,7 @@ class RecipesController < ApplicationController
         @like = current_user.likes_recipe(@recipe) || Like.new(user: current_user, recipe: @recipe)
         @comment = Comment.new(user: current_user, recipe: @recipe)
         @comments = @recipe.comments
+        render json: @recipe
     end
 
     def new
@@ -65,6 +66,7 @@ class RecipesController < ApplicationController
             render :edit
         end
     end
+
 
     def destroy
         authorize @recipe

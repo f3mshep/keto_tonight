@@ -5,7 +5,6 @@ class Comment {
         this.content = undefined
         this.id = argument.id
         this.selector = argument
-        debugger
     }
 
     setContent(){
@@ -17,7 +16,6 @@ class Comment {
     }
 
     setPostURL(){
-        debugger
         this.postURL = this.selector.action.replace(/https?:\/\/localhost:3000/, "")
     }
 
@@ -39,7 +37,7 @@ class Comment {
             // commentHolder.getElementsByTagName("button")[1].id = data.id
             // commentHolder.getElementsByTagName("form")[1].action = "/comments/" + data.id
 
-            document.getElementById("commentsBox").appendChild(commentHolder)
+            document.getElementById("commentsBox").prependChild(commentHolder)
             $('#leaveComment').modal('hide')
         })
         postThis.then($.proxy(function (resp) {
@@ -78,7 +76,6 @@ class Comment {
     editComment(){
         this.setActionURL()
         this.setContent()
-        debugger
         let myUpdate = this.updateComment.bind(this)
         document.getElementById("js-comment").innerHTML = this.content
         $("#commitEdit").click(function(event){
@@ -87,12 +84,10 @@ class Comment {
         })
         $('#editComment').on('hidden.bs.modal', function(){
             $('#commitEdit').off()
-            debugger
         })
     }
 
     changeComment(newContent){
-        debugger
         this.selector.getElementsByTagName("p").namedItem("commentContent").innerHTML = newContent
         $('#editComment').modal('hide')
     }
@@ -101,7 +96,6 @@ class Comment {
         let newContent = document.getElementById("js-comment").value
         let id = this.id.replace(/\D*/, "")
         let myComment = this.changeComment.bind(this, newContent)
-        debugger
         let newData = {
             id: id,
             content: newContent
@@ -139,7 +133,6 @@ function addDeleteListener(){
 function addEditListener(){
     $(".js-edit").click(function (event) {
         event.preventDefault()
-        debugger
         let commentObj = new Comment(this.parentNode.parentNode)
         commentObj.editComment()
     })
