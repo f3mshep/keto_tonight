@@ -1,7 +1,10 @@
 <br>
+
     <div class="container">
+
         <div class='row justify-content-center' >
             <div class="col-md-10 content-box">
+                
                 <div class="container">
                     <div class="row">
                         <div class="col-10">
@@ -82,12 +85,13 @@
         <div id="missingIngredients" class="col-md-10 content-box">
             <div class="container">
                 <!-- Shows the ingredients that the user is missing -->
-                <!--To get this working, we can make a  -->
+                <!--To get this working, we can make a POST route /missing_ingredients,
+                takes the current user ID and the recipe ID. It will return a list of missing ingredients. -->
                 <h4>You are missing
-                    <%=@recipe.missing_ingredients(current_user).size%> ingredients</h4>
+                    <div id="missingCount"><%=@recipe.missing_ingredients(current_user).size%></div> ingredients</h4>
                 <p>
                     <br>
-                    <%=@recipe.missing_ingredient_names(current_user)%>
+                    <div id="missingIngredients"><%=@recipe.missing_ingredient_names(current_user)%></div>
                     <hr>
                 </p>
             </div>
@@ -110,6 +114,7 @@
         </div>
         </div>
         <br>
+        
         </div>
     </div>
     </div>
