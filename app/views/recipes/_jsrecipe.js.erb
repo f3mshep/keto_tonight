@@ -110,6 +110,56 @@ class CategoryCollection{
 
 }
 
+//likes
+
+class Like {
+    constructor(likeId) {
+        this.likeButton = document.getElementsByName("edit_like")[0];
+        this.userId = currentUserId;
+        this.recipeId = currentRecipeId;
+        this.status = this.likeButton.innerHTML;
+        this.id = likeId;
+    }
+
+    switchStatus() {
+        if (this.status === "Like") {
+            this.status = "Unlike";
+        }
+        else {
+            this.status = "Like";
+        }
+    }
+
+    likeRequest() {
+        if (this.id) {
+            const unlike = this.switchStatus.bind(this)
+            $.ajax({
+                url: '/likes/' + this.id,
+                type: 'DELETE',
+                success: unlike
+            });
+        }
+        else {
+            const like = this.switchStatus.bind(this)
+            $.ajax({
+                url: '/likes',
+                type: 'POST',
+                success: like
+            });
+        }
+    }
+}
+
+function likeListener(id) {
+    $("#likeButton").off()
+    $("#likeButton").click(function (event) {
+        event.preventDefault()
+        let newLike = new Like(id)
+        newLike.likeRequest()
+    })
+}
+
+
 //comments
 
 class CommentCollection{
@@ -170,10 +220,12 @@ class Recipe{
     }
 
     loadLikes(){
-        
         let isLiked = this.likes.find((like)=> like.user_id === currentUserId)
         if (isLiked){
-
+            likeListener(isLiked.id)
+        }
+        else {
+            likeListener()
         }
     }
 

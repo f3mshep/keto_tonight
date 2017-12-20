@@ -28,12 +28,12 @@
                     <div class="container">
                         <% if @like.persisted? %>
                             <%= form_for(@like, method: :delete) do |f| %>
-                                <%= f.submit "Unlike", class: 'btn btn-primary' %>
+                                <%= f.submit "Unlike", class: 'btn btn-primary', id:"likeButton" %>
                             <% end %>
                             <% else %>
                                 <%= form_for(@like) do |f| %>
                                 <%= f.hidden_field :recipe_id, value: "#{@recipe.id}" %>
-                                <%= f.submit"Like", class: 'btn btn-primary' %>
+                                <%= f.submit "Like", class: 'btn btn-primary', id:"likeButton" %>
                             <% end %>
                         <% end %>
                     </div>
