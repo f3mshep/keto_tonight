@@ -1,19 +1,38 @@
 class Like{
-    constructor(){
-        this.likeButton = document.getElementsByName("edit_like")[0]
-        this.userId = currentUserId
-        this.recipeId = currentRecipeId
-        this.status = this.likeButton.innerHTML
+    constructor(likeId){
+        this.likeButton = document.getElementsByName("edit_like")[0];
+        this.userId = currentUserId;
+        this.recipeId = currentRecipeId;
+        this.status = this.likeButton.innerHTML;
+        this.id = likeId;
     }
 
     switchStatus(){
         if(this.status ==="Like"){
-            this.status ==="Unlike"
+            this.status = "Unlike";
         }
         else{
-            this.status === "Like"
+            this.status = "Like";
         }
     }
 
+    likeRequest(){
+        if (this.id){
+            const unlike = this.switchStatus.bind(this)
+            $.ajax({
+                url: '/likes/' + this.id,
+                type: 'DELETE',
+                success: unlike
+            });
+        }
+        else {
+            const like = this.switchStatus.bind(this)
+            $.ajax({
+                url: '/likes',
+                type: 'POST',
+                success: like
+            });
+        }
+    }
     
 }
