@@ -166,6 +166,14 @@ class Recipe{
         this.user_id = recipe.user.id
         this.id = recipe.id
         this.recipeURL = "/users/" + this.user_id + "/recipes/" + this.id
+        this.likes = recipe.likes
+    }
+
+    loadLikes(){
+        let isLiked = this.likes.find((like)=> like.user_id === currentUserId)
+        if (isLiked){
+            
+        }
     }
 
     loadAdminFunctions(){
