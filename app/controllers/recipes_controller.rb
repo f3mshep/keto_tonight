@@ -26,7 +26,7 @@ class RecipesController < ApplicationController
 
     def my_likes
         @recipes = Recipe.my_likes(params[:id])
-        render :index
+        render :server_index
     end
 
     def show

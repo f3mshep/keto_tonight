@@ -8,7 +8,7 @@ class CategoriesController < ApplicationController
   def show
     @recipes = RecipeCategory.recipes_by_category(params[:id])
     respond_to do |format|
-      format.html {render :'recipes/index'}
+      format.html {render :'recipes/server_index'}
       format.json {render json: @recipes}
     end
   end
