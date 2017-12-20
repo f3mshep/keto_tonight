@@ -165,15 +165,26 @@ class Recipe{
         this.ingredients = recipe.ingredients
         this.comments = recipe.comments
         this.categories = recipe.categories
+        this.user_id = recipe.user.id
+        this.id = recipe.id
+        this.recipeURL = "/users/" + this.user_id + "/recipes/" + this.id
     }
 
     loadAdminFunctions(){
-
+        if(isAdmin || this.user_id === currentUserId){
+            document.getElementById("adminFeatures").style.visibility = "visible"
+            document.getElementById("adminFeatures").children[0].action =  this.recipeURL + "/edit"
+            document.getElementById("adminFeatures").children[1].action = this.recipeURL
+        }
+        else{
+            //if we have a malicious user, their attempts to edit or delete the recipe will be foiled by the controller
+            //therefore, should be safe to merely hide the element.
+            document.getElementById("adminFeatures").style.visibility = "hidden"
+        }
     }
 
     buildRecipe(){
         document.getElementById("recipeTitle").innerHTML = this.title
-        document.getElementById("adminFeatures").innerHTML = ""
         document.getElementById("recipePicture").src = this.image
         document.getElementById("recipeServings").innerHTML = "Serves " + this.servings
         document.getElementById("recipeCalories").innerHTML = "<strong>Calories: </strong>" + this.caloriesPer
