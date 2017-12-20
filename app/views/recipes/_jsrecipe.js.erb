@@ -59,7 +59,8 @@ function loadRecipes() {
 class IngredientCollection{
     constructor(recipe){
         this.recipe = recipe
-
+        this.recipeIngredients = recipe.recipe_ingredients
+        
     }
 
     ingredientName(recipeIngredient){
@@ -69,20 +70,15 @@ class IngredientCollection{
     }
 
     buildIngredients(){
-
+        document.getElementById("recipeIngredients").innerHTML = ""
+        for (const recipeIngredient of this.recipeIngredients) {
+            let lineItem = document.createElement("li")
+            lineItem.innerHTML = `${Math.ceil(recipeIngredient.quantity)} ${recipeIngredient.measure} ${this.ingredientName(recipeIngredient)}`
+            document.getElementById("recipeIngredients").appendChild(lineItem)
+        }
+        document.getElementById("recipeIngredients").prepend(document.createElement("br"))
     }
 
-}
-
-
-function loadIngredients(){
-    let recipeIngredients = thisRecipe.recipe_ingredients
-    for (const recipeIngredient of recipeIngredients) {
-        let lineItem = document.createElement("li")
-        lineItem.innerHTML = `${Math.ceil(recipeIngredient.quantity)} ${recipeIngredient.measure} ${ingredientName(recipeIngredient)}`
-        document.getElementById("recipeIngredients").appendChild(lineItem)
-    }
-    document.getElementById("recipeIngredients").prepend(document.createElement("br"))
 }
 
 //categories
@@ -147,6 +143,10 @@ class Recipe{
         this.proteinPer = parseInt(recipe.protein / this.servings)
         this.carbsPer = parseInt(recipe.carbs / this.servings)
         this.fiberPer = parseInt(recipe.fiber / this.servings)
+        this.recipe_ingredients = recipe.recipe_ingredients
+        this.ingredients = recipe.ingredients
+        this.comments = recipe.comments
+        this.categories = recipe.categories
     }
 
     loadAdminFunctions(){
@@ -169,13 +169,13 @@ class Recipe{
         this.loadAdminFunctions()
 
         let ingredients = new IngredientCollection(this)
-        ingredients.buildIngredients
+        ingredients.buildIngredients()
 
         let comments = new CommentCollection(this)
-        comments.buildComments
+        comments.buildComments()
 
         let categories = new CategorieCollection(this)
-        categories.buildCategories
+        categories.buildCategories()
         // loadCategories()
         // loadComments()
         // loadIngredients()
