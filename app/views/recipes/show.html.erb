@@ -122,14 +122,14 @@
                     <br>
                     <div class="row justify-content-center">
                         <div class="col-md-1 mr-auto">
-                            <%= link_to  material_icon.navigate_before.md_36, "#", id: "prevRecipe"%>
+                            <%= link_to  material_icon.navigate_before.md_36, "", id: "prevRecipe"%>
                         </div>
                         <div class="col-md-4 mx-auto text-center">
                             <h5>View more
                                 <%=@recipe.categories.first.name%> recipes</h5>
                         </div>
                         <div class="ml-auto col-md-1">
-                            <%= link_to  material_icon.navigate_next.md_36, "#", id: "nextRecipe"%>
+                            <%= link_to  material_icon.navigate_next.md_36, "", id: "nextRecipe"%>
                         </div>
                     </div>
                 </div>
@@ -156,13 +156,11 @@
 <script>
     <%= render partial: "jscomments",
               formats: [:js],
-              locals: {time_now: Time.now}
           %>
 </script>
 
 <script>
     <%= render partial: "jsrecipe",
         formats: [:js],
-            locals: { time_now: Time.now }
           %>
 </script>

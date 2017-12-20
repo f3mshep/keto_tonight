@@ -7,12 +7,47 @@ let nextId = ""
 let previousId = ""
 let thisRecipe = {}
 
+//global functions
+
+function paginateRecipes() {
+    let recipeMap = allRecipes.map(recipe => recipe.id)
+    let currentIndex = recipeMap.indexOf(currentRecipeId)
+    let nextIndex = currentIndex + 1
+    let prevIndex = currentIndex - 1
+   if (nextIndex >= recipeMap.length){
+        nextIndex = nextIndex % recipeMap.length
+   }
+   if (prevIndex < 0){
+       prevIndex = recipeMap.length - 1
+   }
+   nextId = recipeMap[nextIndex]
+   previousId = recipeMap[prevIndex]
+}
+
+
+function nextRecipe(){
+    $("#nextRecipe").click(function(event){
+        event.preventDefault()
+        loadRecipe(nextId)
+    })
+}
+
+function previousRecipe(){
+    $("#prevRecipe").click(function(event){
+        event.preventDefault()
+        loadRecipe(previousId)
+    })
+}
+
 function loadRecipes() {
     $.get("/categories/" + categoryId + ".json", function(data){
         allRecipes = data
         paginateRecipes()
     })
 }
+
+
+//ingredients
 
 function ingredientName(recipeIngredient){
     let target = recipeIngredient.ingredient_id
@@ -33,6 +68,8 @@ function loadIngredients(){
     document.getElementById("recipeIngredients").prepend(document.createElement("br"))
 }
 
+//categories
+
 function loadCategories(){
     let categories = thisRecipe.categories.map((category)=>category.name)
     if(categories.length === 1){
@@ -47,6 +84,8 @@ function loadCategories(){
     }
     document.getElementById("recipeCategories").innerHTML = "<br>" + categories
 }
+
+//comments
 
 function commentActions(commentHolder, comment){
     if(isAdmin || comment.user_id === currentUserId){
@@ -77,21 +116,8 @@ function loadComments(){
 }
 
 
-function paginateRecipes() {
-    let recipeMap = allRecipes.map(recipe => recipe.id)
-    let currentIndex = recipeMap.indexOf(currentRecipeId)
-    let nextIndex = currentIndex + 1
-    let prevIndex = currentIndex - 1
-   if (nextIndex >= recipeMap.length){
-        nextIndex = nextIndex % recipeMap.length
-   }
-   if (prevIndex < 0){
-       prevIndex = recipeMap.length - 1
-   }
-   nextId = recipeMap[nextIndex]
-   previousId = recipeMap[prevIndex]
-}
 
+//recipe 
 function loadRecipe(RecipeId){
     function loadThis(element){
         return element.id === RecipeId
@@ -121,19 +147,6 @@ function loadRecipe(RecipeId){
     
 }
 
-function nextRecipe(){
-    $("#nextRecipe").click(function(event){
-        event.preventDefault()
-        loadRecipe(nextId)
-    })
-}
-
-function previousRecipe(){
-    $("#prevRecipe").click(function(event){
-        event.preventDefault()
-        loadRecipe(previousId)
-    })
-}
 
 $(function () {
     loadRecipes()
