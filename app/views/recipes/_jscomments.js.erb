@@ -118,7 +118,7 @@ function addCommentListener(){
     })
 }
 
-function addDeleteListener(){
+function addDeleteListener(target){
     $(".js-delete").click(function (event) {
         event.preventDefault()
         let commentObj = new Comment(this.parentElement.parentElement.parentElement)

@@ -1,10 +1,11 @@
 const categoryId = parseInt("<%= @recipe.categories.first.id %>")
 const currentUserId = parseInt("<%= current_user.id %>")
-var currentRecipeId = parseInt("<%= @recipe.id%>")
-var allRecipes = {}
-var nextId = ""
-var previousId = ""
-var thisRecipe = {}
+let isAdmin = <%= current_user.admin%>
+let currentRecipeId = parseInt("<%= @recipe.id%>")
+let allRecipes = {}
+let nextId = ""
+let previousId = ""
+let thisRecipe = {}
 
 function loadRecipes() {
     $.get("/categories/" + categoryId + ".json", function(data){
@@ -14,7 +15,7 @@ function loadRecipes() {
 }
 
 function ingredientName(recipeIngredient){
-    let target = recipeIngredient.id
+    let target = recipeIngredient.ingredient_id
 
     let food = thisRecipe.ingredients.find((ingredient) => ingredient.id === target)
     if (food){
@@ -25,10 +26,12 @@ function ingredientName(recipeIngredient){
 function loadIngredients(){
     let recipeIngredients = thisRecipe.recipe_ingredients
     for (const recipeIngredient of recipeIngredients) {
+        debugger
         let lineItem = document.createElement("li")
         lineItem.innerHTML = `${Math.ceil(recipeIngredient.quantity)} ${recipeIngredient.measure} ${ingredientName(recipeIngredient)}`
         document.getElementById("recipeIngredients").appendChild(lineItem)
     }
+    document.getElementById("recipeIngredients").prepend(document.createElement("br"))
 }
 
 function loadCategories(){
@@ -43,7 +46,18 @@ function loadCategories(){
         categories[categories.length - 1] = "and " + categories[categories.length - 1]
         categories = categories.join(", ")
     }
-    document.getElementById("recipeCategories").innerHTML = categories
+    document.getElementById("recipeCategories").innerHTML = "<br>" + categories
+}
+
+function commentActions(commentHolder, comment){
+    if(isAdmin || comment.user_id === currentUserId){
+        commentHolder.getElementsByTagName("button")[0].id = comment.id
+        commentHolder.getElementsByTagName("form")[0].action = "/comments/" + comment.id
+    }
+    else{ 
+        commentHolder.getElementsByTagName("button")[0].remove()
+        commentHolder.getElementsByTagName("form")[0].remove()
+    }
 }
 
 function loadComments(){
@@ -54,11 +68,14 @@ function loadComments(){
         commentHolder.id = "comment-" + comment.id
         commentHolder.innerHTML = "<%= j (render(@comment)) %>"
         commentHolder.getElementsByTagName("p")[0].innerHTML = comment.content
-        commentHolder.getElementsByTagName("button")[0].id = comment.id
-        commentHolder.getElementsByTagName("form")[0].action = "/comments/" + comment.id
+        commentHolder.getElementsByTagName("p")[1].innerHTML = "-" + comment.username
+        commentActions(commentHolder, comment)
         document.getElementById("commentsBox").prepend(commentHolder)
     }
+    addDeleteListener()
+    addEditListener()
 }
+
 
 function paginateRecipes() {
     let recipeMap = allRecipes.map(recipe => recipe.id)
@@ -93,7 +110,8 @@ function loadRecipe(RecipeId){
     document.getElementById("recipeCarbs").innerHTML = "<strong>Protein: </strong>" + parseInt(thisRecipe.carbs / thisRecipe.servings)
     document.getElementById("recipeFiber").innerHTML = "<strong>Fiber: </strong>" + parseInt(thisRecipe.fiber / thisRecipe.servings)
     document.getElementById("recipeIngredients").innerHTML = ""
-    document.getElementById("recipeDescription").innerHTML = thisRecipe.description
+    document.getElementById("recipeDescription").innerHTML = ""
+    document.getElementById("recipeDescription").innerHTML = thisRecipe.description.replace(new RegExp('\r?\n', 'g'), '<br />')
     document.getElementById("missingCount").innerHTML = ""
     document.getElementById("missingIngredients").innerHTML = ""
     document.getElementById("commentsBox").innerHTML = ""
