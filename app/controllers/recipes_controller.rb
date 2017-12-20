@@ -10,7 +10,6 @@ class RecipesController < ApplicationController
         else
             @recipes = Recipe.where(nil)
             filtering_params(params).each do |key, value|
-                binding.pry
                 if value == "true"
                     @recipes = @recipes.public_send(key, current_user)
                 elsif value.present?

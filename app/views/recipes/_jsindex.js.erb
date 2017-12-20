@@ -1,22 +1,37 @@
 
-// class RecipeCard{
-//     constructor(recipe){
-//         this.title = 
-//         this.image = 
-//         this.commentCount = 
-//         this.recipeURL =
-//     }
+class RecipeCard{
+    constructor(recipe){
+        this.title = recipe.title;
+        this.image = recipe.image;
+        this.commentCount = recipe.comments.length;
+        this.recipeURL = "/users/" + recipe.user.id + "/recipes/" + recipe.id;
+    }
 
-//     cardBuilder(){
+    cardBuilder(){
+        let recipeCard = document.createElement("div")
+        recipeCard.className ="col-md-4"
+        recipeCard.innerHTML = "<%=j render(partial: 'recipe_card_template')%>";
+        recipeCard.getElementsByClassName("recipePath")[0].href = this.recipeURL
+        recipeCard.getElementsByClassName("recipePath")[1].href = this.recipeURL
+        recipeCard.getElementsByClassName("recipeImage")[0].src = this.image
+        recipeCard.getElementsByClassName("card-title")[0].innerHTML = this.title
+        debugger
+        recipeCard.getElementsByClassName("recipeCommentCount")[0].innerHTML = this.commentCount + ' comments'
+        document.getElementsByClassName("row")[0].appendChild(recipeCard)
+    }
 
-//     }
-
-// }
+}
 
 function requestRecipes(){
-    debugger;
     const path = window.location.pathname;
-    $.get(path, function(data){
-
+    $.get(path + ".json", function(recipes){
+        for (const recipe of recipes) {
+            let card = new RecipeCard(recipe);
+            card.cardBuilder()
+        }
     })
 }
+
+$(function(){
+    requestRecipes()
+});
