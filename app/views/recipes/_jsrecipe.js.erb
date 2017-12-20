@@ -26,7 +26,6 @@ function ingredientName(recipeIngredient){
 function loadIngredients(){
     let recipeIngredients = thisRecipe.recipe_ingredients
     for (const recipeIngredient of recipeIngredients) {
-        debugger
         let lineItem = document.createElement("li")
         lineItem.innerHTML = `${Math.ceil(recipeIngredient.quantity)} ${recipeIngredient.measure} ${ingredientName(recipeIngredient)}`
         document.getElementById("recipeIngredients").appendChild(lineItem)
@@ -51,6 +50,7 @@ function loadCategories(){
 
 function commentActions(commentHolder, comment){
     if(isAdmin || comment.user_id === currentUserId){
+        debugger
         commentHolder.getElementsByTagName("button")[0].id = comment.id
         commentHolder.getElementsByTagName("form")[0].action = "/comments/" + comment.id
     }
