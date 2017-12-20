@@ -5,7 +5,6 @@ let currentRecipeId = parseInt("<%= @recipe.id%>")
 let allRecipes = {}
 let nextId = ""
 let previousId = ""
-let thisRecipe = {}
 
 //global functions
 
@@ -28,14 +27,22 @@ function paginateRecipes() {
 function nextRecipe(){
     $("#nextRecipe").click(function(event){
         event.preventDefault()
-        loadRecipe(nextId)
+        let currentRecipe = allRecipes.find((recipe) => recipe.id === nextId)
+        currentRecipeId = currentRecipe.id
+        let recipeObject = new Recipe(currentRecipe)
+        paginateRecipes()
+        recipeObject.buildRecipe()
     })
 }
 
 function previousRecipe(){
     $("#prevRecipe").click(function(event){
         event.preventDefault()
-        loadRecipe(previousId)
+        let currentRecipe = allRecipes.find((recipe) => recipe.id === previousId)
+        currentRecipeId = currentRecipe.id
+        new Recipe(currentRecipe)
+        paginateRecipes()
+        recipeObject.buildRecipe()
     })
 }
 
@@ -49,14 +56,24 @@ function loadRecipes() {
 
 //ingredients
 
-function ingredientName(recipeIngredient){
-    let target = recipeIngredient.ingredient_id
+class IngredientCollection{
+    constructor(recipe){
+        this.recipe = recipe
 
-    let food = thisRecipe.ingredients.find((ingredient) => ingredient.id === target)
-    if (food){
+    }
+
+    ingredientName(recipeIngredient){
+        let target = recipeIngredient.ingredient_id
+        let food = this.recipe.ingredients.find((ingredient) => ingredient.id === target)
         return food.name
     }
+
+    buildIngredients(){
+
+    }
+
 }
+
 
 function loadIngredients(){
     let recipeIngredients = thisRecipe.recipe_ingredients
@@ -117,36 +134,53 @@ function loadComments(){
 
 
 
-//recipe 
-function loadRecipe(RecipeId){
-    function loadThis(element){
-        return element.id === RecipeId
-    }
-    thisRecipe = allRecipes.find(loadThis)
-    currentRecipeId = thisRecipe.id
-    paginateRecipes()
-    //maybe on a refactor I can make this a hash that is iterated through.
-    document.getElementById("recipeTitle").innerHTML = thisRecipe.title
-    document.getElementById("adminFeatures").innerHTML = ""
-    document.getElementById("recipePicture").src = thisRecipe.image
-    document.getElementById("recipeServings").innerHTML = "Serves " + thisRecipe.servings
-    document.getElementById("recipeCalories").innerHTML = "<strong>Calories: </strong>" + parseInt(thisRecipe.calories / thisRecipe.servings)
-    document.getElementById("recipeFat").innerHTML = "<strong>Fats: </strong>" + parseInt(thisRecipe.fat / thisRecipe.servings)
-    document.getElementById("recipeProtein").innerHTML = "<strong>Protein: </strong>" + parseInt(thisRecipe.protein / thisRecipe.servings)
-    document.getElementById("recipeCarbs").innerHTML = "<strong>Protein: </strong>" + parseInt(thisRecipe.carbs / thisRecipe.servings)
-    document.getElementById("recipeFiber").innerHTML = "<strong>Fiber: </strong>" + parseInt(thisRecipe.fiber / thisRecipe.servings)
-    document.getElementById("recipeIngredients").innerHTML = ""
-    document.getElementById("recipeDescription").innerHTML = ""
-    document.getElementById("recipeDescription").innerHTML = thisRecipe.description.replace(new RegExp('\r?\n', 'g'), '<br />')
-    document.getElementById("missingCount").innerHTML = ""
-    document.getElementById("missingIngredients").innerHTML = ""
-    document.getElementById("commentsBox").innerHTML = ""
-    loadCategories()
-    loadComments()
-    loadIngredients()
-    
-}
+//takes in JSON response, creates object
 
+class Recipe{
+    constructor(recipe){
+        this.title = recipe.title
+        this.description = recipe.description.replace(new RegExp('\r?\n', 'g'), '<br />')
+        this.image = recipe.image
+        this.servings = recipe.servings
+        this.caloriesPer = parseInt(recipe.calories / this.servings)
+        this.fatPer = parseInt(recipe.fat / this.servings)
+        this.proteinPer = parseInt(recipe.protein / this.servings)
+        this.carbsPer = parseInt(recipe.carbs / this.servings)
+        this.fiberPer = parseInt(recipe.fiber / this.servings)
+    }
+
+    loadAdminFunctions(){
+
+    }
+
+    buildRecipe(){
+        document.getElementById("recipeTitle").innerHTML = this.title
+        document.getElementById("adminFeatures").innerHTML = ""
+        document.getElementById("recipePicture").src = this.image
+        document.getElementById("recipeServings").innerHTML = "Serves " + this.servings
+        document.getElementById("recipeCalories").innerHTML = "<strong>Calories: </strong>" + this.caloriesPer
+        document.getElementById("recipeFat").innerHTML = "<strong>Fats: </strong>" + this.fatPer
+        document.getElementById("recipeProtein").innerHTML = "<strong>Protein: </strong>" + this.proteinPer
+        document.getElementById("recipeCarbs").innerHTML = "<strong>Protein: </strong>" + this.carbsPer
+        document.getElementById("recipeFiber").innerHTML = "<strong>Fiber: </strong>" + this.fiberPer
+        document.getElementById("recipeDescription").innerHTML = this.description
+        document.getElementById("missingCount").innerHTML = ""
+        document.getElementById("missingIngredients").innerHTML = ""
+        this.loadAdminFunctions()
+
+        let ingredients = new IngredientCollection(this)
+        ingredients.buildIngredients
+
+        let comments = new CommentCollection(this)
+        comments.buildComments
+
+        let categories = new CategorieCollection(this)
+        categories.buildCategories
+        // loadCategories()
+        // loadComments()
+        // loadIngredients()
+    }
+}
 
 $(function () {
     loadRecipes()
