@@ -120,12 +120,10 @@ class CommentCollection{
 
     commentActions(commentHolder, comment){
         if (isAdmin || comment.user_id === currentUserId) {
-            debugger
             commentHolder.getElementsByTagName("button")[0].id = comment.id
             commentHolder.getElementsByTagName("form")[0].action = "/comments/" + comment.id
         }
         else {
-            debugger
             commentHolder.getElementsByTagName("button")[0].remove()
             commentHolder.getElementsByTagName("form")[0].remove()
         }
@@ -136,8 +134,8 @@ class CommentCollection{
         let comments = this.comments
         for (const comment of comments) {
             var commentHolder = document.createElement("div")
-            commentHolder.id = "comment-" + comment.id
             commentHolder.innerHTML = "<%= j (render(@comment)) %>"
+            commentHolder.firstChild.id = "comment-" + comment.id
             commentHolder.getElementsByTagName("p")[0].innerHTML = comment.content
             commentHolder.getElementsByTagName("p")[1].innerHTML = "-" + comment.username
             this.commentActions(commentHolder, comment)

@@ -1,5 +1,6 @@
 class Comment {
     constructor(argument){
+        debugger
         this.serialized = undefined
         this.postURL = undefined
         this.content = undefined
@@ -112,7 +113,6 @@ function addCommentListener(){
         event.preventDefault()
         let commentObj = new Comment(this)
         commentObj.postComment()
-
         $(this).removeClass("disabled")
 
     })
