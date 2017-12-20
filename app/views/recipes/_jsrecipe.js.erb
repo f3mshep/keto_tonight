@@ -40,7 +40,7 @@ function previousRecipe(){
         event.preventDefault()
         let currentRecipe = allRecipes.find((recipe) => recipe.id === previousId)
         currentRecipeId = currentRecipe.id
-        new Recipe(currentRecipe)
+        let recipeObject = new Recipe(currentRecipe)
         paginateRecipes()
         recipeObject.buildRecipe()
     })
@@ -83,12 +83,6 @@ class IngredientCollection{
 
 //categories
 
-function loadCategories(){
-    let categories = thisRecipe.categories.map((category)=>category.name)
-
-    document.getElementById("recipeCategories").innerHTML = "<br>" + categories
-}
-
 class CategoryCollection{
     constructor(recipe){
         this.categories = recipe.categories.map((category) => category.name)
@@ -118,35 +112,41 @@ class CategoryCollection{
 
 //comments
 
-function commentActions(commentHolder, comment){
-    if(isAdmin || comment.user_id === currentUserId){
-        debugger
-        commentHolder.getElementsByTagName("button")[0].id = comment.id
-        commentHolder.getElementsByTagName("form")[0].action = "/comments/" + comment.id
+class CommentCollection{
+    constructor(recipe){
+        this.comments = recipe.comments
+        document.getElementById("commentsBox").innerHTML = ""
     }
-    else{ 
-        commentHolder.getElementsByTagName("button")[0].remove()
-        commentHolder.getElementsByTagName("form")[0].remove()
+
+    commentActions(commentHolder, comment){
+        if (isAdmin || comment.user_id === currentUserId) {
+            debugger
+            commentHolder.getElementsByTagName("button")[0].id = comment.id
+            commentHolder.getElementsByTagName("form")[0].action = "/comments/" + comment.id
+        }
+        else {
+            debugger
+            commentHolder.getElementsByTagName("button")[0].remove()
+            commentHolder.getElementsByTagName("form")[0].remove()
+        }
+    }
+
+    buildComments(){
+        document.getElementById("new_comment").action = "/recipes/" + currentRecipeId + "/comments"
+        let comments = this.comments
+        for (const comment of comments) {
+            var commentHolder = document.createElement("div")
+            commentHolder.id = "comment-" + comment.id
+            commentHolder.innerHTML = "<%= j (render(@comment)) %>"
+            commentHolder.getElementsByTagName("p")[0].innerHTML = comment.content
+            commentHolder.getElementsByTagName("p")[1].innerHTML = "-" + comment.username
+            this.commentActions(commentHolder, comment)
+            document.getElementById("commentsBox").prepend(commentHolder)
+        }
+        addDeleteListener()
+        addEditListener()
     }
 }
-
-function loadComments(){
-    document.getElementById("new_comment").action = "/recipes/" + currentRecipeId + "/comments"
-    let comments = thisRecipe.comments
-    for (const comment of comments) {
-        var commentHolder = document.createElement("div")
-        commentHolder.id = "comment-" + comment.id
-        commentHolder.innerHTML = "<%= j (render(@comment)) %>"
-        commentHolder.getElementsByTagName("p")[0].innerHTML = comment.content
-        commentHolder.getElementsByTagName("p")[1].innerHTML = "-" + comment.username
-        commentActions(commentHolder, comment)
-        document.getElementById("commentsBox").prepend(commentHolder)
-    }
-    addDeleteListener()
-    addEditListener()
-}
-
-
 
 //takes in JSON response, creates object
 
