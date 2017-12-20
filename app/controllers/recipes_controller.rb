@@ -6,7 +6,6 @@ class RecipesController < ApplicationController
 
     def index
         if params[:user_id]
-            #I could write a scope for this but I don't want to mess up nested params
             @recipes = User.find(params[:user_id]).recipes
         else
             @recipes = Recipe.where(nil)
@@ -18,6 +17,10 @@ class RecipesController < ApplicationController
                     @recipes = @recipes.public_send(key, value)
                 end
             end
+        end
+        respond_to do |format|
+            format.html {render :index}
+            format.json {render json: @recipes}
         end
     end
 
