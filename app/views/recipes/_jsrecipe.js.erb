@@ -85,17 +85,35 @@ class IngredientCollection{
 
 function loadCategories(){
     let categories = thisRecipe.categories.map((category)=>category.name)
-    if(categories.length === 1){
-        categories = categories[0]
-    }
-    else if(categories.length === 2){
-        categories = categories[0] + " and " + categories[1]
-    }
-    else if(categories.length > 2){
-        categories[categories.length - 1] = "and " + categories[categories.length - 1]
-        categories = categories.join(", ")
-    }
+
     document.getElementById("recipeCategories").innerHTML = "<br>" + categories
+}
+
+class CategoryCollection{
+    constructor(recipe){
+        this.categories = recipe.categories.map((category) => category.name)
+    }
+
+    categoryFormatter(){
+        let formattedCategories = this.categories
+        if (this.categories.length === 1) {
+            formattedCategories = this.categories[0]
+        }
+        else if (this.categories.length === 2) {
+            formattedCategories = this.categories[0] + " and " + this.categories[1]
+        }
+        else if (this.categories.length > 2) {
+            formattedCategories[formattedCategories.length - 1] = "and " + formattedCategories[formattedCategories.length - 1]
+            formattedCategories = formattedCategories.join(", ")
+        }
+        return formattedCategories
+    }
+
+    buildCategories(){
+        let myCategories = this.categoryFormatter()
+        document.getElementById("recipeCategories").innerHTML = "<br>" + myCategories
+    }
+
 }
 
 //comments
@@ -171,11 +189,12 @@ class Recipe{
         let ingredients = new IngredientCollection(this)
         ingredients.buildIngredients()
 
+        let categories = new CategoryCollection(this)
+        categories.buildCategories()
+
         let comments = new CommentCollection(this)
         comments.buildComments()
 
-        let categories = new CategorieCollection(this)
-        categories.buildCategories()
         // loadCategories()
         // loadComments()
         // loadIngredients()
