@@ -81,6 +81,7 @@ class RecipesController < ApplicationController
     end
 
     def missing_ingredients
+        binding.pry
         user = User.find(recipe_params)
         #that won't work, treat as psuedo code
         names = @recipe.missing_ingredient_names(user)

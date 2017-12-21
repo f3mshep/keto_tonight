@@ -1,4 +1,4 @@
 
-[] Get comment loaded via recipe ajax post and delete working
-[] add edit/delete function to ajax recipe page
-[] get index working with ajax
+[x] Get comment loaded via recipe ajax post and delete working
+[x] add edit/delete function to ajax recipe page
+[x] get index working with ajax

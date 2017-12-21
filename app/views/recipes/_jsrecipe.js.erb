@@ -231,6 +231,13 @@ class Recipe{
         this.likes = recipe.likes
     }
 
+    loadMissingIngredients(){
+        $.get("/recipes/" + currentRecipeId + "/missing_ingredients/" + currentUserId, function(resp){
+            document.getElementById("missingCount").innerHTML = "You are missing " + resp.missing_count + "ingredients"
+            document.getElementById("missingIngredients").innerHTML = resp.missing_names
+        })
+    }
+
     loadLikes(){
         let isLiked = this.likes.find((like)=> like.user_id === currentUserId)
         if (isLiked){
@@ -277,6 +284,7 @@ class Recipe{
         let comments = new CommentCollection(this)
         comments.buildComments()
         this.loadLikes()
+        this.loadMissingIngredients()
         // loadCategories()
         // loadComments()
         // loadIngredients()
