@@ -10,15 +10,18 @@
                         <div class="col-10">
                             <h2 id="recipeTitle"><%=@recipe.title%></h2>
                         </div>
-                        <div id="adminFeatures" class="btn-group col-2">
-                            <% if policy(@recipe).update?%>
+                        <% if policy(@recipe).update?%>
+                            <div id="adminFeatures" class="btn-group col-2">
                                 <%= button_to  "Edit", edit_user_recipe_path(@recipe), method: :get, class: "btn btn-primary"  %>
-                                <%= button_to  "Delete", user_recipe_path(@recipe), method: :delete, class: "btn btn-secondary" %>
-                            <% else %>
-                                <%= button_to  "Edit", edit_user_recipe_path(@recipe), method: :get, class: "btn btn-primary", style: "visibility: hidden;"  %>
-                                <%= button_to  "Delete", user_recipe_path(@recipe), method: :delete, class: "btn btn-secondary", style: "visibility: hidden;" %>
-                            <% end %>
-                        </div>
+                                <%= button_to  "Delete", user_recipe_path(@recipe), method: :delete, class: "btn btn-secondary" %>                          
+                            </div>
+                        <% else %>
+                            <div id="adminFeatures" class="btn-group col-2", style="visibility:hidden">
+                                <%= button_to  "Edit", edit_user_recipe_path(@recipe), method: :get, class: "btn btn-primary"  %>
+                                <%= button_to  "Delete", user_recipe_path(@recipe), method: :delete, class: "btn btn-secondary" %>                          
+                            </div>
+                        <% end %>
+
                     </div>
                     <div class="container">
                         <br>
