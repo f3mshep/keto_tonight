@@ -1,6 +1,6 @@
 class RecipesController < ApplicationController
 
-    before_action :recipe_setter, only: [:show, :edit, :update, :destroy]
+    before_action :recipe_setter, only: [:show, :edit, :update, :destroy, :missing_ingredients]
     before_action :require_login, only: [:show, :edit, :new, :create, :update, :destroy]
     before_action :has_pantry, only: [:show]
 
@@ -80,6 +80,15 @@ class RecipesController < ApplicationController
     def search
     end
 
+    def missing_ingredients
+        user = User.find(recipe_params)
+        #that won't work, treat as psuedo code
+        names = @recipe.missing_ingredient_names(user)
+        count = @recipe.missing_ingredients(user).size
+        @missing_ingredients = {missing_names: names, missing_count: count}
+        render json: @missing_ingredients
+    end
+
     private
 
     def filtering_params(params)
@@ -89,7 +98,7 @@ class RecipesController < ApplicationController
 
     def recipe_params
        params.require(:recipe).permit(:title, :image, :description, :serving_size,
-       :ingredient_list, :cook_time, :prep_time, :servings,
+       :ingredient_list, :cook_time, :prep_time, :servings, :user_id,
        :categories_attributes => [:name], :category_ids => [])
     end
 

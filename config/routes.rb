@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :recipes, only: [:update, :create, :destroy, :index]
   get '/recipes/search' => 'recipes#search', as: "search"
   resources :comments, only: [:destroy, :update]
+  get '/recipes/:id/missing_ingredients/:user_id' => 'recipes#missing_ingredients'
   resources :pantry_ingredients
   resources :ingredients
   resources :recipe_ingredients
