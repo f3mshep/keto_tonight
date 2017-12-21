@@ -8,7 +8,7 @@ class RecipeCard{
     }
 
     cardBuilder(){
-        let recipeCard = document.createElement("div")
+        var recipeCard = document.createElement("div")
         recipeCard.className ="col-md-4"
         recipeCard.innerHTML = "<%=j render(partial: 'recipe_card_template')%>";
         recipeCard.getElementsByClassName("recipePath")[0].href = this.recipeURL
@@ -22,8 +22,15 @@ class RecipeCard{
 }
 
 function requestRecipes(){
-    const path = window.location.pathname;
-    $.get(path + ".json", function(recipes){
+    let path = window.location.href.replace(/https?:\/\/localhost:3000/, "")
+    
+    if(path.includes("commit")){
+        path = path + "&request=true"
+    }
+    else {
+        path = path + ".json"
+    }
+    $.get(path, function(recipes){
         for (const recipe of recipes) {
             let card = new RecipeCard(recipe);
             card.cardBuilder()
@@ -31,6 +38,35 @@ function requestRecipes(){
     })
 }
 
+// function requestRecipes(){
+//     var urlToParse = window.location.href.replace(/https?:\/\/localhost:3000/, "")
+//     var result = parseQueryString(urlToParse);
+//     result.request = "true"
+//     $.ajax({
+//         url: urlToParse ,
+//         type: "GET",
+//         data: result,
+//         success: function(recipes){
+//             for (const recipe of recipes) {
+//                 var card = new RecipeCard(recipe);
+//                 card.cardBuilder()
+//             }
+//         },
+//     })
+// }
+
 $(function(){
     requestRecipes()
 });
+
+// var parseQueryString = function (url) {
+//     var urlParams = {};
+//     url.replace(
+//         new RegExp("([^?=&]+)(=([^&]*))?", "g"),
+//         function ($0, $1, $2, $3) {
+//             urlParams[$1] = $3;
+//         }
+//     );
+
+//     return urlParams;
+// }

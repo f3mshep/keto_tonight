@@ -17,10 +17,7 @@ class RecipesController < ApplicationController
                 end
             end
         end
-        respond_to do |format|
-            format.html {render :index}
-            format.json {render json: @recipes}
-        end
+        render json: @recipes if params[:request] || request.format.symbol == :json
     end
 
     def my_likes
