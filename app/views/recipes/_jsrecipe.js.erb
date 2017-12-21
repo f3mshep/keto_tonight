@@ -128,13 +128,14 @@ class Like {
         
     }
 
-    switchStatus() {
-        debugger
+    switchStatus(data) {
         if (this.status === "Like") {
             this.status = "Unlike";
+            this.id = data
         }
         else {
             this.status = "Like";
+            this.id = undefined
         }
         this.likeButton.value = this.status
     }
@@ -155,7 +156,9 @@ class Like {
                 url: '/likes' + ".json",
                 type: 'POST',
                 data: {like: postData},
-                success: like
+                success: function(data){
+                    like(data.id)
+                }
             });
         }
     }
@@ -232,7 +235,6 @@ class Recipe{
     }
 
     loadMissingIngredients(){
-        debugger
         $.get("/recipes/" + currentRecipeId + "/missing_ingredients/" + currentUserId, function(resp){
             document.getElementById("missingCount").innerHTML = "You are missing " + resp.missing_count + " ingredients"
             document.getElementById("missingIngredients").innerHTML = resp.missing_names
@@ -251,8 +253,7 @@ class Recipe{
 
     loadAdminFunctions(){
         if(isAdmin || this.user_id === currentUserId){
-            document.getElementById("adminFeatures").style.visibility = "visible"
-            debugger
+            document.getElementById("adminFeatures").style.visibility = "visible"            
             document.getElementById("adminFeatures").children[0].action =  this.recipeURL + "/edit"
             document.getElementById("adminFeatures").children[1].action = this.recipeURL
         }
