@@ -1,6 +1,6 @@
 class RecipesController < ApplicationController
 
-    before_action :recipe_setter, only: [:show, :edit, :update, :destroy, :missing_ingredients]
+    before_action :recipe_setter, only: [:show, :edit, :update, :destroy]
     before_action :require_login, only: [:show, :edit, :new, :create, :update, :destroy]
     before_action :has_pantry, only: [:show]
 
@@ -81,8 +81,8 @@ class RecipesController < ApplicationController
     end
 
     def missing_ingredients
-        binding.pry
-        user = User.find(recipe_params)
+        user = User.find(params[:user_id])
+        @recipe = Recipe.find(params[:id])
         #that won't work, treat as psuedo code
         names = @recipe.missing_ingredient_names(user)
         count = @recipe.missing_ingredients(user).size

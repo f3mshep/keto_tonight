@@ -232,8 +232,9 @@ class Recipe{
     }
 
     loadMissingIngredients(){
+        debugger
         $.get("/recipes/" + currentRecipeId + "/missing_ingredients/" + currentUserId, function(resp){
-            document.getElementById("missingCount").innerHTML = "You are missing " + resp.missing_count + "ingredients"
+            document.getElementById("missingCount").innerHTML = "You are missing " + resp.missing_count + " ingredients"
             document.getElementById("missingIngredients").innerHTML = resp.missing_names
         })
     }
@@ -251,6 +252,7 @@ class Recipe{
     loadAdminFunctions(){
         if(isAdmin || this.user_id === currentUserId){
             document.getElementById("adminFeatures").style.visibility = "visible"
+            debugger
             document.getElementById("adminFeatures").children[0].action =  this.recipeURL + "/edit"
             document.getElementById("adminFeatures").children[1].action = this.recipeURL
         }
@@ -273,6 +275,7 @@ class Recipe{
         document.getElementById("recipeDescription").innerHTML = this.description
         document.getElementById("missingCount").innerHTML = ""
         document.getElementById("missingIngredients").innerHTML = ""
+        this.loadMissingIngredients()
         this.loadAdminFunctions()
 
         let ingredients = new IngredientCollection(this)
@@ -284,7 +287,7 @@ class Recipe{
         let comments = new CommentCollection(this)
         comments.buildComments()
         this.loadLikes()
-        this.loadMissingIngredients()
+        
         // loadCategories()
         // loadComments()
         // loadIngredients()

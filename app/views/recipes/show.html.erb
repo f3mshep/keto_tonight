@@ -13,9 +13,10 @@
                         <div id="adminFeatures" class="btn-group col-2">
                             <% if policy(@recipe).update?%>
                                 <%= button_to  "Edit", edit_user_recipe_path(@recipe), method: :get, class: "btn btn-primary"  %>
-                            <% end %>
-                            <% if policy(@recipe).destroy?%>
                                 <%= button_to  "Delete", user_recipe_path(@recipe), method: :delete, class: "btn btn-secondary" %>
+                            <% else %>
+                                <%= button_to  "Edit", edit_user_recipe_path(@recipe), method: :get, class: "btn btn-primary", style: "visibility: hidden;"  %>
+                                <%= button_to  "Delete", user_recipe_path(@recipe), method: :delete, class: "btn btn-secondary", style: "visibility: hidden;" %>
                             <% end %>
                         </div>
                     </div>
