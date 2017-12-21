@@ -114,36 +114,47 @@ class CategoryCollection{
 
 class Like {
     constructor(likeId) {
-        this.likeButton = document.getElementsByName("edit_like")[0];
+        this.likeButton = document.getElementById("likeButton");
         this.userId = currentUserId;
         this.recipeId = currentRecipeId;
-        this.status = this.likeButton.innerHTML;
         this.id = likeId;
+        if(this.id){
+            this.status = "Unlike"
+        }
+        else{
+            this.status = "Like"
+        }
+        this.likeButton.value = this.status
+        
     }
 
     switchStatus() {
+        debugger
         if (this.status === "Like") {
             this.status = "Unlike";
         }
         else {
             this.status = "Like";
         }
+        this.likeButton.value = this.status
     }
 
     likeRequest() {
         if (this.id) {
             const unlike = this.switchStatus.bind(this)
             $.ajax({
-                url: '/likes/' + this.id,
+                url: '/likes/' + this.id + ".json",
                 type: 'DELETE',
                 success: unlike
             });
         }
         else {
+            let postData = {user_id: this.userId ,recipe_id: this.recipeId}
             const like = this.switchStatus.bind(this)
             $.ajax({
-                url: '/likes',
+                url: '/likes' + ".json",
                 type: 'POST',
+                data: {like: postData},
                 success: like
             });
         }
@@ -151,11 +162,12 @@ class Like {
 }
 
 function likeListener(id) {
+    let newLike = new Like(id)
     $("#likeButton").off()
     $("#likeButton").click(function (event) {
         event.preventDefault()
-        let newLike = new Like(id)
         newLike.likeRequest()
+        $(this).removeClass("disabled")
     })
 }
 
@@ -264,7 +276,7 @@ class Recipe{
 
         let comments = new CommentCollection(this)
         comments.buildComments()
-
+        this.loadLikes()
         // loadCategories()
         // loadComments()
         // loadIngredients()
