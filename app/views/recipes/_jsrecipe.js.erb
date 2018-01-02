@@ -236,6 +236,7 @@ function init(){
                 commentForm.getElementsByTagName("textarea")[0].value = ""
                 commentForm.getElementsByTagName("input").namedItem("commit").disabled = false
                     }, this))
+                document.getElementById("newCommentSubmit").disabled = false
         }
 
         deleteComment(){
@@ -293,9 +294,15 @@ function init(){
         $("#new_comment").submit(function (event) {
             event.preventDefault()
             let commentObj = new Comment(this)
-            commentObj.postComment()
             $(this).removeClass("disabled")
+            commentObj.postComment()
+        })
+    }
 
+    function removeDisabledComment(){
+        $("#postComment").click(function (event){
+            
+            document.getElementById("newCommentSubmit").disabled = false
         })
     }
 
@@ -427,13 +434,15 @@ function init(){
             this.loadLikes()
         }
     }
-        addCommentListener()
-        addDeleteListener()
-        addEditListener()
-        loadRecipes()
-        nextRecipe()
-        previousRecipe()
-        getRecipe()
+
+    removeDisabledComment()
+    addCommentListener()
+    addDeleteListener()
+    addEditListener()
+    loadRecipes()
+    nextRecipe()
+    previousRecipe()
+    getRecipe()
 
 }
 $(function() {

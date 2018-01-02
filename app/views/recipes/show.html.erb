@@ -104,7 +104,7 @@
             		<h4 style="display: inline;">Comments</h4>
                 </div>
                 <div class="col-2">
-                    <button type="button" data-toggle="modal" data-target="#leaveComment" style="display: inline;" class="btn btn-primary pull-right">Post a Comment</button>
+                    <button type="button" data-toggle="modal" id="postComment" data-target="#leaveComment" style="display: inline;" class="btn btn-primary pull-right">Post a Comment</button>
                 </div>
             </div>
         <div id="commentsBox">
@@ -141,7 +141,7 @@
 <%=bootstrap_modal("leaveComment"){ form_for @comment, url: create_recipe_comment_path(@recipe) do |f| %>
     <%= f.label :content, "New Comment"%> <br>
     <%= f.text_area :content, class:"form-control", rows: 3 %> <br>
-    <%= f.submit%>
+    <%= f.submit id: "newCommentSubmit"%>
 <% end }%>
 
 <!-- edit comment here -->
