@@ -3,10 +3,11 @@ function init(){
     const currentUserId = parseInt("<%= current_user.id %>")
     let isAdmin = <%= current_user.admin%>
     let currentRecipeId = parseInt("<%= @recipe.id%>")
-    let allRecipes = {}
+    let allRecipes = []
     let nextId = ""
     let previousId = ""
 
+    console.log(currentRecipeId)
     //global functions
 
     function paginateRecipes() {
@@ -26,7 +27,6 @@ function init(){
 
     function getRecipe(){
         $.get("/recipes/" + currentRecipeId + ".json", function(recipeJSON){
-            debugger
             let recipeObject = new Recipe(recipeJSON)
             paginateRecipes()
             recipeObject.buildRecipe()
@@ -415,8 +415,7 @@ function init(){
             document.getElementById("missingCount").innerHTML = ""
             document.getElementById("missingIngredients").innerHTML = ""
             this.loadMissingIngredients()
-            this.loadAdminFunctions()
-
+            this.loadAdminFunctions()       
             let ingredients = new IngredientCollection(this)
             ingredients.buildIngredients()
 
@@ -428,15 +427,16 @@ function init(){
             this.loadLikes()
         }
     }
-
-    $(function () {
-        getRecipe()
         addCommentListener()
         addDeleteListener()
         addEditListener()
         loadRecipes()
         nextRecipe()
         previousRecipe()
-    })
+        getRecipe()
+
 }
-init();
+$(function() {
+    init();
+})
+    
