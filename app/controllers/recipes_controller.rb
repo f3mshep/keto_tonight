@@ -29,6 +29,12 @@ class RecipesController < ApplicationController
         @like = current_user.likes_recipe(@recipe) || Like.new(user: current_user, recipe: @recipe)
         @comment = Comment.new(user: current_user, recipe: @recipe)
         @comments = @recipe.comments
+
+        respond_to do |format|
+            format.html {render :show}
+            format.json {render json: @recipe}
+        end
+
     end
 
     def new

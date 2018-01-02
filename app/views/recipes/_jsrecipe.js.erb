@@ -1,302 +1,440 @@
-const categoryId = parseInt("<%= @recipe.categories.first.id %>")
-const currentUserId = parseInt("<%= current_user.id %>")
-let isAdmin = <%= current_user.admin%>
-let currentRecipeId = parseInt("<%= @recipe.id%>")
-let allRecipes = {}
-let nextId = ""
-let previousId = ""
+function init(){
+    const categoryId = parseInt("<%= @recipe.categories.first.id %>")
+    const currentUserId = parseInt("<%= current_user.id %>")
+    let isAdmin = <%= current_user.admin%>
+    let currentRecipeId = parseInt("<%= @recipe.id%>")
+    let allRecipes = {}
+    let nextId = ""
+    let previousId = ""
 
-//global functions
+    //global functions
 
-function paginateRecipes() {
-    let recipeMap = allRecipes.map(recipe => recipe.id)
-    let currentIndex = recipeMap.indexOf(currentRecipeId)
-    let nextIndex = currentIndex + 1
-    let prevIndex = currentIndex - 1
-   if (nextIndex >= recipeMap.length){
-        nextIndex = nextIndex % recipeMap.length
-   }
-   if (prevIndex < 0){
-       prevIndex = recipeMap.length - 1
-   }
-   nextId = recipeMap[nextIndex]
-   previousId = recipeMap[prevIndex]
-}
-
-
-function nextRecipe(){
-    $("#nextRecipe").click(function(event){
-        event.preventDefault()
-        let currentRecipe = allRecipes.find((recipe) => recipe.id === nextId)
-        currentRecipeId = currentRecipe.id
-        let recipeObject = new Recipe(currentRecipe)
-        paginateRecipes()
-        recipeObject.buildRecipe()
-    })
-}
-
-function previousRecipe(){
-    $("#prevRecipe").click(function(event){
-        event.preventDefault()
-        let currentRecipe = allRecipes.find((recipe) => recipe.id === previousId)
-        currentRecipeId = currentRecipe.id
-        let recipeObject = new Recipe(currentRecipe)
-        paginateRecipes()
-        recipeObject.buildRecipe()
-    })
-}
-
-function loadRecipes() {
-    $.get("/categories/" + categoryId + ".json", function(data){
-        allRecipes = data
-        paginateRecipes()
-    })
-}
-
-
-//ingredients
-
-class IngredientCollection{
-    constructor(recipe){
-        this.recipe = recipe
-        this.recipeIngredients = recipe.recipe_ingredients
-        
+    function paginateRecipes() {
+        let recipeMap = allRecipes.map(recipe => recipe.id)
+        let currentIndex = recipeMap.indexOf(currentRecipeId)
+        let nextIndex = currentIndex + 1
+        let prevIndex = currentIndex - 1
+    if (nextIndex >= recipeMap.length){
+            nextIndex = nextIndex % recipeMap.length
+    }
+    if (prevIndex < 0){
+        prevIndex = recipeMap.length - 1
+    }
+    nextId = recipeMap[nextIndex]
+    previousId = recipeMap[prevIndex]
     }
 
-    ingredientName(recipeIngredient){
-        let target = recipeIngredient.ingredient_id
-        let food = this.recipe.ingredients.find((ingredient) => ingredient.id === target)
-        return food.name
-    }
-
-    buildIngredients(){
-        document.getElementById("recipeIngredients").innerHTML = ""
-        for (const recipeIngredient of this.recipeIngredients) {
-            let lineItem = document.createElement("li")
-            lineItem.innerHTML = `${Math.ceil(recipeIngredient.quantity)} ${recipeIngredient.measure} ${this.ingredientName(recipeIngredient)}`
-            document.getElementById("recipeIngredients").appendChild(lineItem)
-        }
-        document.getElementById("recipeIngredients").prepend(document.createElement("br"))
-    }
-
-}
-
-//categories
-
-class CategoryCollection{
-    constructor(recipe){
-        this.categories = recipe.categories.map((category) => category.name)
-    }
-
-    categoryFormatter(){
-        let formattedCategories = this.categories
-        if (this.categories.length === 1) {
-            formattedCategories = this.categories[0]
-        }
-        else if (this.categories.length === 2) {
-            formattedCategories = this.categories[0] + " and " + this.categories[1]
-        }
-        else if (this.categories.length > 2) {
-            formattedCategories[formattedCategories.length - 1] = "and " + formattedCategories[formattedCategories.length - 1]
-            formattedCategories = formattedCategories.join(", ")
-        }
-        return formattedCategories
-    }
-
-    buildCategories(){
-        let myCategories = this.categoryFormatter()
-        document.getElementById("recipeCategories").innerHTML = "<br>" + myCategories
-    }
-
-}
-
-//likes
-
-class Like {
-    constructor(likeId) {
-        this.likeButton = document.getElementById("likeButton");
-        this.userId = currentUserId;
-        this.recipeId = currentRecipeId;
-        this.id = likeId;
-        if(this.id){
-            this.status = "Unlike"
-        }
-        else{
-            this.status = "Like"
-        }
-        this.likeButton.value = this.status
-        
-    }
-
-    switchStatus(data) {
-        if (this.status === "Like") {
-            this.status = "Unlike";
-            this.id = data
-        }
-        else {
-            this.status = "Like";
-            this.id = undefined
-        }
-        this.likeButton.value = this.status
-    }
-
-    likeRequest() {
-        if (this.id) {
-            const unlike = this.switchStatus.bind(this)
-            $.ajax({
-                url: '/likes/' + this.id + ".json",
-                type: 'DELETE',
-                success: unlike
-            });
-        }
-        else {
-            let postData = {user_id: this.userId ,recipe_id: this.recipeId}
-            const like = this.switchStatus.bind(this)
-            $.ajax({
-                url: '/likes' + ".json",
-                type: 'POST',
-                data: {like: postData},
-                success: function(data){
-                    like(data.id)
-                }
-            });
-        }
-    }
-}
-
-function likeListener(id) {
-    let newLike = new Like(id)
-    $("#likeButton").off()
-    $("#likeButton").click(function (event) {
-        event.preventDefault()
-        newLike.likeRequest()
-        $(this).removeClass("disabled")
-    })
-}
-
-
-//comments
-
-class CommentCollection{
-    constructor(recipe){
-        this.comments = recipe.comments
-        document.getElementById("commentsBox").innerHTML = ""
-    }
-
-    commentActions(commentHolder, comment){
-        if (isAdmin || comment.user_id === currentUserId) {
-            commentHolder.getElementsByTagName("button")[0].id = comment.id
-            commentHolder.getElementsByTagName("form")[0].action = "/comments/" + comment.id
-        }
-        else {
-            commentHolder.getElementsByTagName("button")[0].remove()
-            commentHolder.getElementsByTagName("form")[0].remove()
-        }
-    }
-
-    buildComments(){
-        document.getElementById("new_comment").action = "/recipes/" + currentRecipeId + "/comments"
-        let comments = this.comments
-        for (const comment of comments) {
-            var commentHolder = document.createElement("div")
-            commentHolder.innerHTML = "<%= j (render(@comment)) %>"
-            commentHolder.firstChild.id = "comment-" + comment.id
-            commentHolder.getElementsByTagName("p")[0].innerHTML = comment.content
-            commentHolder.getElementsByTagName("p")[1].innerHTML = "-" + comment.username
-            this.commentActions(commentHolder, comment)
-            document.getElementById("commentsBox").prepend(commentHolder)
-        }
-        addDeleteListener()
-        addEditListener()
-    }
-}
-
-//takes in JSON response, creates object
-
-class Recipe{
-    constructor(recipe){
-        this.title = recipe.title
-        this.description = recipe.description.replace(new RegExp('\r?\n', 'g'), '<br />')
-        this.image = recipe.image
-        this.servings = recipe.servings
-        this.caloriesPer = parseInt(recipe.calories / this.servings)
-        this.fatPer = parseInt(recipe.fat / this.servings)
-        this.proteinPer = parseInt(recipe.protein / this.servings)
-        this.carbsPer = parseInt(recipe.carbs / this.servings)
-        this.fiberPer = parseInt(recipe.fiber / this.servings)
-        this.recipe_ingredients = recipe.recipe_ingredients
-        this.ingredients = recipe.ingredients
-        this.comments = recipe.comments
-        this.categories = recipe.categories
-        this.user_id = recipe.user.id
-        this.id = recipe.id
-        this.recipeURL = "/users/" + this.user_id + "/recipes/" + this.id
-        this.likes = recipe.likes
-    }
-
-    loadMissingIngredients(){
-        $.get("/recipes/" + currentRecipeId + "/missing_ingredients/" + currentUserId, function(resp){
-            document.getElementById("missingCount").innerHTML = "You are missing " + resp.missing_count + " ingredients"
-            document.getElementById("missingIngredients").innerHTML = resp.missing_names
+    function getRecipe(){
+        $.get("/recipes/" + currentRecipeId + ".json", function(recipeJSON){
+            let recipeObject = new Recipe(recipeJSON)
+            paginateRecipes()
+            recipeObject.buildRecipe()
         })
     }
 
-    loadLikes(){
-        let isLiked = this.likes.find((like)=> like.user_id === currentUserId)
-        if (isLiked){
-            likeListener(isLiked.id)
+    function nextRecipe(){
+        $("#nextRecipe").click(function(event){
+            event.preventDefault()
+            currentRecipeId = (allRecipes.find((recipe) => recipe.id === nextId)).id
+            
+        })
+    }
+
+    function previousRecipe(){
+        $("#prevRecipe").click(function(event){
+            event.preventDefault()
+            currentRecipeId = (allRecipes.find((recipe) => recipe.id === previousId)).id
+            getRecipe()
+        })
+    }
+
+    function loadRecipes() {
+        $.get("/categories/" + categoryId + ".json", function(data){
+            allRecipes = data
+            paginateRecipes()
+        })
+    }
+
+
+    //ingredients
+
+    class IngredientCollection{
+        constructor(recipe){
+            this.recipe = recipe
+            this.recipeIngredients = recipe.recipe_ingredients
+            
         }
-        else {
-            likeListener()
+
+        ingredientName(recipeIngredient){
+            let target = recipeIngredient.ingredient_id
+            let food = this.recipe.ingredients.find((ingredient) => ingredient.id === target)
+            return food.name
+        }
+
+        buildIngredients(){
+            document.getElementById("recipeIngredients").innerHTML = ""
+            for (const recipeIngredient of this.recipeIngredients) {
+                let lineItem = document.createElement("li")
+                lineItem.innerHTML = `${Math.ceil(recipeIngredient.quantity)} ${recipeIngredient.measure} ${this.ingredientName(recipeIngredient)}`
+                document.getElementById("recipeIngredients").appendChild(lineItem)
+            }
+            document.getElementById("recipeIngredients").prepend(document.createElement("br"))
+        }
+
+    }
+
+    //categories
+
+    class CategoryCollection{
+        constructor(recipe){
+            this.categories = recipe.categories.map((category) => category.name)
+        }
+
+        categoryFormatter(){
+            let formattedCategories = this.categories
+            if (this.categories.length === 1) {
+                formattedCategories = this.categories[0]
+            }
+            else if (this.categories.length === 2) {
+                formattedCategories = this.categories[0] + " and " + this.categories[1]
+            }
+            else if (this.categories.length > 2) {
+                formattedCategories[formattedCategories.length - 1] = "and " + formattedCategories[formattedCategories.length - 1]
+                formattedCategories = formattedCategories.join(", ")
+            }
+            return formattedCategories
+        }
+
+        buildCategories(){
+            let myCategories = this.categoryFormatter()
+            document.getElementById("recipeCategories").innerHTML = "<br>" + myCategories
+        }
+
+    }
+
+    //likes
+
+    class Like {
+        constructor(likeId) {
+            this.likeButton = document.getElementById("likeButton");
+            this.userId = currentUserId;
+            this.recipeId = currentRecipeId;
+            this.id = likeId;
+            if(this.id){
+                this.status = "Unlike"
+            }
+            else{
+                this.status = "Like"
+            }
+            this.likeButton.value = this.status
+            
+        }
+
+        switchStatus(data) {
+            if (this.status === "Like") {
+                this.status = "Unlike";
+                this.id = data
+            }
+            else {
+                this.status = "Like";
+                this.id = undefined
+            }
+            this.likeButton.value = this.status
+        }
+
+        likeRequest() {
+            if (this.id) {
+                const unlike = this.switchStatus.bind(this)
+                $.ajax({
+                    url: '/likes/' + this.id + ".json",
+                    type: 'DELETE',
+                    success: unlike
+                });
+            }
+            else {
+                let postData = {user_id: this.userId ,recipe_id: this.recipeId}
+                const like = this.switchStatus.bind(this)
+                $.ajax({
+                    url: '/likes' + ".json",
+                    type: 'POST',
+                    data: {like: postData},
+                    success: function(data){
+                        like(data.id)
+                    }
+                });
+            }
         }
     }
 
-    loadAdminFunctions(){
-        if(isAdmin || this.user_id === currentUserId){
-            document.getElementById("adminFeatures").style.visibility = "visible"            
-            document.getElementById("adminFeatures").children[0].action =  this.recipeURL + "/edit"
-            document.getElementById("adminFeatures").children[1].action = this.recipeURL
+    function likeListener(id) {
+        let newLike = new Like(id)
+        $("#likeButton").off()
+        $("#likeButton").click(function (event) {
+            event.preventDefault()
+            newLike.likeRequest()
+            $(this).removeClass("disabled")
+        })
+    }
+
+
+    //comments
+
+    class Comment {
+        constructor(argument){
+            this.serialized = undefined
+            this.postURL = undefined
+            this.content = undefined
+            this.id = argument.id
+            this.selector = argument
         }
-        else{
-            //if we have a malicious user, their attempts to edit or delete the recipe will be foiled by the controller
-            //therefore, should be safe to merely hide the element.
-            document.getElementById("adminFeatures").style.visibility = "hidden"
+
+        setContent(){
+            this.content = this.selector.getElementsByTagName("p").namedItem("commentContent").innerHTML
+        }
+
+        setActionURL(){
+            this.actionURL = "/comments/" + this.id.replace(/\D*/, "")
+        }
+
+        setPostURL(){
+            this.postURL = this.selector.action.replace(/https?:\/\/localhost:3000/, "")
+        }
+
+        serializeForm(){
+            this.serialized = $(this.selector).serialize()
+        }
+
+        postComment(){
+            this.setPostURL()
+            this.serializeForm()
+            let postThis = $.post(this.postURL, this.serialized, (data)=>{
+                var commentHolder = document.createElement("div")
+                commentHolder.id = "comment-" + data.id
+                commentHolder.innerHTML = "<%= j (render(@comment)) %>"
+                commentHolder.getElementsByTagName("p")[0].innerHTML = data.content
+                commentHolder.getElementsByTagName("button")[0].id = data.id
+                commentHolder.getElementsByTagName("form")[0].action = "/comments/" + data.id
+                document.getElementById("commentsBox").prepend(commentHolder)
+                $('#leaveComment').modal('hide')
+            })
+            postThis.then($.proxy(function (resp) {
+                let myId = "comment-" + resp.id
+                this.selector = document.getElementById(myId)
+                this.id = myId
+                const myEdit = this.editComment.bind(this)
+                const myDelete = this.deleteComment.bind(this)
+                document.getElementById(myId).querySelector(".js-delete").addEventListener("click", function(event){
+                    event.preventDefault()
+                    myDelete()
+                })
+                document.getElementById(myId).querySelector(".js-edit").addEventListener("click", function(event){
+                    event.preventDefault()
+                    myEdit()
+                })
+                const commentForm = document.getElementById("new_comment")
+                commentForm.getElementsByTagName("textarea")[0].value = ""
+                commentForm.getElementsByTagName("input").namedItem("commit").disabled = false
+                    }, this))
+        }
+
+        deleteComment(){
+            this.setActionURL()
+            let url = this.actionURL
+            $.ajax({
+            url: url,
+            type: 'DELETE',
+            success: function(resp) {
+                    let myId = "#comment-" + resp.id
+                    $(myId).remove()
+                    }
+                })
+        }
+
+        editComment(){
+            this.setActionURL()
+            this.setContent()
+            let myUpdate = this.updateComment.bind(this)
+            document.getElementById("js-comment").innerHTML = this.content
+            $("#commitEdit").click(function(event){
+                event.preventDefault()
+                myUpdate()
+            })
+            $('#editComment').on('hidden.bs.modal', function(){
+                $('#commitEdit').off()
+            })
+        }
+
+        changeComment(newContent){
+            this.selector.getElementsByTagName("p").namedItem("commentContent").innerHTML = newContent
+            $('#editComment').modal('hide')
+        }
+
+        updateComment(){
+            let newContent = document.getElementById("js-comment").value
+            let id = this.id.replace(/\D*/, "")
+            let myComment = this.changeComment.bind(this, newContent)
+            let newData = {
+                id: id,
+                content: newContent
+            }
+            $.ajax({
+                url: this.actionURL,
+                type: "PATCH",
+                data: {comment: newData},
+                success: myComment
+            })
         }
     }
 
-    buildRecipe(){
-        document.getElementById("recipeTitle").innerHTML = this.title
-        document.getElementById("recipePicture").src = this.image
-        document.getElementById("recipeServings").innerHTML = "Serves " + this.servings
-        document.getElementById("recipeCalories").innerHTML = "<strong>Calories: </strong>" + this.caloriesPer
-        document.getElementById("recipeFat").innerHTML = "<strong>Fats: </strong>" + this.fatPer
-        document.getElementById("recipeProtein").innerHTML = "<strong>Protein: </strong>" + this.proteinPer
-        document.getElementById("recipeCarbs").innerHTML = "<strong>Protein: </strong>" + this.carbsPer
-        document.getElementById("recipeFiber").innerHTML = "<strong>Fiber: </strong>" + this.fiberPer
-        document.getElementById("recipeDescription").innerHTML = this.description
-        document.getElementById("missingCount").innerHTML = ""
-        document.getElementById("missingIngredients").innerHTML = ""
-        this.loadMissingIngredients()
-        this.loadAdminFunctions()
 
-        let ingredients = new IngredientCollection(this)
-        ingredients.buildIngredients()
 
-        let categories = new CategoryCollection(this)
-        categories.buildCategories()
+    function addCommentListener(){
+        $("#new_comment").submit(function (event) {
+            event.preventDefault()
+            let commentObj = new Comment(this)
+            commentObj.postComment()
+            $(this).removeClass("disabled")
 
-        let comments = new CommentCollection(this)
-        comments.buildComments()
-        this.loadLikes()
-        
-        // loadCategories()
-        // loadComments()
-        // loadIngredients()
+        })
     }
+
+    function addDeleteListener(target){
+        $(".js-delete").click(function (event) {
+            event.preventDefault()
+            let commentObj = new Comment(this.parentElement.parentElement.parentElement)
+            commentObj.deleteComment()
+        })
+    }
+
+    function addEditListener(){
+        $(".js-edit").click(function (event) {
+            event.preventDefault()
+            let commentObj = new Comment(this.parentNode.parentNode)
+            commentObj.editComment()
+        })
+    }
+
+    class CommentCollection{
+        constructor(recipe){
+            this.comments = recipe.comments
+            document.getElementById("commentsBox").innerHTML = ""
+        }
+
+        commentActions(commentHolder, comment){
+            if (isAdmin || comment.user_id === currentUserId) {
+                commentHolder.getElementsByTagName("button")[0].id = comment.id
+                commentHolder.getElementsByTagName("form")[0].action = "/comments/" + comment.id
+            }
+            else {
+                commentHolder.getElementsByTagName("button")[0].remove()
+                commentHolder.getElementsByTagName("form")[0].remove()
+            }
+        }
+
+        buildComments(){
+            document.getElementById("new_comment").action = "/recipes/" + currentRecipeId + "/comments"
+            let comments = this.comments
+            for (const comment of comments) {
+                var commentHolder = document.createElement("div")
+                commentHolder.innerHTML = "<%= j (render(@comment)) %>"
+                commentHolder.firstChild.id = "comment-" + comment.id
+                commentHolder.getElementsByTagName("p")[0].innerHTML = comment.content
+                commentHolder.getElementsByTagName("p")[1].innerHTML = "-" + comment.username
+                this.commentActions(commentHolder, comment)
+                document.getElementById("commentsBox").prepend(commentHolder)
+            }
+            addDeleteListener()
+            addEditListener()
+        }
+    }
+
+    //takes in JSON response, creates object
+
+    class Recipe{
+        constructor(recipe){
+            this.title = recipe.title
+            this.description = recipe.description.replace(new RegExp('\r?\n', 'g'), '<br />')
+            this.image = recipe.image
+            this.servings = recipe.servings
+            this.caloriesPer = parseInt(recipe.calories / this.servings)
+            this.fatPer = parseInt(recipe.fat / this.servings)
+            this.proteinPer = parseInt(recipe.protein / this.servings)
+            this.carbsPer = parseInt(recipe.carbs / this.servings)
+            this.fiberPer = parseInt(recipe.fiber / this.servings)
+            this.recipe_ingredients = recipe.recipe_ingredients
+            this.ingredients = recipe.ingredients
+            this.comments = recipe.comments
+            this.categories = recipe.categories
+            this.user_id = recipe.user.id
+            this.id = recipe.id
+            this.recipeURL = "/users/" + this.user_id + "/recipes/" + this.id
+            this.likes = recipe.likes
+        }
+
+        loadMissingIngredients(){
+            $.get("/recipes/" + currentRecipeId + "/missing_ingredients/" + currentUserId, function(resp){
+                document.getElementById("missingCount").innerHTML = "You are missing " + resp.missing_count + " ingredients"
+                document.getElementById("missingIngredients").innerHTML = resp.missing_names
+            })
+        }
+
+        loadLikes(){
+            let isLiked = this.likes.find((like)=> like.user_id === currentUserId)
+            if (isLiked){
+                likeListener(isLiked.id)
+            }
+            else {
+                likeListener()
+            }
+        }
+
+        loadAdminFunctions(){
+            if(isAdmin || this.user_id === currentUserId){
+                document.getElementById("adminFeatures").style.visibility = "visible"            
+                document.getElementById("adminFeatures").children[0].action =  this.recipeURL + "/edit"
+                document.getElementById("adminFeatures").children[1].action = this.recipeURL
+            }
+            else{
+                //if we have a malicious user, their attempts to edit or delete the recipe will be foiled by the controller
+                //therefore, should be safe to merely hide the element.
+                document.getElementById("adminFeatures").style.visibility = "hidden"
+            }
+        }
+
+        buildRecipe(){
+            document.getElementById("recipeTitle").innerHTML = this.title
+            document.getElementById("recipePicture").src = this.image
+            document.getElementById("recipeServings").innerHTML = "Serves " + this.servings
+            document.getElementById("recipeCalories").innerHTML = "<strong>Calories: </strong>" + this.caloriesPer
+            document.getElementById("recipeFat").innerHTML = "<strong>Fats: </strong>" + this.fatPer
+            document.getElementById("recipeProtein").innerHTML = "<strong>Protein: </strong>" + this.proteinPer
+            document.getElementById("recipeCarbs").innerHTML = "<strong>Protein: </strong>" + this.carbsPer
+            document.getElementById("recipeFiber").innerHTML = "<strong>Fiber: </strong>" + this.fiberPer
+            document.getElementById("recipeDescription").innerHTML = this.description
+            document.getElementById("missingCount").innerHTML = ""
+            document.getElementById("missingIngredients").innerHTML = ""
+            this.loadMissingIngredients()
+            this.loadAdminFunctions()
+
+            let ingredients = new IngredientCollection(this)
+            ingredients.buildIngredients()
+
+            let categories = new CategoryCollection(this)
+            categories.buildCategories()
+
+            let comments = new CommentCollection(this)
+            comments.buildComments()
+            this.loadLikes()
+        }
+    }
+
+    $(function () {
+        addCommentListener()
+        addDeleteListener()
+        addEditListener()
+        loadRecipes()
+        nextRecipe()
+        previousRecipe()
+    })
 }
-
-$(function () {
-    loadRecipes()
-    nextRecipe()
-    previousRecipe()
-})
+init();

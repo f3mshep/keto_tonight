@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     resource :pantry
     resources :recipes
   end
-  resources :recipes, only: [:update, :create, :destroy, :index]
+  resources :recipes, only: [:update, :create, :show, :destroy, :index]
   get '/recipes/search' => 'recipes#search', as: "search"
   resources :comments, only: [:destroy, :update]
   get '/recipes/:id/missing_ingredients/:user_id' => 'recipes#missing_ingredients'
