@@ -26,6 +26,7 @@ function init(){
 
     function getRecipe(){
         $.get("/recipes/" + currentRecipeId + ".json", function(recipeJSON){
+            debugger
             let recipeObject = new Recipe(recipeJSON)
             paginateRecipes()
             recipeObject.buildRecipe()
@@ -429,6 +430,7 @@ function init(){
     }
 
     $(function () {
+        getRecipe()
         addCommentListener()
         addDeleteListener()
         addEditListener()

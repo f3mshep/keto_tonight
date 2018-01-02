@@ -8,12 +8,12 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-10">
-                            <h2 id="recipeTitle"><%=@recipe.title%></h2>
+                            <h2 id="recipeTitle"></h2>
                         </div>
                         <% if policy(@recipe).update?%>
                             <div id="adminFeatures" class="btn-group col-2">
-                                <%= button_to  "Edit", edit_user_recipe_path(@recipe), method: :get, class: "btn btn-primary"  %>
-                                <%= button_to  "Delete", user_recipe_path(@recipe), method: :delete, class: "btn btn-secondary" %>                          
+                                <%= button_to  "Edit", "", method: :get, class: "btn btn-primary"  %>
+                                <%= button_to  "Delete", "", method: :delete, class: "btn btn-secondary" %>                          
                             </div>
                         <% else %>
                             <div id="adminFeatures" class="btn-group col-2", style="visibility:hidden">
@@ -25,7 +25,7 @@
                     </div>
                     <div class="container">
                         <br>
-                        <%= image_tag  "#{@recipe.image}", style: "width:100%;", id:"recipePicture" %>
+                        <%= image_tag  "", style: "width:100%;", id:"recipePicture" %>
                         <br>
                     </div>
                     <br>
@@ -43,13 +43,13 @@
                     </div>
                     <hr>
                     <h3>Macronutrients per Serving</h3>
-                    <h4 id="recipeServings">Serves <%=@recipe.servings%></h4>
+                    <h4 id="recipeServings"></h4>
                     <ul>
-                        <li id="recipeCalories"><strong>Calories: </strong><%=@recipe.calories / @recipe.servings%></li>
-                        <li id="recipeFat"><strong>Fats: </strong><%=@recipe.fat / @recipe.servings%></li>
-                        <li id="recipeProtein"><strong>Protein: </strong><%=@recipe.protein / @recipe.servings%></li>
-                        <li id="recipeCarbs"><strong>Carbohydrates: </strong><%=@recipe.carbs / @recipe.servings%></li>
-                        <li id="recipeFiber"><strong>Fiber: </strong><%=@recipe.fiber / @recipe.servings%></li>
+                        <li id="recipeCalories"></li>
+                        <li id="recipeFat"></li>
+                        <li id="recipeProtein"></li>
+                        <li id="recipeCarbs"></li>
+                        <li id="recipeFiber"></li>
                     </ul>
                     <hr>
                 </div>
@@ -57,7 +57,7 @@
             <div class="col-md-10 content-box">
                 <div class="container">
                     <h3>Categories</h3>
-                    <p id="recipeCategories" ><%=@recipe.categories_names.to_sentence%></p>
+                    <p id="recipeCategories" ></p>
                     <hr>
                 </div>
             </div>
@@ -66,9 +66,6 @@
                     <h3>Ingredients</h3>
                     <ul id="recipeIngredients">
                         <br>
-                        <%@recipe.recipe_ingredients.each do |recipe_ingredient|%>
-                            <li><%=recipe_ingredient.amount%> <%=recipe_ingredient.name%></li>
-                        <%end%>
                     </ul>
                     <hr>
                 </div>
@@ -79,8 +76,6 @@
                     <h3>Directions</h3>
                     <br>
                     <div id="recipeDescription">
-                        <%=simple_format(@recipe.description)%>
-                        <hr>
                     </div>
                 </div>
             </div>
@@ -91,11 +86,10 @@
                 <!-- Shows the ingredients that the user is missing -->
                 <!--To get this working, we can make a POST route /missing_ingredients,
                 takes the current user ID and the recipe ID. It will return a list of missing ingredients. -->
-                <h4 id="missingCount">You are missing
-                    <%=@recipe.missing_ingredients(current_user).size%> ingredients</h4>
+                <h4 id="missingCount"></h4>
                 <p>
                     <br>
-                    <div id="missingIngredients"><%=@recipe.missing_ingredient_names(current_user)%></div>
+                    <div id="missingIngredients"></div>
                     <hr>
                 </p>
             </div>
@@ -114,7 +108,6 @@
                 </div>
             </div>
         <div id="commentsBox">
-            <%=render(@comments)%>
         </div>
         </div>
         <br>
