@@ -63,7 +63,7 @@ function init(){
         constructor(recipe){
             this.recipe = recipe
             this.recipeIngredients = recipe.recipe_ingredients
-            
+
         }
 
         ingredientName(recipeIngredient){
@@ -128,7 +128,7 @@ function init(){
                 this.status = "Like"
             }
             this.likeButton.value = this.status
-            
+
         }
 
         switchStatus(data) {
@@ -301,7 +301,7 @@ function init(){
 
     function removeDisabledComment(){
         $("#postComment").click(function (event){
-            
+
             document.getElementById("newCommentSubmit").disabled = false
         })
     }
@@ -398,7 +398,7 @@ function init(){
 
         loadAdminFunctions(){
             if(isAdmin || this.user_id === currentUserId){
-                document.getElementById("adminFeatures").style.visibility = "visible"            
+                document.getElementById("adminFeatures").style.visibility = "visible"
                 document.getElementById("adminFeatures").children[0].action =  this.recipeURL + "/edit"
                 document.getElementById("adminFeatures").children[1].action = this.recipeURL
             }
@@ -416,13 +416,13 @@ function init(){
             document.getElementById("recipeCalories").innerHTML = "<strong>Calories: </strong>" + this.caloriesPer
             document.getElementById("recipeFat").innerHTML = "<strong>Fats: </strong>" + this.fatPer
             document.getElementById("recipeProtein").innerHTML = "<strong>Protein: </strong>" + this.proteinPer
-            document.getElementById("recipeCarbs").innerHTML = "<strong>Protein: </strong>" + this.carbsPer
+            document.getElementById("recipeCarbs").innerHTML = "<strong>Carbohydrates: </strong>" + this.carbsPer
             document.getElementById("recipeFiber").innerHTML = "<strong>Fiber: </strong>" + this.fiberPer
             document.getElementById("recipeDescription").innerHTML = this.description
             document.getElementById("missingCount").innerHTML = ""
             document.getElementById("missingIngredients").innerHTML = ""
             this.loadMissingIngredients()
-            this.loadAdminFunctions()       
+            this.loadAdminFunctions()
             let ingredients = new IngredientCollection(this)
             ingredients.buildIngredients()
 
@@ -448,4 +448,3 @@ function init(){
 $(function() {
     init();
 })
-    
